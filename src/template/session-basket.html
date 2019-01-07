@@ -1,0 +1,17 @@
+<div class="shoppingcart">
+  <div ng-repeat="item in itemsCtrl.items[1].cart">
+        <img ng-src="img/{{item.image}}"/>
+        <p><label>Name: </label>{{item.name}}</p>
+        <p><label>Description: </label>{{item.description}}</p>
+        <p><label>Size: </label>{{item.size}}</p>
+        <p><label>Items: </label>{{item.quantity}}</p>
+  </div>
+  <div>
+    <a class="btn btn-block"
+    ng-click="itemsCtrl.emptyCart()"
+    >Empty cart</a>
+  </div>
+<div>
+  <a ui-sref="checkout({basket: cartCtrl.items})" class="btn btn-block">Checkout</a>
+</div>
+</div>

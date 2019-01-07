@@ -1,0 +1,15 @@
+<div class="shoppingcart">
+  <div ng-repeat="item in hCtrl.isloggedin[1].items">
+        <img ng-src="img/{{item.image}}"/>
+        <p><label>Name: </label>{{item.name}}</p>
+        <p><label>Description: </label>{{item.description}}</p>
+        <p><label>Size: </label>{{item.size}}</p>
+        <p><label>Items: </label>{{item.quantity}}</p>
+  </div>
+  <div>
+    <a ng-click="hCtrl.emptyCart()" class="btn btn-block">Empty cart</a>
+  </div>
+  <div>
+    <a ui-sref="checkout({basket: hCtrl.isloggedin[1].items})" class="btn btn-block">Checkout</a>
+  </div>
+</div>

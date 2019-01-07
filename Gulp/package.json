@@ -1,0 +1,31 @@
+{
+  "name": "shoes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "latest",
+    "gulp-coffee": "latest",
+    "gulp-concat": "latest",
+    "gulp-connect": "latest",
+    "gulp-minify": "^3.1.0",
+    "gulp-sass": "latest",
+    "gulp-uglify": "latest",
+    "gulp-util": "latest",
+    "uglifyjs-webpack-plugin": "^2.0.1"
+  },
+  "dependencies": {
+    "gulp-clean-css": "^4.0.0",
+    "gulp-order": "^1.2.0",
+    "gulp-uglify-es": "^1.0.4",
+    "pump": "^3.0.0"
+  }
+}

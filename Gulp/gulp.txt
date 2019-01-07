@@ -1,0 +1,16 @@
+npm install --global gulp-cli
+npx mkdirp my-project
+cd my-project
+npm init (creates package.json with questions)
+npm install --save-dev gulp@next
+gulp --version
+
+Create a gulpfile (gulpfile.js):
+	 function defaultTask(cb) {
+	  // place code for your default task here
+	  cb();
+	}
+	exports.default = defaultTask
+
+Run gulp: gulp
+(with options gulp <task> <othertask>)
