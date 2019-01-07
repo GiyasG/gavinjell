@@ -19,16 +19,32 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
     }
   }
 
-  var items = {
-    name: 'items',
-    url:'/items',
+  var projects = {
+    name: 'projects',
+    url:'/projects',
     views: {
         'content@': {
-          templateUrl: 'src/template/items.template.html',
-          controller: 'ItemsController as itemsCtrl',
+          templateUrl: 'src/template/projects.template.html',
+          controller: 'ProjectsController as projectsCtrl',
           resolve: {
             items: ['ShopDataService', function (ShopDataService) {
-              return ShopDataService.getAllItems();
+              return ShopDataService.getProjects();
+            }]
+          }
+    }
+   }
+  }
+
+  var papers = {
+    name: 'papers',
+    url:'/papers',
+    views: {
+        'content@': {
+          templateUrl: 'src/template/papers.template.html',
+          controller: 'PapersController as papersCtrl',
+          resolve: {
+            items: ['ShopDataService', function (ShopDataService) {
+              return ShopDataService.getPapers();
             }]
           }
     }
@@ -112,7 +128,8 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');
   $stateProvider
   .state(home)
-  .state(items)
+  .state(projects)
+  .state(papers)
   .state(checkout)
   .state(emailconfirmed)
   .state(passwordconfirmed)

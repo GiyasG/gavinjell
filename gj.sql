@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2019 at 07:18 PM
+-- Generation Time: Jan 07, 2019 at 02:42 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -40,6 +40,13 @@ CREATE TABLE `authority` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `authority`
+--
+
+INSERT INTO `authority` (`id`, `title`, `name`, `surname`, `position`, `about`, `dob`, `sex`, `created_at`, `updated_at`) VALUES
+(1, 'Dr', 'Gavin', 'Jell', 'Head', 'Welcome to the lab of the Programme Director/course tutor for the  MSc in Nanotechnology and Regenerative Medicine (UCL). \\n Here you can find the information regarding ongoing and finished projects as well as be acquainted with the lab\'s publications. \\n Meet our team members, become a member of our community to share new ideas.  ', '1980-04-01', 'male', '2019-01-07 06:42:08', '2019-01-07 11:43:58');
 
 -- --------------------------------------------------------
 
@@ -88,6 +95,14 @@ CREATE TABLE `papers` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `papers`
+--
+
+INSERT INTO `papers` (`id`, `authority_id`, `title`, `description`, `url`, `published`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Paper 1', 'About nanotechnology', 'www.paper1.org', '2019-01-01', '2019-01-07 08:37:52', '2019-01-07 08:37:52'),
+(2, 1, 'Paper 2', 'About nano particles', 'www.paper2.org', '2018-12-02', '2019-01-07 08:39:03', '2019-01-07 08:39:03');
+
 -- --------------------------------------------------------
 
 --
@@ -117,6 +132,13 @@ CREATE TABLE `photos` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `photos`
+--
+
+INSERT INTO `photos` (`id`, `authority_id`, `paper_id`, `project_id`, `team_id`, `filename`, `description`, `created_at`, `updated_at`) VALUES
+(1, 1, NULL, NULL, NULL, 'gavin.jpg', 'Dr. Gavin Jell', '2019-01-07 07:23:24', '2019-01-07 07:23:24');
+
 -- --------------------------------------------------------
 
 --
@@ -134,6 +156,14 @@ CREATE TABLE `projects` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`id`, `authority_id`, `title`, `description`, `url`, `started`, `finished`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Project 1', 'It is all about project 1', 'www.project1.org', '2019-01-01', '2019-01-06', '2019-01-07 08:25:30', '2019-01-07 08:25:30'),
+(2, 1, 'Project 2', 'It is all about project 2', 'www.project2.org', '2018-12-02', '2019-01-02', '2019-01-07 08:33:53', '2019-01-07 08:33:53');
 
 -- --------------------------------------------------------
 
@@ -241,7 +271,7 @@ ALTER TABLE `teams`
 -- AUTO_INCREMENT for table `authority`
 --
 ALTER TABLE `authority`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `contact`
@@ -253,19 +283,19 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `papers`
 --
 ALTER TABLE `papers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `photos`
 --
 ALTER TABLE `photos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `teams`

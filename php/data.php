@@ -19,16 +19,19 @@ include('class/mysql_crud.php');
 $db = new Database();
 if (isset($db)) {
   $tb = new Table();
-  $res = $tb->get_ParentResult('authority');
+  $res = $tb->get_ParentResult('authority', 'photos');
 // print_r ($res);
   $outp1 = "";
 
   foreach ($res as $rs) {
-      if ($outp1 != "") {$outp1 .= ",";}
+      if ($outp1 != "") {
+        $outp1 .= ",";}
       $outp1 .= '{"id":"'.$rs["id"].'",';
       $outp1 .= '"title":"'.$rs["title"].'",';
       $outp1 .= '"name":"'.$rs["name"].'",';
       $outp1 .= '"surname":"'.$rs["surname"].'",';
+      $outp1 .= '"about":"'.$rs["about"].'",';
+      $outp1 .= '"image":"'.$rs["filename"].'",';
       $outp1 .= '"position":"'.$rs["position"].'"}';
   }
 
@@ -36,6 +39,38 @@ if (isset($db)) {
 } else {
   $outp1 ='{"all":["No items found"]}';
 }
+
+
+$res = $tb->get_ParentResult('authority', 'projects');
+$proj = "";
+
+foreach ($res as $rs) {
+    if ($proj != "") {$proj .= ",";}
+    $proj .= '{"id":"'.$rs["id"].'",';
+    $proj .= '"title":"'.$rs["title"].'",';
+    $proj .= '"description":"'.$rs["description"].'",';
+    $proj .= '"url":"'.$rs["url"].'",';
+    $proj .= '"started":"'.$rs["started"].'",';
+    $proj .= '"finished":"'.$rs["finished"].'"}';
+}
+
+$proj ='{"projects":['.$proj.']}';
+
+
+$res = $tb->get_ParentResult('authority', 'papers');
+$papr = "";
+
+foreach ($res as $rs) {
+    if ($papr != "") {$papr .= ",";}
+    $papr .= '{"id":"'.$rs["id"].'",';
+    $papr .= '"title":"'.$rs["title"].'",';
+    $papr .= '"description":"'.$rs["description"].'",';
+    $papr .= '"url":"'.$rs["url"].'",';
+    $papr .= '"published":"'.$rs["published"].'"}';
+}
+
+$papr ='{"papers":['.$papr.']}';
+
 
 if (isset($_SESSION['cart'])) {
   // var_dump($_SESSION);
@@ -54,7 +89,7 @@ if (isset($_SESSION['cart'])) {
   // var_dump($_SESSION);
   $outp2 = '{"cart": null}';
 }
-$outp = '{"items":['.$outp1.','.$outp2.','.$outp3.']}';
+$outp = '{"items":['.$outp1.','.$proj.','.$papr.']}';
 
 $db->disconnect();
 

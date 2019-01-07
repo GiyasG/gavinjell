@@ -275,10 +275,16 @@ class Database{
 
 class Table extends Database {
 
-	function get_ParentResult($tbl){
+	function get_ParentResult($tbl1, $tbl2=NULL){
 		parent::connect();
 		parent::setName('SET NAMES \'utf8\'');
-		parent::select($tbl); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
+		if ($tbl2 == NULL) {
+			parent::select($tbl1);
+		} else {
+      // ($table, $rows = '*', $join = null, $where = null, $order = null, $limit = null)
+			// JOIN students s ON s.student_id = sc.student_id
+			parent::select($tbl1,'*', $tbl2." ON ".$tbl1."_id = ".$tbl1.".id");
+		}
 		$val = parent::getResult();
 		return $val;
 	}

@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <title>Items view</title>
 
-<!-- <link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/main.css"> -->
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/main.css">
+<!-- <link rel="stylesheet" href="css/styles.css"> -->
 
 <script src="lib/angular.min.js"></script>
 <script src="lib/angular-ui-router.min.js"></script>
@@ -17,8 +17,9 @@
 
 
 <script src="lib/jquery.min.js"></script>
+<script src="lib//bootstrap.min.js"></script>
 
-<!-- <script src="src/shopapp.module.js"></script>
+<script src="src/shopapp.module.js"></script>
 <script src="src/loading/loading.component.js"></script>
 <script src="src/loading/loading.interceptor.js"></script>
 
@@ -30,8 +31,11 @@
 <script src="src/home.controller.js"></script>
 <script src="src/modalinstance.controller.js"></script>
 
-<script src="src/items.component.js"></script>
-<script src="src/items.controller.js"></script>
+<script src="src/projects.component.js"></script>
+<script src="src/projects.controller.js"></script>
+
+<script src="src/papers.component.js"></script>
+<script src="src/papers.controller.js"></script>
 
 <script src="src/cart.component.js"></script>
 <script src="src/cart.controller.js"></script>
@@ -48,9 +52,9 @@
 <script src="src/admin.component.js"></script>
 <script src="src/admin.controller.js"></script>
 
-<script src="src/routes.js"></script> -->
+<script src="src/routes.js"></script>
 
-<script src="lib/script.js"></script>
+<!-- <script src="lib/script.js"></script> -->
 
 </head>
 <body>

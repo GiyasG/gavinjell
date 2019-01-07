@@ -8,30 +8,40 @@ require '../vendor/autoload.php';
   if ($auth->isLoggedIn()) {
     $outp1 ='{"isIn":true}';
     if ($auth->hasRole(\Delight\Auth\Role::ADMIN)) {
-      $outp3 = '{"Role": "Admin"}';
+      $outp2 = '{"Role": "Admin"}';
     } else {
-      $outp3 = '{"Role": null}';
+      $outp2 = '{"Role": null}';
     }
   } else {
     $outp1 ='{"isIn":false}';
-    $outp3 = '{"Role": null}';
+    $outp2 = '{"Role": null}';
   }
 
-if (isset($_SESSION['cart'])) {
-  $outp2 = "";
-  foreach ($_SESSION['cart'] as $rs) {
-      if ($outp2 != "") {$outp2 .= ",";}
-      $outp2 .= '{"name":"'.$rs["sname"].'",';
-      $outp2 .= '"description":"'.$rs["sdescription"].'",';
-      $outp2 .= '"price":"'.$rs["sprice"].'",';
-      $outp2 .= '"size":"'.$rs["size"].'",';
-      $outp2 .= '"quantity":"'.$rs["quantity"].'",';
-      $outp2 .= '"image":"'.$rs["simage"].'"}';
+  include('class/mysql_crud.php');
+  $db = new Database();
+  if (isset($db)) {
+    $tb = new Table();
+    $res = $tb->get_ParentResult('authority', 'photos');
+  // print_r ($res);
+    $outp3 = "";
+
+    foreach ($res as $rs) {
+        if ($outp3 != "") {$outp3 .= ",";}
+        $outp3 .= '{"id":"'.$rs["id"].'",';
+        $outp3 .= '"title":"'.$rs["title"].'",';
+        $outp3 .= '"name":"'.$rs["name"].'",';
+        $outp3 .= '"surname":"'.$rs["surname"].'",';
+        $outp3 .= '"about":"'.$rs["about"].'",';
+        $outp3 .= '"image":"'.$rs["filename"].'",';
+        $outp3 .= '"position":"'.$rs["position"].'"}';
+        // echo ($rs["about"]);
+    }
+
+    $outp3 ='{"all":['.$outp3.']}';
+  } else {
+    $outp3 ='{"all":["No items found"]}';
   }
-  $outp2 ='{"items":['.$outp2.']}';
-} else {
-  $outp2 = '{"items": null}';
-}
+
 $outp = '{"isloggedin":['.$outp1.','.$outp2.','.$outp3.']}';
 echo ($outp);
 ?>

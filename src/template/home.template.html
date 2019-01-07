@@ -1,8 +1,4 @@
-<h2> Shop </h2>
-
 <h4>
-<a ui-sref="home">Home</a>
-<a ui-sref="items">Items</a>
 <a ng-show="hasRoleAdmin" ui-sref="admin">Admin</a>
 </h4>
 <div class="auth_link">
@@ -19,7 +15,107 @@
 
 </div>
 
-<session-cart ng-if="showCart"></session-cart>
+<!-- <session-cart ng-if="showCart"></session-cart> -->
 
 <div ui-view="verifyemail"></div>
 <div ui-view="changepassword"></div>
+
+<div class="jumbotron">
+  <div class="container">
+    <div ng-repeat="item in hCtrl.isloggedin[2].all" ng-init="sectionIndex = $index">
+    	<div align="center" class="row">
+
+            <div align="center" class="col-md-4 cell">
+                <img style="width: 200px;" ng-src="img/{{item.image}}"  alt="photo"/>
+            </div>
+
+            <div class="col-md-7">
+                <p> {{item.about}} </p>
+                <p> {{item.title}} {{item.name}} {{item.surname}} </p>
+                <!-- <p>{{item.position}}</p> -->
+            </div>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="col-md-9 column-in-center">
+
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+      <div class="item active">
+        <a ui-sref='projects'>
+          <img src="img/mitochondria.jpg" alt="New York">
+          <div class="carousel-caption">
+            <h3>Mitochondria project</h3>
+            <p>Ongoing project</p>
+          </div>
+        </a>
+      </div>
+      <div class="item">
+        <img src="img/publications.jpg" alt="Chicago">
+        <div class="carousel-caption">
+          <h3>Publications</h3>
+          <p>Recent publications</p>
+        </div>
+      </div>
+
+      <div class="item">
+        <img src="img/team.jpg" alt="Los Angeles">
+        <div class="carousel-caption">
+          <h3>Our team</h3>
+          <p>Awesome, inspiring, friendly</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+</div>
+
+<div class="container">
+  <!-- Example row of columns -->
+  <div class="col-md-10  column-in-center">
+    <div class="col-md-4">
+      <h2>Projects</h2>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <p><a class="btn btn-default" ui-sref="projects">View details &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+      <h2>Publications</h2>
+      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+      <p><a class="btn btn-default" ui-sref="papers">View details &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+      <h2>Our team</h2>
+      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+    </div>
+  </div>
+</div>
+
+<hr>
+<footer>
+  <div class="center">
+    <p>Dr. Jell's Lab 2018 <span class="glyphicon glyphicon-copyright-mark"></span></p>
+  </div>
+</footer>

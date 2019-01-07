@@ -251,3 +251,16 @@ div span {
 	height: 100px;
 	width: auto;
 }
+
+.jumbotron p {
+	font-size: 1.2em;
+}
+
+.jumbotron {
+	background-color: white;
+}
+
+.column-in-center{
+    float: none;
+    margin: 0 auto;
+}

@@ -23,6 +23,22 @@
         });
       };
 
+      service.getProjects = function () {
+       return $http.get("php/data.php")
+         .then(function (response) {
+           console.log("all items:"+response.data);
+         return response.data.items;
+       });
+     };
+
+     service.getPapers = function () {
+      return $http.get("php/data.php")
+        .then(function (response) {
+          console.log("all items:"+response.data);
+        return response.data.items;
+      });
+    };
+
       service.CheckoutItems = function (basket) {
         // console.log("basket in service: "+basket);
         // var basketitems = basket;
