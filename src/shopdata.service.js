@@ -24,7 +24,7 @@
       };
 
       service.getProjects = function () {
-       return $http.get("php/data.php")
+       return $http.get("php/data.php?projects")
          .then(function (response) {
            console.log("all items:"+response.data);
          return response.data.items;
@@ -32,7 +32,7 @@
      };
 
      service.getPapers = function () {
-      return $http.get("php/data.php")
+      return $http.get("php/data.php?papers")
         .then(function (response) {
           console.log("all items:"+response.data);
         return response.data.items;

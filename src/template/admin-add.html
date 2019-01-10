@@ -10,105 +10,36 @@
   </p>
 </div>
 
-      <div class="well col-md-4">
-          <span>დასახელება</span>
-          <input class="form-control" type="text" ng-model="fElements.sname" value=""/>
-          <span>აღწერა</span>
-          <input class="form-control"  type="text" ng-model="fElements.sdescription" value=""/>
-          <span>ფასი (ლარი)</span>
-          <input class="form-control"  type="text" ng-model="fElements.sprice" value=""/>
+      <div class="well col-md-3">
+          <span>Title</span>
+          <input class="form-control" type="text" ng-model="fElements.title" value=""/>
+          <span>Name</span>
+          <input class="form-control"  type="text" ng-model="fElements.name" value=""/>
+          <span>Surname</span>
+          <input class="form-control"  type="text" ng-model="fElements.surname" value=""/>
+          <input class="form-control"  type="text" ng-model="fElements.position"/>
+          <span>Date of birth</span>
+          <input class="form-control"  type="date" ng-model="fElements.dob"/>
+          <span>Sex</span>
+          <!-- <select ng-model="fElements" ng-options="gender.type for gender in genders"></select> -->
+
+
+          <select ng-model="fElements.genders.model"
+                  required>
+              <option value="" selected>Select gender</option>
+              <option ng-repeat="option in fElements.genders.sex"
+                value="{{option}}"
+                >{{option}}
+              </option>
+          </select>
+
+
       </div>
 
 
-    <!-- <div class="col-md-2">
-    </div> -->
-
-<div class="inputsize well text-center col-md-5">
-      <h5>ზომა 39</h5>
-      <div>
-          <span>ყველა</span>
-          <input ng-model="fElements.sizes.i39.all" type="text"/>
-          <span>დაცულია</span>
-          <input ng-model="fElements.sizes.i39.reserved" type="text"/>
-          <span>იყიდება</span>
-          <input ng-model="fElements.sizes.i39.forsale" type="text"/>
-          <span>გაიყიდა</span>
-          <input ng-model="fElements.sizes.i39.sold" type="text"/>
-      </div>
-
-      <h5>ზომა 40</h5>
-      <div>
-      <span>ყველა</span>
-      <input ng-model="fElements.sizes.i40.all" type="text"/>
-      <span>დაცულია</span>
-      <input ng-model="fElements.sizes.i40.reserved" type="text"/>
-      <span>იყიდება</span>
-      <input ng-model="fElements.sizes.i40.forsale" type="text"/>
-      <span>გაიყიდა</span>
-      <input ng-model="fElements.sizes.i40.sold" type="text"/>
-      </div>
-
-      <h5>ზომა 41</h5>
-      <div>
-      <span>ყველა</span>
-      <input ng-model="fElements.sizes.i41.all" type="text"/>
-      <span>დაცულია</span>
-      <input ng-model="fElements.sizes.i41.reserved" type="text"/>
-      <span>იყიდება</span>
-      <input ng-model="fElements.sizes.i41.forsale" type="text"/>
-      <span>გაიყიდა</span>
-      <input ng-model="fElements.sizes.i41.sold" type="text"/>
-      </div>
-
-      <h5>ზომა 42</h5>
-      <div>
-      <span>ყველა</span>
-      <input ng-model="fElements.sizes.i42.all" type="text"/>
-      <span>დაცულია</span>
-      <input ng-model="fElements.sizes.i42.reserved" type="text"/>
-      <span>იყიდება</span>
-      <input ng-model="fElements.sizes.i42.forsale" type="text"/>
-      <span>გაიყიდა</span>
-      <input ng-model="fElements.sizes.i42.sold" type="text"/>
-      </div>
-
-      <h5>ზომა 43</h5>
-      <div>
-      <span>ყველა</span>
-      <input ng-model="fElements.sizes.i43.all" type="text"/>
-      <span>დაცულია</span>
-      <input ng-model="fElements.sizes.i43.reserved" type="text"/>
-      <span>იყიდება</span>
-      <input ng-model="fElements.sizes.i43.forsale" type="text"/>
-      <span>გაიყიდა</span>
-      <input ng-model="fElements.sizes.i43.sold" type="text"/>
-      </div>
-
-      <h5>ზომა 44</h5>
-      <div class="inputsize">
-      <span>ყველა</span>
-      <input ng-model="fElements.sizes.i44.all" type="text"/>
-      <span>დაცულია</span>
-      <input ng-model="fElements.sizes.i44.reserved" type="text"/>
-      <span>იყიდება</span>
-      <input ng-model="fElements.sizes.i44.forsale" type="text"/>
-      <span>გაიყიდა</span>
-      <input ng-model="fElements.sizes.i44.sold" type="text"/>
-      </div>
-
-      <h5>ზომა 45</h5>
-      <div>
-      <span>ყველა</span>
-      <input ng-model="fElements.sizes.i45.all" type="text"/>
-      <span>დაცულია</span>
-      <input ng-model="fElements.sizes.i45.reserved" type="text"/>
-      <span>იყიდება</span>
-      <input ng-model="fElements.sizes.i45.forsale" type="text"/>
-      <span>გაიყიდა</span>
-      <input ng-model="fElements.sizes.i45.sold" type="text"/>
-      </div>
-</div>
-
+        <div class="well col-md-6">
+          <textarea type="textarea" ng-model="fElements.about" rows="5" style="min-width: 90%;"></textarea>
+        </div>
 
     <div class="col-md-12">
       <span class="pwarnings">{{message.info[1].message}}</span>

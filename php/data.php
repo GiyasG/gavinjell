@@ -1,7 +1,14 @@
 <?php
 session_start();
-// print_r ($_SESSION);
+// print_r ($_GET);
 
+if ( $_GET ) {
+    foreach ( $_GET as $key => $value ) {
+        $choosendb = $key;
+    }
+} else {
+  $choosendb = "admin";
+}
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -41,21 +48,27 @@ if (isset($db)) {
 }
 
 
-$res = $tb->get_ParentResult('authority', 'projects');
-$proj = "";
+if ($choosendb == "projects" || $choosendb == "admin") {
 
-foreach ($res as $rs) {
-    if ($proj != "") {$proj .= ",";}
-    $proj .= '{"id":"'.$rs["id"].'",';
-    $proj .= '"title":"'.$rs["title"].'",';
-    $proj .= '"description":"'.$rs["description"].'",';
-    $proj .= '"url":"'.$rs["url"].'",';
-    $proj .= '"started":"'.$rs["started"].'",';
-    $proj .= '"finished":"'.$rs["finished"].'"}';
+  $res = $tb->get_ParentResult('authority', 'projects');
+  $proj = "";
+
+  foreach ($res as $rs) {
+      if ($proj != "") {$proj .= ",";}
+      $proj .= '{"id":"'.$rs["id"].'",';
+      $proj .= '"title":"'.$rs["title"].'",';
+      $proj .= '"description":"'.$rs["description"].'",';
+      $proj .= '"url":"'.$rs["url"].'",';
+      $proj .= '"started":"'.$rs["started"].'",';
+      $proj .= '"finished":"'.$rs["finished"].'"}';
+  }
+
+  $proj ='{"projects":['.$proj.']}';
+} else {
+  $proj ='{"projects":null}';
 }
 
-$proj ='{"projects":['.$proj.']}';
-
+if ($choosendb == "papers" || $choosendb == "admin") {
 
 $res = $tb->get_ParentResult('authority', 'papers');
 $papr = "";
@@ -70,26 +83,11 @@ foreach ($res as $rs) {
 }
 
 $papr ='{"papers":['.$papr.']}';
-
-
-if (isset($_SESSION['cart'])) {
-  // var_dump($_SESSION);
-  $outp2 = "";
-  foreach ($_SESSION['cart'] as $rs) {
-      if ($outp2 != "") {$outp2 .= ",";}
-      $outp2 .= '{"name":"'.$rs["sname"].'",';
-      $outp2 .= '"description":"'.$rs["sdescription"].'",';
-      $outp2 .= '"price":"'.$rs["sprice"].'",';
-      $outp2 .= '"size":"'.$rs["size"].'",';
-      $outp2 .= '"quantity":"'.$rs["quantity"].'",';
-      $outp2 .= '"image":"'.$rs["simage"].'"}';
-  }
-  $outp2 ='{"cart":['.$outp2.']}';
 } else {
-  // var_dump($_SESSION);
-  $outp2 = '{"cart": null}';
+  $papr ='{"papers":null}';
 }
-$outp = '{"items":['.$outp1.','.$proj.','.$papr.']}';
+
+$outp = '{"items":['.$outp1.','.$proj.','.$papr.','.$outp3.']}';
 
 $db->disconnect();
 

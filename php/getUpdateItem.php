@@ -13,7 +13,7 @@ if (isset($postdata->id)) {
   $db = new Database();
   $db->connect();
   $db->setName('SET NAMES \'utf8\'');
-  $db->select('stock','*',null,'id='.$postdata->id); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
+  $db->select('authority','*',null,'id='.$postdata->id); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
   $res = $db->getResult();
 
 // print_r($res);
@@ -24,16 +24,14 @@ if (isset($postdata->id)) {
       foreach ($res as $rs) {
           if ($outp != "") {$outp .= ",";}
           $outp .= '{"id":"'.$rs["id"].'",';
-          $outp .= '"name":"'.$rs["sname"].'",';
-          $outp .= '"description":"'.$rs["sdescription"].'",';
-          $outp .= '"price":"'.$rs["sprice"].'",';
-          for ($i=39; $i<46; $i++) {
-            $outp .= '"size'.$i.'all":"'.$rs["s".$i."_all"].'",';
-            $outp .= '"size'.$i.'reserved":"'.$rs["s".$i."_reserved"].'",';
-            $outp .= '"size'.$i.'forsale":"'.$rs["s".$i."_forsale"].'",';
-            $outp .= '"size'.$i.'sold":"'.$rs["s".$i."_sold"].'",';
-          }
-          $outp .= '"image":"'.$rs["simage"].'"}';
+          $outp .= '"title":"'.$rs["title"].'",';
+          $outp .= '"name":"'.$rs["name"].'",';
+          $outp .= '"surname":"'.$rs["surname"].'",';
+          $outp .= '"about":"'.$rs["about"].'",';
+          $outp .= '"dob":"'.$rs["dob"].'",';
+          $outp .= '"sex":"'.$rs["sex"].'",';
+          // $outp1 .= '"image":"'.$rs["filename"].'",';
+          $outp .= '"position":"'.$rs["position"].'"}';
       }
 
       $outp ='{"item":['.$outp.']}';

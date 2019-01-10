@@ -15,24 +15,20 @@
         aCtrl.items = items;
         $scope.updateIndex = null;
         $scope.AddNewRecord = false;
-        $scope.hasRoleAdmin = aCtrl.items[2].AdminIsIn;
+        $scope.hasRoleAdmin = aCtrl.items[3].AdminIsIn;
         console.log($scope.hasRoleAdmin);
 
         //**************** Data for Dbase Upload ********************//
           $scope.itemU = {};
           $scope.fElements = {};
-          $scope.fElements.sizes =
-          {
-            "i39" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-            "i40" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-            "i41" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-            "i42" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-            "i43" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-            "i44" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-            "i45" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-          };
+          $scope.fElements.genders = {
+            model: null,
+            sex: ["male","female"]
+         };
+
           console.log(aCtrl.items[0].all.length);
           console.log(aCtrl.items[0].all);
+          console.log($scope.fElements.genders.sex);
         //**********************************************************//
         //**************** File Upload *********************//
         $scope.onFileSelect = function(file) {
@@ -52,27 +48,21 @@
                     if ($scope.message.info[0].newitem[0].id) {
 
                       var newitem = {};
-                      newitem.name = $scope.message.info[0].newitem[0].sname;
-                      newitem.description = $scope.message.info[0].newitem[0].sdescription;
-                      newitem.price = $scope.message.info[0].newitem[0].sprice;
-                      newitem.image = $scope.message.info[0].newitem[0].simage;
+                      newitem.title = $scope.message.info[0].newitem[0].title;
+                      newitem.name = $scope.message.info[0].newitem[0].name;
+                      newitem.surname = $scope.message.info[0].newitem[0].surname;
+                      newitem.about = $scope.message.info[0].newitem[0].about;
+                      newitem.position = $scope.message.info[0].newitem[0].position;
+                      newitem.sex = $scope.message.info[0].newitem[0].genders.model;
+                      newitem.dob = $scope.message.info[0].newitem[0].dob;
                       newitem.id = $scope.message.info[0].newitem[0].id;
+                      newitem.filename = $scope.message.info[0].newitem[0].filename;
 
                       aCtrl.items[0].all.push(newitem);
 
                       console.log($scope.message.info[0].newitem[0].id);
                       $scope.AddNewRecord = false;
                       $scope.fElements = {};
-                      $scope.fElements.sizes =
-                      {
-                        "i39" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-                        "i40" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-                        "i41" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-                        "i42" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-                        "i43" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-                        "i44" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-                        "i45" : {"all": "0", "reserved": "0", "forsale": "0", "sold": "0"},
-                      };
                     }
                 }).error(function(data, status) {
                     $scope.message = data;

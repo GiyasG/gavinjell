@@ -77,7 +77,7 @@
         //*****************************************//
         $scope.hasRoleAdmin = false;
         hCtrl.isloggedin = isloggedin;
-        if (hCtrl.isloggedin[2].Role != null) {
+        if (hCtrl.isloggedin[1].Role != null) {
           $scope.hasRoleAdmin = true;
         } else {
           $scope.hasRoleAdmin = false;
@@ -101,7 +101,7 @@
           } else {
             $scope.showCart = true;
           }
-          console.log("Logged in "+hCtrl.isloggedin[0]);
+          console.log("Logged in "+hCtrl.isloggedin[1].Role);
         }
 
         $scope.showLoginForm = false;

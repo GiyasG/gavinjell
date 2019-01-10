@@ -26,13 +26,24 @@
         </div>
 
         <div class="col-md-6">
-            <p> {{item.name}} </p>
-            <p> {{item.description}} </p>
-            <p> {{item.price}} ლარი</p>
+            <p> {{item.title}} {{item.name}} {{item.surname}}</p>
+            <p> {{item.about}} </p>
         </div>
     </div>
     <admin-update ng-if="sectionIndex == updateIndex"></admin-update>
     <hr>
+</div>
+<div ng-repeat="item in aCtrl.items[1].projects" ng-init="sectionIndex = $index">
+	<div class="col-md-6">
+			<p> {{item.title}} </p>
+			<p> {{item.description}} </p>
+	</div>
+</div>
+<div ng-repeat="item in aCtrl.items[2].papers" ng-init="sectionIndex = $index">
+	<div class="col-md-6">
+			<p> {{item.title}} </p>
+			<p> {{item.description}} </p>
+	</div>
 </div>
 </div>
 <div ng-if="!hasRoleAdmin">

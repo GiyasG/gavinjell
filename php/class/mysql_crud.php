@@ -24,6 +24,12 @@ class Database{
 	private $result = array(); // Any results from a query will be stored here
   private $myQuery = "";// used for debugging process with SQL return
   private $numResults = "";// used for returning the number of rows
+	public $lastId = "";// used for returning the number of rows
+
+	// public function lastId()
+	// {
+	//
+	// }
 
 	// Function to make connection to database
 	public function connect(){
@@ -162,6 +168,7 @@ class Database{
             // Make the query to insert to the database
             if($ins = $this->myconn->query($sql)){
             	array_push($this->result,$this->myconn->insert_id);
+								$this->lastId = $this->myconn->insert_id;
                 return true; // The data has been inserted
             }else{
             	array_push($this->result,$this->myconn->error);
