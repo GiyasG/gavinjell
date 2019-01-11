@@ -23,19 +23,43 @@ if ($adminOk) {
     $outp1 = '{"newitem": "null"}';
     $outp  = '{"info":['.$outp1.','.$outp2.']}';
     echo ($outp);
-  } elseif (!isset($items['name'])) {
-    $outp2 = '{"message": "Please fill name field"}';
+  } elseif (!isset($items['title'])) {
+    $outp2 = '{"message": "Please fill title field"}';
     $outp1 = '{"newitem": "null"}';
     $outp  = '{"info":['.$outp1.','.$outp2.']}';
     echo ($outp);
     return;
+  } elseif (!isset($items['name'])) {
+      $outp2 = '{"message": "Please fill name field"}';
+      $outp1 = '{"newitem": "null"}';
+      $outp  = '{"info":['.$outp1.','.$outp2.']}';
+      echo ($outp);
+      return;
   } elseif (!isset($items['surname'])) {
     $outp2 = '{"message": "Please fill surname field"}';
     $outp1 = '{"newitem": "null"}';
     $outp  = '{"info":['.$outp1.','.$outp2.']}';
     echo ($outp);
     return;
+  } elseif (!isset($items['position'])) {
+    $outp2 = '{"message": "Please fill position field"}';
+    $outp1 = '{"newitem": "null"}';
+    $outp  = '{"info":['.$outp1.','.$outp2.']}';
+    echo ($outp);
+    return;
+  } elseif (!isset($items['about'])) {
+    $outp2 = '{"message": "Please fill date of about field"}';
+    $outp1 = '{"newitem": "null"}';
+    $outp  = '{"info":['.$outp1.','.$outp2.']}';
+    echo ($outp);
+    return;
   } elseif (!isset($items['dob'])) {
+    $outp2 = '{"message": "Please fill date of birth field"}';
+    $outp1 = '{"newitem": "null"}';
+    $outp  = '{"info":['.$outp1.','.$outp2.']}';
+    echo ($outp);
+    return;
+  } elseif (!isset($items['genders']['model'])) {
     $outp2 = '{"message": "Please fill date of birth field"}';
     $outp1 = '{"newitem": "null"}';
     $outp  = '{"info":['.$outp1.','.$outp2.']}';

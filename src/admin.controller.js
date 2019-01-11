@@ -26,9 +26,9 @@
             sex: ["male","female"]
          };
 
-          console.log(aCtrl.items[0].all.length);
-          console.log(aCtrl.items[0].all);
-          console.log($scope.fElements.genders.sex);
+          // console.log(aCtrl.items[0].all.length);
+          // console.log(aCtrl.items[0].all);
+          // console.log($scope.fElements.genders.sex);
         //**********************************************************//
         //**************** File Upload *********************//
         $scope.onFileSelect = function(file) {
@@ -48,14 +48,14 @@
                     if ($scope.message.info[0].newitem[0].id) {
 
                       var newitem = {};
+                      newitem.id = $scope.message.info[0].newitem[0].id;
                       newitem.title = $scope.message.info[0].newitem[0].title;
                       newitem.name = $scope.message.info[0].newitem[0].name;
                       newitem.surname = $scope.message.info[0].newitem[0].surname;
                       newitem.about = $scope.message.info[0].newitem[0].about;
                       newitem.position = $scope.message.info[0].newitem[0].position;
-                      newitem.sex = $scope.message.info[0].newitem[0].genders.model;
                       newitem.dob = $scope.message.info[0].newitem[0].dob;
-                      newitem.id = $scope.message.info[0].newitem[0].id;
+                      newitem.sex = $scope.message.info[0].newitem[0].genders.model;
                       newitem.filename = $scope.message.info[0].newitem[0].filename;
 
                       aCtrl.items[0].all.push(newitem);

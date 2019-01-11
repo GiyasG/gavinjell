@@ -24,7 +24,14 @@
   <span>Date of birth</span>
   <input class="form-control"  type="date"  value="{{itemU.dob}}" ng-model="itemU.dob"/>
   <span>Sex</span>
-  <input class="form-control"  type="text" ng-model="itemU.sex"/>
+  <select ng-model="itemU"
+          required>
+      <option value="" selected>{{itemU.sex}}</option>
+      <option ng-repeat="option in itemU.sex"
+        value="{{option}}"
+        >{{option}}
+      </option>
+  </select>
 </div>
 
 

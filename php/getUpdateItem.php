@@ -13,6 +13,7 @@ if (isset($postdata->id)) {
   $db = new Database();
   $db->connect();
   $db->setName('SET NAMES \'utf8\'');
+
   $db->select('authority','*',null,'id='.$postdata->id); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
   $res = $db->getResult();
 

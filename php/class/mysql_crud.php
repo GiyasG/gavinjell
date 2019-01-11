@@ -203,6 +203,7 @@ class Database{
         }
     }
 
+
 	// Function to update row in database
     public function update($table,$params=array(),$where){
     	// Check to see if table exists
@@ -289,8 +290,9 @@ class Table extends Database {
 			parent::select($tbl1);
 		} else {
       // ($table, $rows = '*', $join = null, $where = null, $order = null, $limit = null)
-			// JOIN students s ON s.student_id = sc.student_id
-			parent::select($tbl1,'*', $tbl2." ON ".$tbl1."_id = ".$tbl1.".id");
+			// ($tbl1, '*', $tbl2 ON $tbl2.$tbl1_id = $tbl1.id)
+			// SELECT * FROM `authority` JOIN `photos` ON `photos`.`authority_id` = `authority`.`id`;
+			parent::select($tbl1,"*", $tbl2." ON ".$tbl2.".".$tbl1."_id = ".$tbl1.".id");
 		}
 		$val = parent::getResult();
 		return $val;

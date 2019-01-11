@@ -33,7 +33,7 @@ if (isset($db)) {
   foreach ($res as $rs) {
       if ($outp1 != "") {
         $outp1 .= ",";}
-      $outp1 .= '{"id":"'.$rs["id"].'",';
+      $outp1 .= '{"authority_id":"'.$rs["authority_id"].'",';
       $outp1 .= '"title":"'.$rs["title"].'",';
       $outp1 .= '"name":"'.$rs["name"].'",';
       $outp1 .= '"surname":"'.$rs["surname"].'",';
