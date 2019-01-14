@@ -17,19 +17,17 @@
           <input class="form-control"  type="text" ng-model="fElements.name" value=""/>
           <span>Surname</span>
           <input class="form-control"  type="text" ng-model="fElements.surname" value=""/>
+          <span>Position</span>
           <input class="form-control"  type="text" ng-model="fElements.position"/>
           <span>Date of birth</span>
           <input class="form-control"  type="date" ng-model="fElements.dob"/>
           <span>Sex</span>
-          <!-- <select ng-model="fElements" ng-options="gender.type for gender in genders"></select> -->
-
-
           <select ng-model="fElements.genders.model"
                   required>
               <option value="" selected>Select gender</option>
-              <option ng-repeat="option in fElements.genders.sex"
-                value="{{option}}"
-                >{{option}}
+              <option ng-repeat="option in fElements.genders"
+                value="{{option}}">
+                {{option}}
               </option>
           </select>
 

@@ -1,0 +1,42 @@
+<!-- <span>{{sectionIndex}}</span> -->
+<div class="row well">
+
+<div class="col-md-2">
+  <button  class="btn btn-info" ngf-select ng-model="File"
+  accept="image/*"
+  ngf-max-height="1000"
+  ngf-max-size="1MB">Select picture
+</button>
+  <p class="well">
+    <img class="imgfit" ng-src="img/{{itemU.image}}">
+  </p>
+</div>
+
+<div class="well col-md-3">
+    <span>Title</span>
+    <input class="form-control" type="text" ng-model="itemU.title" value=""/>
+    <span>URL</span>
+    <input class="form-control"  type="text" ng-model="itemU.url" value=""/>
+    <span>Start date</span>
+    <input class="form-control"  type="date" ng-model="itemU.started" value=""/>
+    <span>Closure date</span>
+    <input class="form-control"  type="date" ng-model="itemU.finished"/>
+</div>
+
+  <div class="well col-md-6">
+    <span>Description</span>
+    <textarea type="textarea" ng-model="itemU.description" rows="5" style="min-width: 90%;"></textarea>
+  </div>
+
+
+<hr>
+<div class="col-md-12">
+  <span class="pwarnings">{{message}}</span>
+</div>
+
+<div class="col-md-12 text-center">
+  <button class="btn btn-success" ng-click="onProjectUpdate(File)">Save</button>
+  <button class="btn btn-success" ng-click="CancelUpdateProject()">Cancel</button>
+</div>
+
+</div>

@@ -1,0 +1,38 @@
+<div class="row well">
+  <div class="col-md-2">
+    <button class="btn btn-info" ngf-select ng-model="File"
+    accept="image/*"
+    ngf-max-height="1000"
+    ngf-max-size="1MB">Select picture
+  </button>
+  <p class="text-center well">
+  <img class="imgfit" ng-src={{File.$ngfBlobUrl}}>
+  </p>
+</div>
+
+      <div class="well col-md-3">
+          <span>Title</span>
+          <input class="form-control" type="text" ng-model="fElements.title" value=""/>
+          <span>URL</span>
+          <input class="form-control"  type="text" ng-model="fElements.url" value=""/>
+          <span>Published</span>
+          <input class="form-control"  type="date" ng-model="fElements.published"/>
+      </div>
+
+        <div class="well col-md-6">
+          <span>Description</span>
+          <textarea type="textarea" ng-model="fElements.description" rows="5" style="min-width: 90%;"></textarea>
+        </div>
+
+    <div class="col-md-12">
+      <span class="pwarnings">{{message.info[1].message}}</span>
+    </div>
+
+    <div class="col-md-12 text-center">
+      <button class="btn btn-success" ng-click="onPaperSelect(File)">Save
+      </button>
+      <button class="btn btn-success" ng-click="CloseAddPaper()">Cancel
+      </button>
+    </div>
+
+  </div>

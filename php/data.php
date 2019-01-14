@@ -32,7 +32,7 @@ if (isset($db)) {
 
   foreach ($res as $rs) {
       if ($outp1 != "") {
-        $outp1 .= ",";}
+      $outp1 .= ",";}
       $outp1 .= '{"authority_id":"'.$rs["authority_id"].'",';
       $outp1 .= '"title":"'.$rs["title"].'",';
       $outp1 .= '"name":"'.$rs["name"].'",';
@@ -53,9 +53,11 @@ if ($choosendb == "projects" || $choosendb == "admin") {
   $res = $tb->get_ParentResult('authority', 'projects');
   $proj = "";
 
+  // print_r ($res);
   foreach ($res as $rs) {
       if ($proj != "") {$proj .= ",";}
       $proj .= '{"id":"'.$rs["id"].'",';
+      $proj .= '"authority_id":"'.$rs["authority_id"].'",';
       $proj .= '"title":"'.$rs["title"].'",';
       $proj .= '"description":"'.$rs["description"].'",';
       $proj .= '"url":"'.$rs["url"].'",';
@@ -75,7 +77,9 @@ $papr = "";
 
 foreach ($res as $rs) {
     if ($papr != "") {$papr .= ",";}
+    // $papr .= '{"authority_id":"'.$rs["authority_id"].'",';
     $papr .= '{"id":"'.$rs["id"].'",';
+    $papr .= '"authority_id":"'.$rs["authority_id"].'",';
     $papr .= '"title":"'.$rs["title"].'",';
     $papr .= '"description":"'.$rs["description"].'",';
     $papr .= '"url":"'.$rs["url"].'",';
