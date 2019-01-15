@@ -34,6 +34,7 @@
             sex: ["male","female"]
          };
          $scope.fProjects = {};
+         $scope.fPapers = {};
 
           // console.log(aCtrl.items[0].all.length);
           // console.log(aCtrl.items[0].all);
@@ -106,13 +107,15 @@
                  })
               .then(function(response) {
                   $scope.itemU = response.data.item[0];
+                  $scope.fElements.genders.model = $scope.itemU.sex;
                   console.log($scope.itemU);
+                  console.log($scope.fElements);
                   return response.data.item;
               });
             }
 
 
-          //**************** File Update *********************//
+          //**************** Authority Update *********************//
           $scope.onFileUpdate = function(file) {
 
             // console.log(file);
@@ -176,19 +179,59 @@
                         newitem.surname = $scope.message.info[0].newitem[0].url;
                         newitem.about = $scope.message.info[0].newitem[0].started;
                         newitem.position = $scope.message.info[0].newitem[0].finished;
-                        newitem.dob = $scope.message.info[0].newitem[0].authority_id;
+                        newitem.authority_id = $scope.message.info[0].newitem[0].authority_id;
+                        newitem.image = $scope.message.info[0].newitem[0].image;
 
                         aCtrl.items[0].all.push(newitem);
 
                         console.log($scope.message.info[0].newitem[0].id);
                         $scope.AddNewProject = false;
-                        $scope.fElements = {};
+                        $scope.fProjects = {};
                       }
                   }).error(function(data, status) {
                       $scope.message = data;
                   });
           };
 
+          //**************** Project Update *********************//
+          $scope.onProjectUpdate = function(file) {
+
+            // console.log(file);
+              $scope.message = "";
+                  $scope.upload = Upload.upload({
+                      url: 'php/updateProject.php',
+                      method: 'POST',
+                      file: file,
+                      data: {
+                                'item': $scope.itemU
+                            }
+                  }).success(function(data, status, headers, config) {
+                      $scope.message = data;
+                      $scope.updateIndex = null;
+                      console.log($scope.message);
+
+                      var uitem = {};
+                      uitem.name = $scope.message.info[0].updateitem[0].name;
+                      uitem.description = $scope.message.info[0].updateitem[0].description;
+                      uitem.price = $scope.message.info[0].updateitem[0].price;
+                      uitem.image = $scope.message.info[0].updateitem[0].image;
+                      uitem.id = $scope.message.info[0].updateitem[0].id;
+
+                      // console.log(newitem);
+                      var rid = aCtrl.items[0].all.findIndex(x => x.id === $scope.itemU.id);
+                      aCtrl.items[0].all[rid] = uitem;
+                      console.log(aCtrl.items[0].all);
+                      console.log(rid);
+
+                      // aCtrl.items[0].all.push(updateitem);
+                      // $scope.itemU = uitem;
+                      // console.log($scope.itemU);
+
+
+                  }).error(function(data, status) {
+                      $scope.message = data;
+                  });
+          };
           //************************************************//
           $scope.DeleteProject = function(id) {
               console.log("id is: "+id);
@@ -206,13 +249,13 @@
                 });
           };
 
-          $scope.UpdateProject = function (id, sid) {
+          $scope.UpdateProject = function (aid, id, sid) {
             $scope.message = "";
             $scope.updateIndexProject = sid;
             $http({
                   method  : 'POST',
                   url     : 'php/getUpdateProject.php',
-                  data    : {id: id},
+                  data    : {ida: aid, id: id},
                   headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
                    })
                 .then(function(response) {
@@ -231,7 +274,7 @@
                           method: 'POST',
                           file: file,
                           data: {
-                                    'item': $scope.fElements
+                                    'item': $scope.fPapers
                                 }
                       }).success(function(data, status, headers, config) {
                           $scope.message = data;
@@ -242,20 +285,57 @@
                             var newitem = {};
                             newitem.id = $scope.message.info[0].newitem[0].id;
                             newitem.title = $scope.message.info[0].newitem[0].title;
-                            newitem.name = $scope.message.info[0].newitem[0].name;
-                            newitem.surname = $scope.message.info[0].newitem[0].surname;
-                            newitem.about = $scope.message.info[0].newitem[0].about;
-                            newitem.position = $scope.message.info[0].newitem[0].position;
-                            newitem.dob = $scope.message.info[0].newitem[0].dob;
-                            newitem.sex = $scope.message.info[0].newitem[0].genders.model;
+                            newitem.url = $scope.message.info[0].newitem[0].url;
+                            newitem.description = $scope.message.info[0].newitem[0].description;
+                            newitem.paper_id = $scope.message.info[0].newitem[0].paper_id;
                             newitem.filename = $scope.message.info[0].newitem[0].filename;
 
                             aCtrl.items[0].all.push(newitem);
 
                             console.log($scope.message.info[0].newitem[0].id);
                             $scope.AddNewRecord = false;
-                            $scope.fElements = {};
+                            $scope.fPapers = {};
                           }
+                      }).error(function(data, status) {
+                          $scope.message = data;
+                      });
+              };
+
+              //**************** Project Update *********************//
+              $scope.onPaperUpdate = function(file) {
+
+                // console.log(file);
+                  $scope.message = "";
+                      $scope.upload = Upload.upload({
+                          url: 'php/updatePaper.php',
+                          method: 'POST',
+                          file: file,
+                          data: {
+                                    'item': $scope.itemU
+                                }
+                      }).success(function(data, status, headers, config) {
+                          $scope.message = data;
+                          $scope.updateIndex = null;
+                          console.log($scope.message);
+
+                          var uitem = {};
+                          uitem.title = $scope.message.info[0].updateitem[0].title;
+                          uitem.description = $scope.message.info[0].updateitem[0].description;
+                          uitem.url = $scope.message.info[0].updateitem[0].url;
+                          uitem.image = $scope.message.info[0].updateitem[0].image;
+                          uitem.id = $scope.message.info[0].updateitem[0].id;
+
+                          // console.log(newitem);
+                          var rid = aCtrl.items[0].all.findIndex(x => x.id === $scope.itemU.id);
+                          aCtrl.items[0].all[rid] = uitem;
+                          console.log(aCtrl.items[0].all);
+                          console.log(rid);
+
+                          // aCtrl.items[0].all.push(updateitem);
+                          // $scope.itemU = uitem;
+                          // console.log($scope.itemU);
+
+
                       }).error(function(data, status) {
                           $scope.message = data;
                       });
@@ -278,13 +358,13 @@
                     });
               };
 
-              $scope.UpdatePaper = function (id, sid) {
+              $scope.UpdatePaper = function (aid, id, sid) {
                 $scope.message = "";
                 $scope.updateIndexPaper = sid;
                 $http({
                       method  : 'POST',
                       url     : 'php/getUpdatePaper.php',
-                      data    : {id: id},
+                      data    : {ida: aid, id: id},
                       headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
                        })
                     .then(function(response) {
@@ -310,8 +390,10 @@
 
         //************************************************//
 
-        $scope.AddProject = function() {
+        $scope.AddProject = function(id) {
           $scope.AddNewProject = true;
+          $scope.fProjects.id = id;
+          console.log($scope.fProjects);
         }
 
         $scope.CloseAddProject = function() {
@@ -324,8 +406,9 @@
 
         //************************************************//
 
-        $scope.AddPaper = function() {
+        $scope.AddPaper = function(id) {
           $scope.AddNewPaper = true;
+          $scope.fPapers.id = id;
         }
 
         $scope.CloseAddPaper = function() {

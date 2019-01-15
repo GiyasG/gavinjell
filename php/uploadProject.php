@@ -86,6 +86,7 @@ if ($adminOk) {
 
 //*******************************************************//
 function toDbase($items, $newFileName) {
+  // echo $items['authority_id'];
   include('class/mysql_crud.php');
   $db = new Database();
   $db->connect();
@@ -96,7 +97,7 @@ function toDbase($items, $newFileName) {
               'started'=>$items['started'],
               'finished'=>$items['finished'],
               'description'=>$items['description'],
-              'authority_id'=>$items['authority_id']
+              'authority_id'=>$items['id']
           ));
 
   // echo $db->lastId;

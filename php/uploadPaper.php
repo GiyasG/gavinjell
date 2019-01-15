@@ -18,6 +18,7 @@ if ($adminOk) {
     $items = $_POST['item'];
     // print_r($items);
   }
+
   if(!isset($_FILES['file'])){
     $outp2 = '{"message": "No image selected"}';
     $outp1 = '{"newitem": "null"}';
@@ -29,42 +30,12 @@ if ($adminOk) {
     $outp  = '{"info":['.$outp1.','.$outp2.']}';
     echo ($outp);
     return;
-  } elseif (!isset($items['name'])) {
-      $outp2 = '{"message": "Please fill name field"}';
+  } elseif (!isset($items['published'])) {
+      $outp2 = '{"message": "Please fill published field"}';
       $outp1 = '{"newitem": "null"}';
       $outp  = '{"info":['.$outp1.','.$outp2.']}';
       echo ($outp);
       return;
-  } elseif (!isset($items['surname'])) {
-    $outp2 = '{"message": "Please fill surname field"}';
-    $outp1 = '{"newitem": "null"}';
-    $outp  = '{"info":['.$outp1.','.$outp2.']}';
-    echo ($outp);
-    return;
-  } elseif (!isset($items['position'])) {
-    $outp2 = '{"message": "Please fill position field"}';
-    $outp1 = '{"newitem": "null"}';
-    $outp  = '{"info":['.$outp1.','.$outp2.']}';
-    echo ($outp);
-    return;
-  } elseif (!isset($items['about'])) {
-    $outp2 = '{"message": "Please fill date of about field"}';
-    $outp1 = '{"newitem": "null"}';
-    $outp  = '{"info":['.$outp1.','.$outp2.']}';
-    echo ($outp);
-    return;
-  } elseif (!isset($items['dob'])) {
-    $outp2 = '{"message": "Please fill date of birth field"}';
-    $outp1 = '{"newitem": "null"}';
-    $outp  = '{"info":['.$outp1.','.$outp2.']}';
-    echo ($outp);
-    return;
-  } elseif (!isset($items['genders']['model'])) {
-    $outp2 = '{"message": "Please fill date of birth field"}';
-    $outp1 = '{"newitem": "null"}';
-    $outp  = '{"info":['.$outp1.','.$outp2.']}';
-    echo ($outp);
-    return;
   }
 
   if(isset($_FILES['file'])){
@@ -110,14 +81,27 @@ if ($adminOk) {
 
 //*******************************************************//
 function toDbase($items, $newFileName) {
+
+  // print_r($items);
   include('class/mysql_crud.php');
+
+  if (!$items['url']) {
+    $items['url'] = "";
+  }
+  if (!$items['description']) {
+    $items['description'] = "";
+  }
+
   $db = new Database();
   $db->connect();
   $db->setName('SET NAMES \'utf8\'');
 
-  $db->insert('authority',array('title'=>$items['title'],'name'=>$items['name'],'surname'=>$items['surname'],
-            'about'=>$items['about'], 'sex'=>$items['genders']['model'], 'position'=>$items['position'], 'dob'=>$items['dob']
-          ));
+  $db->insert('papers',array('title'=>$items['title'],
+              'url'=>$items['url'],
+              'published'=>$items['published'],
+              'description'=>$items['description'],
+              'authority_id'=>$items['id']
+            ));
 
   // echo $db->lastId;
   // echo $db->getSql();
@@ -128,9 +112,9 @@ function toDbase($items, $newFileName) {
   {
   die('Cant connect: ' . mysql_error());
 } else {
-        $db->insert('photos',array('authority_id'=>$db->lastId, 'filename'=>$newFileName,
-                    'description'=>$items['title']." ".$items['name']." ".$items['surname'],
-                    ));
+        $db->insert('photos',array('paper_id'=>$db->lastId,
+                    'filename'=>$newFileName,
+                    'description'=>$items['title']));
         $res1 = $db->getResult();
         if (!$res1) {
           die('Cant connect: ' . mysql_error());

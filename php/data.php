@@ -24,10 +24,14 @@ if (($auth->isLoggedIn()) && ($auth->hasRole(\Delight\Auth\Role::ADMIN))) {
 
 include('class/mysql_crud.php');
 $db = new Database();
+$db->connect();
+
 if (isset($db)) {
   $tb = new Table();
   $res = $tb->get_ParentResult('authority', 'photos');
+
 // print_r ($res);
+
   $outp1 = "";
 
   foreach ($res as $rs) {
@@ -40,6 +44,7 @@ if (isset($db)) {
       $outp1 .= '"about":"'.$rs["about"].'",';
       $outp1 .= '"image":"'.$rs["filename"].'",';
       $outp1 .= '"position":"'.$rs["position"].'"}';
+
   }
 
   $outp1 ='{"all":['.$outp1.']}';
@@ -56,7 +61,17 @@ if ($choosendb == "projects" || $choosendb == "admin") {
   // print_r ($res);
   foreach ($res as $rs) {
       if ($proj != "") {$proj .= ",";}
-      $proj .= '{"id":"'.$rs["id"].'",';
+
+      $db->select('photos','filename',null,'project_id='.$rs['id']);
+      $photo = $db->getResult();
+      if (isset($photo[0])) {
+        // print_r ($photo);
+        $proj .= '{"image":"'.$photo[0]["filename"].'",';
+      } else {
+        $proj .= '{"image":"temp.jpg",';
+      }
+
+      $proj .= '"id":"'.$rs["id"].'",';
       $proj .= '"authority_id":"'.$rs["authority_id"].'",';
       $proj .= '"title":"'.$rs["title"].'",';
       $proj .= '"description":"'.$rs["description"].'",';
@@ -77,8 +92,16 @@ $papr = "";
 
 foreach ($res as $rs) {
     if ($papr != "") {$papr .= ",";}
+    $db->select('photos','filename',null,'paper_id='.$rs['id']);
+    $photo = $db->getResult();
+    if (isset($photo[0])) {
+      // print_r ($photo);
+      $papr .= '{"image":"'.$photo[0]["filename"].'",';
+    } else {
+      $papr .= '{"image":"temp.jpg",';
+    }
     // $papr .= '{"authority_id":"'.$rs["authority_id"].'",';
-    $papr .= '{"id":"'.$rs["id"].'",';
+    $papr .= '"id":"'.$rs["id"].'",';
     $papr .= '"authority_id":"'.$rs["authority_id"].'",';
     $papr .= '"title":"'.$rs["title"].'",';
     $papr .= '"description":"'.$rs["description"].'",';

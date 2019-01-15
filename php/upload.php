@@ -115,8 +115,13 @@ function toDbase($items, $newFileName) {
   $db->connect();
   $db->setName('SET NAMES \'utf8\'');
 
-  $db->insert('authority',array('title'=>$items['title'],'name'=>$items['name'],'surname'=>$items['surname'],
-            'about'=>$items['about'], 'sex'=>$items['genders']['model'], 'position'=>$items['position'], 'dob'=>$items['dob']
+  $db->insert('authority',array('title'=>$items['title'],
+                                'name'=>$items['name'],
+                                'surname'=>$items['surname'],
+                                'about'=>$items['about'],
+                                'sex'=>$items['genders']['model'], 
+                                'position'=>$items['position'],
+                                'dob'=>$items['dob']
           ));
 
   // echo $db->lastId;

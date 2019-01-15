@@ -24,14 +24,23 @@ if (isset($postdata->id)) {
     $outp = "";
       foreach ($res as $rs) {
           if ($outp != "") {$outp .= ",";}
-          $outp .= '{"id":"'.$rs["id"].'",';
+
+          $db->select('photos','filename',null,'authority_id='.$rs['id']);
+          $photo = $db->getResult();
+          if (isset($photo[0])) {
+            // print_r ($photo);
+            $outp .= '{"image":"'.$photo[0]["filename"].'",';
+          } else {
+            $outp .= '{"image":"temp.jpg",';
+          }
+
+          $outp .= '"id":"'.$rs["id"].'",';
           $outp .= '"title":"'.$rs["title"].'",';
           $outp .= '"name":"'.$rs["name"].'",';
           $outp .= '"surname":"'.$rs["surname"].'",';
           $outp .= '"about":"'.$rs["about"].'",';
           $outp .= '"dob":"'.$rs["dob"].'",';
           $outp .= '"sex":"'.$rs["sex"].'",';
-          // $outp1 .= '"image":"'.$rs["filename"].'",';
           $outp .= '"position":"'.$rs["position"].'"}';
       }
 

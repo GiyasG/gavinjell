@@ -35,21 +35,26 @@
     </div>
     <admin-update ng-if="sectionIndex == updateIndexItem"></admin-update>
     <hr>
+		<button ng-if="!AddNewProject" class="btn btn-success" ng-click="AddProject(item.authority_id)">Add new project</button>
+		<button ng-if="!AddNewPaper" class="btn btn-success" ng-click="AddPaper(item.authority_id)">Add new publication</button>
+		<hr>
+		<project-add ng-if="AddNewProject"></project-add>
+		<paper-add ng-if="AddNewPaper"></paper-add>
 </div>
 </div>
 
 <div class="well">
-<div class="text-center"><h4>Add, update or delete project</h4></div>
-<button ng-if="!AddNewProject" class="btn btn-success" ng-click="AddProject()">Add new project</button>
-<hr>
-<project-add ng-if="AddNewProject"></project-add>
+<div class="text-center"><h4>Update or delete Project</h4></div>
 
 <div ng-repeat="item in aCtrl.items[1].projects" ng-init="sectionIndex = $index">
  <div ng-if="sectionIndex != updateIndexProject" class="row">
 	<div class="col-md-2">
-		<button class="btn btn-success" ng-click="UpdateProject(item.authority_id, sectionIndex)">Update</button>
-		<button class="btn btn-warning" ng-click="DeleteProject(item.authority_id)">Delete</button>
+		<button class="btn btn-success" ng-click="UpdateProject(item.authority_id, item.id, sectionIndex)">Update</button>
+		<button class="btn btn-warning" ng-click="DeleteProject(item.authority_id, item.id)">Delete</button>
 		<!-- <p>{{sectionIndex}}</p> -->
+	</div>
+	<div class="col-md-2 well text-center">
+			<img class="imgfit" ng-src="img/{{item.image}}"  alt="photo"/>
 	</div>
 	<div class="col-md-6">
 			<p> {{item.title}} </p>
@@ -62,18 +67,18 @@
 </div>
 
 <div class="well">
-<div class="text-center"><h4>Add, update or delete publication</h4></div>
-<button ng-if="!AddNewPaper" class="btn btn-success" ng-click="AddPaper()">Add new publication</button>
-<hr>
-<paper-add ng-if="AddNewPaper"></paper-add>
+<div class="text-center"><h4>Update or delete Publication</h4></div>
 
 <div ng-repeat="item in aCtrl.items[2].papers" ng-init="sectionIndex = $index">
 	<div ng-if="sectionIndex != updateIndexPaper" class="row">
  	<div class="col-md-2">
- 		<button class="btn btn-success" ng-click="UpdatePaper(item.authority_id, sectionIndex)">Update</button>
- 		<button class="btn btn-warning" ng-click="DeletePaper(item.authority_id)">Delete</button>
+ 		<button class="btn btn-success" ng-click="UpdatePaper(item.authority_id, item.id, sectionIndex)">Update</button>
+ 		<button class="btn btn-warning" ng-click="DeletePaper(item.authority_id, item.id)">Delete</button>
  		<!-- <p>{{sectionIndex}}</p> -->
  	</div>
+	<div class="col-md-2 well text-center">
+			<img class="imgfit" ng-src="img/{{item.image}}"  alt="photo"/>
+	</div>
 	<div class="col-md-6">
 			<p> {{item.title}} </p>
 			<p> {{item.description}} </p>
