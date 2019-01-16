@@ -37,6 +37,9 @@
 <script src="src/papers.component.js"></script>
 <script src="src/papers.controller.js"></script>
 
+<script src="src/teams.component.js"></script>
+<script src="src/teams.controller.js"></script>
+
 <script src="src/cart.component.js"></script>
 <script src="src/cart.controller.js"></script>
 
@@ -61,7 +64,7 @@
     <loading class="loading-indicator"></loading>
 <div ui-view class="container">
   <div ui-view="content"></div>
-  <div ui-view="basket"></div>
+  <!-- <div ui-view="basket"></div> -->
   <div ui-view="admin"></div>
 </div>
 

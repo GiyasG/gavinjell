@@ -114,7 +114,37 @@ $papr ='{"papers":['.$papr.']}';
   $papr ='{"papers":null}';
 }
 
-$outp = '{"items":['.$outp1.','.$proj.','.$papr.','.$outp3.']}';
+if ($choosendb == "teams" || $choosendb == "admin") {
+
+$res = $tb->get_ParentResult('authority', 'teams');
+$team = "";
+
+foreach ($res as $rs) {
+    if ($team != "") {$team .= ",";}
+    $db->select('photos','filename',null,'team_id='.$rs['id']);
+    $photo = $db->getResult();
+    if (isset($photo[0])) {
+      // print_r ($photo);
+      $team .= '{"image":"'.$photo[0]["filename"].'",';
+    } else {
+      $team .= '{"image":"temp.jpg",';
+    }
+    // $team .= '{"authority_id":"'.$rs["authority_id"].'",';
+    $team .= '"id":"'.$rs["id"].'",';
+    $team .= '"authority_id":"'.$rs["authority_id"].'",';
+    $team .= '"title":"'.$rs["title"].'",';
+    $team .= '"name":"'.$rs["name"].'",';
+    $team .= '"surname":"'.$rs["surname"].'",';
+    $team .= '"dob":"'.$rs["dob"].'"}';
+}
+
+$team ='{"teams":['.$team.']}';
+} else {
+  $team ='{"teams":null}';
+}
+
+
+$outp = '{"items":['.$outp1.','.$proj.','.$papr.','.$team.','.$outp3.']}';
 
 $db->disconnect();
 

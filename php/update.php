@@ -91,13 +91,14 @@ $db->update('authority',array('title'=>$items['title'],
         echo "ERROR 1";
 			die('Cant connect1: ' . mysql_error());
     } else {
-      $db->update('photos',array('filename'=>$newFileName,'description'=>$items['title']." ".$items['name']." ".$items['surname']),
-                'authority_id='.$items['id']);
+      $db->update('photos',array('filename'=>$newFileName,
+                                 'description'=>$items['title']." ".$items['name']." ".$items['surname']),
+                                 'authority_id='.$items['id']);
                 $res1 = $db->getResult();
           			if (!$res1) {
                   echo "ERROR 2";
                 } else {
-                  echo 'UPDATED';
+                  // echo 'UPDATED';
                 }
     }
 

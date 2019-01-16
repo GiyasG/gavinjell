@@ -51,6 +51,23 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
    }
   }
 
+  var teams = {
+    name: 'teams',
+    url:'/teams',
+    views: {
+        'content@': {
+          templateUrl: 'src/template/teams.template.html',
+          controller: 'TeamsController as teamsCtrl',
+          resolve: {
+            items: ['ShopDataService', function (ShopDataService) {
+              return ShopDataService.getTeams();
+            }]
+          }
+    }
+   }
+  }
+
+
   var checkout = {
     name: 'checkout',
     // parent: 'home',
@@ -130,6 +147,7 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
   .state(home)
   .state(projects)
   .state(papers)
+  .state(teams)
   .state(checkout)
   .state(emailconfirmed)
   .state(passwordconfirmed)

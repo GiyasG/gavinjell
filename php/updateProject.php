@@ -59,7 +59,7 @@ if ($adminOk) {
     $outp1 = '{"updateitem":['.json_encode($items).']}';
     $outp  = '{"info":['.$outp1.','.$outp2.','.$outp3.']}';
 
-    // echo ($outp);
+    echo ($outp);
   }
 
 } else {
@@ -95,7 +95,7 @@ $db->update('projects',array('title'=>$items['title'],
           			if (!$res1) {
                   echo "ERROR 2";
                 } else {
-                  echo 'UPDATED';
+                  // echo 'UPDATED';
                 }
     }
 

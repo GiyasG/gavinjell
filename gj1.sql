@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2019 at 01:03 PM
+-- Generation Time: Jan 16, 2019 at 12:59 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -187,7 +187,6 @@ CREATE TABLE `projects_team` (
 
 CREATE TABLE `teams` (
   `id` int(10) UNSIGNED NOT NULL,
-  `authority_id` int(10) UNSIGNED NOT NULL,
   `title` varchar(3) NOT NULL,
   `name` varchar(20) NOT NULL,
   `surname` varchar(20) NOT NULL,
@@ -316,12 +315,6 @@ ALTER TABLE `teams`
 --
 ALTER TABLE `contact`
   ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`authority_id`) REFERENCES `authority` (`id`);
-
---
--- Constraints for table `contact`
---
-ALTER TABLE `teams`
-  ADD CONSTRAINT `team_ibfk_1` FOREIGN KEY (`authority_id`) REFERENCES `authority` (`id`);
 
 --
 -- Constraints for table `contacts_team`

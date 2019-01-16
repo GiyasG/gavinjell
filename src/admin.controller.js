@@ -23,7 +23,7 @@
         $scope.AddNewRecord = false;
         $scope.AddNewProject = false;
         $scope.AddNewPaper = false;
-        $scope.hasRoleAdmin = aCtrl.items[3].AdminIsIn;
+        $scope.hasRoleAdmin = aCtrl.items[4].AdminIsIn;
         console.log($scope.hasRoleAdmin);
 
         //**************** Data for Dbase Upload ********************//
@@ -117,8 +117,11 @@
 
           //**************** Authority Update *********************//
           $scope.onFileUpdate = function(file) {
-
-            // console.log(file);
+            if ($scope.fElements.genders.model != null) {
+              $scope.itemU.sex = $scope.fElements.genders.model;
+            }
+            console.log($scope.itemU.sex);
+            console.log(file);
               $scope.message = "";
                   $scope.upload = Upload.upload({
                       url: 'php/update.php',
@@ -128,22 +131,26 @@
                                 'item': $scope.itemU
                             }
                   }).success(function(data, status, headers, config) {
-                      $scope.message = data;
+                      $scope.uadata = data;
                       $scope.updateIndex = null;
-                      console.log($scope.message);
 
-                      var uitem = {};
-                      uitem.name = $scope.message.info[0].updateitem[0].name;
-                      uitem.description = $scope.message.info[0].updateitem[0].description;
-                      uitem.price = $scope.message.info[0].updateitem[0].price;
-                      uitem.image = $scope.message.info[0].updateitem[0].image;
-                      uitem.id = $scope.message.info[0].updateitem[0].id;
-
-                      // console.log(newitem);
-                      var rid = aCtrl.items[0].all.findIndex(x => x.id === $scope.itemU.id);
-                      aCtrl.items[0].all[rid] = uitem;
-                      console.log(aCtrl.items[0].all);
-                      console.log(rid);
+                      // var uitem = {};
+                      //
+                      // uitem.id = $scope.message.info[0].updateitem[0].id;
+                      // uitem.title = $scope.message.info[0].updateitem[0].title;
+                      // uitem.name = $scope.message.info[0].updateitem[0].name;
+                      // uitem.surname = $scope.message.info[0].updateitem[0].surname;
+                      // uitem.about = $scope.message.info[0].updateitem[0].about;
+                      // uitem.position = $scope.message.info[0].updateitem[0].position;
+                      // uitem.dob = $scope.message.info[0].updateitem[0].dob;
+                      // uitem.sex = $scope.message.info[0].updateitem[0].sex;
+                      // uitem.iamge = $scope.message.info[0].updateitem[0].image;
+                      //
+                      // // console.log(uitem);
+                      // var rid = aCtrl.items[0].all.findIndex(x => x.id === $scope.itemU.id);
+                      // aCtrl.items[0].all[rid] = uitem;
+                      // console.log(aCtrl.items[0].all);
+                      // console.log(rid);
 
                       // aCtrl.items[0].all.push(updateitem);
                       // $scope.itemU = uitem;
@@ -151,7 +158,7 @@
 
 
                   }).error(function(data, status) {
-                      $scope.message = data;
+                      $scope.message.info[1].message = data;
                   });
           };
 
@@ -182,9 +189,8 @@
                         newitem.authority_id = $scope.message.info[0].newitem[0].authority_id;
                         newitem.image = $scope.message.info[0].newitem[0].image;
 
-                        aCtrl.items[0].all.push(newitem);
-
-                        console.log($scope.message.info[0].newitem[0].id);
+                        aCtrl.items[1].projects.push(newitem);
+                        console.log(aCtrl.items[1].projects);
                         $scope.AddNewProject = false;
                         $scope.fProjects = {};
                       }
@@ -218,9 +224,9 @@
                       uitem.id = $scope.message.info[0].updateitem[0].id;
 
                       // console.log(newitem);
-                      var rid = aCtrl.items[0].all.findIndex(x => x.id === $scope.itemU.id);
-                      aCtrl.items[0].all[rid] = uitem;
-                      console.log(aCtrl.items[0].all);
+                      var rid = aCtrl.items[1].projects.findIndex(x => x.id === $scope.itemU.id);
+                      aCtrl.items[1].projects[rid] = uitem;
+                      console.log(aCtrl.items[1].projects);
                       console.log(rid);
 
                       // aCtrl.items[0].all.push(updateitem);
@@ -233,18 +239,20 @@
                   });
           };
           //************************************************//
-          $scope.DeleteProject = function(id) {
+          $scope.DeleteProject = function(aid, id) {
               console.log("id is: "+id);
             $http({
                   method  : 'POST',
                   url     : 'php/DeleteProject.php',
-                  data    : {id: id},
+                  data    : {aid: aid, id: id},
                   headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
                    })
                 .then(function(response) {
-                    console.log(response.data.info);
-                    var rid = aCtrl.items[0].all.findIndex(x => x.id === id);
-                    aCtrl.items[0].all.splice(rid, 1);
+                    // console.log(response.data.info);
+                    // console.log(aCtrl.items[1].projects);
+                    var rid = aCtrl.items[1].projects.findIndex(x => x.id === id);
+                    // console.log(rid);
+                    aCtrl.items[1].projects.splice(rid, 1);
                     return response.data.info;
                 });
           };
@@ -326,15 +334,10 @@
                           uitem.id = $scope.message.info[0].updateitem[0].id;
 
                           // console.log(newitem);
-                          var rid = aCtrl.items[0].all.findIndex(x => x.id === $scope.itemU.id);
-                          aCtrl.items[0].all[rid] = uitem;
-                          console.log(aCtrl.items[0].all);
+                          var rid = aCtrl.items[2].papers.findIndex(x => x.id === $scope.itemU.id);
+                          aCtrl.items[2].papers[rid] = uitem;
+                          console.log(aCtrl.items[2].papers);
                           console.log(rid);
-
-                          // aCtrl.items[0].all.push(updateitem);
-                          // $scope.itemU = uitem;
-                          // console.log($scope.itemU);
-
 
                       }).error(function(data, status) {
                           $scope.message = data;
@@ -342,19 +345,21 @@
               };
 
               //************************************************//
-              $scope.DeletePaper = function(id) {
-                  console.log("id is: "+id);
+              $scope.DeletePaper = function(aid, id) {
+                  console.log("id is: "+id+" "+aid);
                 $http({
                       method  : 'POST',
                       url     : 'php/DeletePaper.php',
-                      data    : {id: id},
+                      data    : {aid: aid, id: id},
                       headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
                        })
                     .then(function(response) {
-                        console.log(response.data.info);
-                        var rid = aCtrl.items[0].all.findIndex(x => x.id === id);
-                        aCtrl.items[0].all.splice(rid, 1);
-                        return response.data.info;
+                      // console.log(response.data.info);
+                      // console.log(aCtrl.items[1].projects);
+                      var rid = aCtrl.items[2].papers.findIndex(x => x.id === id);
+                      // console.log(rid);
+                      aCtrl.items[2].papers.splice(rid, 1);
+                      return response.data.info;
                     });
               };
 

@@ -12,7 +12,7 @@ if (isset($postdata->id)) {
   include('class/mysql_crud.php');
   $db = new Database();
   $db->connect();
-  $db->delete('authority', 'authority.id ='.$postdata->id); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
+  $db->delete('projects', 'id='.$postdata->id.' and authority_id ='.$postdata->aid); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
   $res = $db->getResult();
 
 if (!$res) {

@@ -8,12 +8,13 @@ if ( $_POST ) {
     }
   }
 
-if (isset($postdata->id)) {
+if (isset($postdata->aid)) {
   include('class/mysql_crud.php');
   $db = new Database();
   $db->connect();
-  $db->delete('authority', 'authority.id ='.$postdata->id); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
+  $db->delete('papers', 'id='.$postdata->id.' and authority_id ='.$postdata->aid); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
   $res = $db->getResult();
+  print_r ($res);
 
 if (!$res) {
     die('Cant connect: ' . mysql_error());
