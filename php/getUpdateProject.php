@@ -34,6 +34,7 @@ if (isset($postdata->id)) {
           }
 
           $outp .= '"id":"'.$rs["id"].'",';
+          $outp .= '"authority_id":"'.$rs["authority_id"].'",';
           $outp .= '"title":"'.$rs["title"].'",';
           $outp .= '"description":"'.$rs["description"].'",';
           $outp .= '"url":"'.$rs["url"].'",';

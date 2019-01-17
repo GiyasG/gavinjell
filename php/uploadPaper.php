@@ -25,13 +25,13 @@ if ($adminOk) {
     $outp  = '{"info":['.$outp1.','.$outp2.']}';
     echo ($outp);
   } elseif (!isset($items['title'])) {
-    $outp2 = '{"message": "Please fill title field"}';
+    $outp2 = '{"message": "Please fill a title field"}';
     $outp1 = '{"newitem": "null"}';
     $outp  = '{"info":['.$outp1.','.$outp2.']}';
     echo ($outp);
     return;
   } elseif (!isset($items['published'])) {
-      $outp2 = '{"message": "Please fill published field"}';
+      $outp2 = '{"message": "Please fill a publishing date"}';
       $outp1 = '{"newitem": "null"}';
       $outp  = '{"info":['.$outp1.','.$outp2.']}';
       echo ($outp);
@@ -59,12 +59,21 @@ if ($adminOk) {
           $currentDate = date('ymdhms');
           $newFileName = $currentDate.$file_name;
           move_uploaded_file($file_tmp,"../img/".$newFileName);
+
+          if (!isset($items['url'])) {
+            $items['url'] = "";
+          }
+          if (!isset($items['description'])) {
+            $items['description'] = "";
+          }
+
           $sid = toDbase($items, $newFileName);
 
           if (isset($sid)) {
+            $items['authority_id'] = $items['id'];
             $items['id'] = $sid[0];
           }
-          $items['simage'] = '../img/'.$newFileName;
+          $items['image'] = $newFileName;
           $outp1 = '{"newitem":['.json_encode($items).']}';
           $outp2 = '{"message": "The record and the image uploaded successfully"}';
           $outp  = '{"info":['.$outp1.','.$outp2.','.$outp3.']}';
@@ -84,13 +93,6 @@ function toDbase($items, $newFileName) {
 
   // print_r($items);
   include('class/mysql_crud.php');
-
-  if (!$items['url']) {
-    $items['url'] = "";
-  }
-  if (!$items['description']) {
-    $items['description'] = "";
-  }
 
   $db = new Database();
   $db->connect();

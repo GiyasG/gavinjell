@@ -8,7 +8,7 @@
   ngf-max-size="1MB">Select picture
 </button>
   <p class="well">
-    <img class="imgfit" ng-src="img/{{itemU.image}}">
+    <img class="imgfit" ng-src="{{File.$ngfBlobUrl ?  File.$ngfBlobUrl : 'img/'+itemU.image }}">
   </p>
 </div>
 
@@ -33,7 +33,7 @@
 
 <div class="col-md-12 text-center">
   <button class="btn btn-success" ng-click="onPaperUpdate(File)">Save</button>
-  <button class="btn btn-success" ng-click="CancelUpdatePaper()">Cancel</button>
+  <button class="btn btn-success" ng-click="CancelUpdatePaper(itemU.authority_id, itemU.id)">Cancel</button>
 </div>
 
 </div>

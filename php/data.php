@@ -58,7 +58,34 @@ if ($choosendb == "projects" || $choosendb == "admin") {
   $res = $tb->get_ParentResult('authority', 'projects');
   $proj = "";
 
-  // print_r ($res);
+  $records_number  = sizeof($res);
+  $records_per_page = 5;
+  $whole_pages =  floor($records_number/$records_per_page);
+  echo "whole: ".$whole_pages;
+  $last_page = $records_number-($whole_pages*$records_per_page);
+  echo "last: ".$last_page;
+  $pages = $whole_pages + $last_page;
+  $page_projects = [];
+  $c_page = 0;
+  if ($last_page > 0) {
+    for ($l=1; $l <= $whole_pages; $l++) {
+      for ($i=0; $i < $records_per_page-1; $i++) {
+        array_shift($page_projects[$i], $res);
+      }
+    }
+}
+  //   for ($i=0; $i < $pages-1 ; $i++) {
+  //     echo "i: ".$i;
+  //     print_r(array_slice($res, $records_per_page));
+  //   }
+  //     array_push($page_projects, $res);
+  // } else {
+  //   for ($i=0; $i < $pages-1 ; $i++) {
+  //     array_push($page_projects, array_slice($res, $records_per_page));
+  //   }
+  // }
+
+  print_r ($page_projects);
   foreach ($res as $rs) {
       if ($proj != "") {$proj .= ",";}
 
@@ -89,6 +116,7 @@ if ($choosendb == "papers" || $choosendb == "admin") {
 
 $res = $tb->get_ParentResult('authority', 'papers');
 $papr = "";
+// echo sizeof($res);
 
 foreach ($res as $rs) {
     if ($papr != "") {$papr .= ",";}
@@ -119,6 +147,7 @@ if ($choosendb == "teams" || $choosendb == "admin") {
 $res = $tb->get_ParentResult('authority', 'teams');
 $team = "";
 
+// echo sizeof($res);
 foreach ($res as $rs) {
     if ($team != "") {$team .= ",";}
     $db->select('photos','filename',null,'team_id='.$rs['id']);
