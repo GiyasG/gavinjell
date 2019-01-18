@@ -66,6 +66,12 @@
   <div ui-view="content"></div>
   <!-- <div ui-view="basket"></div> -->
   <div ui-view="admin"></div>
+  <hr>
+  <footer>
+    <div class="center">
+      <p>Dr. Jell's Lab 2018 <span class="glyphicon glyphicon-copyright-mark"></span></p>
+    </div>
+  </footer>
 </div>
 
 

@@ -7,13 +7,31 @@
 
 			<hr>
 
-		  <div class="col-md-10  column-in-center">
-		    <div class="col-md-4" ng-repeat="item in projectsCtrl.items[1].projects" ng-init="sectionIndex = $index">
-		      <h2>{{item.title}}</h2>
-		      <p>{{item.description}}</p>
-					<p>{{item.url}}</p>
-					<p>{{item.description}}</p>
-		      <p>{{item.started}} {{item.finished}}</p>
+		    <div class="col-md-12" ng-repeat="item in projectsCtrl.PagesProjects[0]">
+						<h2>{{item.title}}</h2>
+						<div class="col-md-4">
+							<img class="imgfit" ng-src="img/{{item.image}}"  alt="photo"/>
+						</div>
+						<div class="col-md-8">
+							<p>URL: {{item.url}}</p>
+		      		<p>Started: {{item.started}} Closure date:{{item.finished}}</p>
+					</div>
+					<div class="col-md-12">
+						<text>{{item.description}}</text>
+					</div>
 		    </div>
-		  </div>
-</div>
+
+	</div>
+	<div class="col-md-5  column-in-center">
+			<ul ng-repeat="num in projectsCtrl.totalPages" class="pagination">
+				<button ng-if="num==1" class="disabled"
+								ng-click="projectsCtrl.NextPage(projectsCtrl.currentPage-1)">Previous</button>
+			</ul>
+			<ul ng-repeat="num in projectsCtrl.totalPages" class="pagination pg-blue">
+				<button class="active" ng-click="projectsCtrl.NextPage(num-1)">{{num}}</button>
+			</ul>
+			<ul ng-repeat="num in projectsCtrl.totalPages" class="pagination pg-blue">
+				<button ng-if="num==projectsCtrl.totalPagesNumber"
+				 				ng-click="projectsCtrl.NextPage(projectsCtrl.currentPage+1)">Next</button>
+			</ul>
+	</div>

@@ -5,12 +5,30 @@
 	<span class="glyphicon glyphicon-triangle-right"></span>
 	<span> Publications </span>
 <hr>
-		<div class="col-md-10  column-in-center">
-			<div class="col-md-4" ng-repeat="item in papersCtrl.items[2].papers" ng-init="sectionIndex = $index">
+			<div class="col-md-12" ng-repeat="item in papersCtrl.PagesPapers[0]">
             <h2> {{item.title}} </h2>
-            <p> {{item.description}} </p>
-            <p>{{item.url}}</p>
-						<p>{{item.published}}</p>
+						<div class="col-md-4">
+							<img class="imgfit" ng-src="img/{{item.image}}"  alt="photo"/>
+						</div>
+						<div class="col-md-8">
+							<p>URL: {{item.url}}</p>
+							<p>Publishing date: {{item.published}}</p>
+						</div>
+						<div class="col-md-12">
+            	<text> {{item.description}} </text>
+						</div>
        </div>
-			</div>
- </div>
+</div>
+<div class="col-md-5  column-in-center">
+		<ul ng-repeat="num in papersCtrl.totalPages" class="pagination">
+			<button ng-if="num==1" class="disabled"
+							ng-click="papersCtrl.NextPage(papersCtrl.currentPage-1)">Previous</button>
+		</ul>
+		<ul ng-repeat="num in papersCtrl.totalPages" class="pagination pg-blue">
+			<button class="active" ng-click="papersCtrl.NextPage(num-1)">{{num}}</button>
+		</ul>
+		<ul ng-repeat="num in papersCtrl.totalPages" class="pagination pg-blue">
+			<button ng-if="num==papersCtrl.totalPagesNumber"
+							ng-click="papersCtrl.NextPage(papersCtrl.currentPage+1)">Next</button>
+		</ul>
+</div>

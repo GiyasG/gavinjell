@@ -30,119 +30,82 @@ if (isset($db)) {
   $tb = new Table();
   $res = $tb->get_ParentResult('authority', 'photos');
 
-// print_r ($res);
-
-  $outp1 = "";
-
-  foreach ($res as $rs) {
-      if ($outp1 != "") {
-      $outp1 .= ",";}
-      $outp1 .= '{"authority_id":"'.$rs["authority_id"].'",';
-      $outp1 .= '"title":"'.$rs["title"].'",';
-      $outp1 .= '"name":"'.$rs["name"].'",';
-      $outp1 .= '"surname":"'.$rs["surname"].'",';
-      $outp1 .= '"about":"'.$rs["about"].'",';
-      $outp1 .= '"image":"'.$rs["filename"].'",';
-      $outp1 .= '"position":"'.$rs["position"].'"}';
-
-  }
-
-  $outp1 ='{"all":['.$outp1.']}';
+  $outp1 ='{"all":['.json_encode($res).']}';
 } else {
   $outp1 ='{"all":["No items found"]}';
 }
 
-
-if ($choosendb == "projects" || $choosendb == "admin") {
-
+/* PROJECTS */
   $res = $tb->get_ParentResult('authority', 'projects');
-  $proj = "";
-
   $records_number  = sizeof($res);
-  $records_per_page = 5;
-  $whole_pages =  floor($records_number/$records_per_page);
-  echo "whole: ".$whole_pages;
-  $last_page = $records_number-($whole_pages*$records_per_page);
-  echo "last: ".$last_page;
-  $pages = $whole_pages + $last_page;
-  $page_projects = [];
-  $c_page = 0;
-  if ($last_page > 0) {
-    for ($l=1; $l <= $whole_pages; $l++) {
-      for ($i=0; $i < $records_per_page-1; $i++) {
-        array_shift($page_projects[$i], $res);
-      }
-    }
-}
-  //   for ($i=0; $i < $pages-1 ; $i++) {
-  //     echo "i: ".$i;
-  //     print_r(array_slice($res, $records_per_page));
-  //   }
-  //     array_push($page_projects, $res);
-  // } else {
-  //   for ($i=0; $i < $pages-1 ; $i++) {
-  //     array_push($page_projects, array_slice($res, $records_per_page));
-  //   }
-  // }
 
-  print_r ($page_projects);
-  foreach ($res as $rs) {
-      if ($proj != "") {$proj .= ",";}
-
-      $db->select('photos','filename',null,'project_id='.$rs['id']);
-      $photo = $db->getResult();
-      if (isset($photo[0])) {
-        // print_r ($photo);
-        $proj .= '{"image":"'.$photo[0]["filename"].'",';
-      } else {
-        $proj .= '{"image":"temp.jpg",';
-      }
-
-      $proj .= '"id":"'.$rs["id"].'",';
-      $proj .= '"authority_id":"'.$rs["authority_id"].'",';
-      $proj .= '"title":"'.$rs["title"].'",';
-      $proj .= '"description":"'.$rs["description"].'",';
-      $proj .= '"url":"'.$rs["url"].'",';
-      $proj .= '"started":"'.$rs["started"].'",';
-      $proj .= '"finished":"'.$rs["finished"].'"}';
+  if ($choosendb == "projects") {
+    $records_per_page = 3;
+    $proj = Projects("projects", $db, $res, $records_number, $records_per_page);
+  }  elseif ($choosendb == "admin") {
+    $records_per_page = $records_number;
+    $proj = Projects("projects",$db, $res, $records_number, $records_per_page);
+  } elseif ($choosendb != "projects" && $choosendb != "admin") {
+    $proj ='{"projects":null}';
   }
 
-  $proj ='{"projects":['.$proj.']}';
-} else {
-  $proj ='{"projects":null}';
-}
 
-if ($choosendb == "papers" || $choosendb == "admin") {
+// echo $proj;
+/* Publications */
 
 $res = $tb->get_ParentResult('authority', 'papers');
 $papr = "";
-// echo sizeof($res);
 
-foreach ($res as $rs) {
-    if ($papr != "") {$papr .= ",";}
-    $db->select('photos','filename',null,'paper_id='.$rs['id']);
-    $photo = $db->getResult();
-    if (isset($photo[0])) {
-      // print_r ($photo);
-      $papr .= '{"image":"'.$photo[0]["filename"].'",';
-    } else {
-      $papr .= '{"image":"temp.jpg",';
-    }
-    // $papr .= '{"authority_id":"'.$rs["authority_id"].'",';
-    $papr .= '"id":"'.$rs["id"].'",';
-    $papr .= '"authority_id":"'.$rs["authority_id"].'",';
-    $papr .= '"title":"'.$rs["title"].'",';
-    $papr .= '"description":"'.$rs["description"].'",';
-    $papr .= '"url":"'.$rs["url"].'",';
-    $papr .= '"published":"'.$rs["published"].'"}';
+$records_number  = sizeof($res);
+
+if ($choosendb == "papers") {
+  $records_per_page = 3;
+}  elseif ($choosendb == "admin") {
+  $records_per_page = $records_number;
 }
 
-$papr ='{"papers":['.$papr.']}';
-} else {
+$whole_pages =  floor($records_number/$records_per_page);
+// echo "whole: ".$whole_pages;
+$last_page = $records_number-($whole_pages*$records_per_page);
+// echo "last: ".$last_page;
+$pages = $whole_pages + $last_page;
+$page_papers = [];
+$c_page = 0;
+if ($last_page >= 0) {
+  for ($l=0; $l <= $whole_pages-1; $l++) {
+    for ($i=0; $i < $records_per_page; $i++) {
+      $page_papers[$l][$i] = array_shift($res);
+      $db->select('photos','filename',null,'paper_id='.$page_papers[$l][$i]['id']);
+      $photo = $db->getResult();
+      if (isset($photo[0])) {
+        $page_papers[$l][$i]['image'] = $photo[0]["filename"];
+      } else {
+        $page_papers[$l][$i]['image'] = "temp.jpg";
+      }
+    }
+  }
+}
+  if ($last_page > 0) {
+  for ($i=0; $i < $last_page; $i++) {
+    $page_papers[$l][$i] = array_shift($res);
+    $db->select('photos','filename',null,'paper_id='.$page_papers[$l][$i]['id']);
+    $photo = $db->getResult();
+    if (isset($photo[0])) {
+      $page_papers[$l][$i]['image'] = $photo[0]["filename"];
+    } else {
+      $page_papers[$l][$i]['image'] = "temp.jpg";
+    }
+  }
+}
+$papr = '{"papers":['.json_encode($page_papers).']}';
+
+if (!isset($papr)) {
   $papr ='{"papers":null}';
 }
 
-if ($choosendb == "teams" || $choosendb == "admin") {
+/* TEAMS */
+
+if ($choosendb == "teams" ) {
 
 $res = $tb->get_ParentResult('authority', 'teams');
 $team = "";
@@ -178,4 +141,49 @@ $outp = '{"items":['.$outp1.','.$proj.','.$papr.','.$team.','.$outp3.']}';
 $db->disconnect();
 
 echo ($outp);
+
+function Projects($dbname, $db, $res, $records_number, $records_per_page)
+{
+  $proj = "";
+
+  $whole_pages =  floor($records_number/$records_per_page);
+  // echo "whole: ".$whole_pages;
+  $last_page = $records_number-($whole_pages*$records_per_page);
+  // echo "last: ".$last_page;
+  $pages = $whole_pages + $last_page;
+  $page_projects = [];
+  $c_page = 0;
+  if ($last_page >= 0) {
+    for ($l=0; $l <= $whole_pages-1; $l++) {
+      for ($i=0; $i < $records_per_page; $i++) {
+        $page_projects[$l][$i] = array_shift($res);
+        $db->select('photos','filename',null,'project_id='.$page_projects[$l][$i]['id']);
+        $photo = $db->getResult();
+        if (isset($photo[0])) {
+          $page_projects[$l][$i]['image'] = $photo[0]["filename"];
+        } else {
+          $page_projects[$l][$i]['image'] = "temp.jpg";
+        }
+      }
+    }
+  }
+  if ($last_page > 0) {
+    for ($i=0; $i < $last_page; $i++) {
+      $page_projects[$l][$i] = array_shift($res);
+      $db->select('photos','filename',null,'project_id='.$page_projects[$l][$i]['id']);
+      $photo = $db->getResult();
+      if (isset($photo[0])) {
+        $page_projects[$l][$i]['image'] = $photo[0]["filename"];
+      } else {
+        $page_projects[$l][$i]['image'] = "temp.jpg";
+      }
+    }
+  }
+  $proj = '{"projects":['.json_encode($page_projects).']}';
+
+  if (!isset($proj)) {
+    $proj ='{"projects":null}';
+  }
+  return $proj;
+}
 ?>
