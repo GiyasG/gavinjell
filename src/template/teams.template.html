@@ -5,16 +5,29 @@
 	<span class="glyphicon glyphicon-triangle-right"></span>
 	<span> Our team </span>
 	<hr>
-<div class="col-md-12 column-in-center">
+<div class="col-md-12"  ng-repeat="item in teamsCtrl.PagesTeams[0]">
 
-	<div ng-repeat="item in teamsCtrl.items[3].teams" ng-init="sectionIndex = $index">
-		<div class="col-md-2 cell">
+		<div class="col-md-4">
 			<img class="imgfit" ng-src="img/{{item.image}}"  alt="photo"/>
 		</div>
-		<div class="col-md-3">
-			<h2> {{item.title}} {{item.name}} {{item.surname}}</h2>
+		<div class="col-md-8">
+			<p> {{item.title}} {{item.name}} {{item.surname}}</p>
 		</div>
-	</div>
-
+		<div class="col-md-12">
+			<text> {{item.about}}</text>
+		</div>
 </div>
- </div>
+</div>
+<div class="col-md-4  column-in-center">
+		<ul ng-repeat="num in teamsCtrl.totalPages" class="pagination">
+			<button ng-if="num==1" class="disabled"
+							ng-click="teamsCtrl.NextPage(teamsCtrl.currentPage-1)">Previous</button>
+		</ul>
+		<ul ng-repeat="num in teamsCtrl.totalPages" class="pagination pg-blue">
+			<button class="active" ng-click="teamsCtrl.NextPage(num-1)">{{num}}</button>
+		</ul>
+		<ul ng-repeat="num in teamsCtrl.totalPages" class="pagination pg-blue">
+			<button ng-if="num==teamsCtrl.totalPagesNumber"
+							ng-click="teamsCtrl.NextPage(teamsCtrl.currentPage+1)">Next</button>
+		</ul>
+</div>
