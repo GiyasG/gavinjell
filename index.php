@@ -7,8 +7,11 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="css/main.css">
 <!-- <link rel="stylesheet" href="css/styles.css"> -->
-
+<script type="text/javascript" src="bower_components/tinymce/tinymce.js"></script>
+<!-- <script type="text/javascript" src="bower_components/angular/angular.js"></script> -->
 <script src="lib/angular.min.js"></script>
+<script type="text/javascript" src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+
 <script src="lib/angular-ui-router.min.js"></script>
 <script src="lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
 <!-- <script src="lib/ui-bootstrap-0.11.2.min.js"></script> -->
@@ -27,6 +30,8 @@
 
 
 <script src="src/shopdata.service.js"></script>
+
+<script src="src/tinymce.controller.js"></script>
 
 <script src="src/home.controller.js"></script>
 <script src="src/modalinstance.controller.js"></script>
@@ -62,6 +67,7 @@
 </head>
 <body>
     <loading class="loading-indicator"></loading>
+
 <div ui-view class="container">
   <div ui-view="content"></div>
   <!-- <div ui-view="basket"></div> -->

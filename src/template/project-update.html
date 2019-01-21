@@ -25,13 +25,14 @@
 
   <div class="well col-md-6">
     <span>Description</span>
-    <textarea type="textarea" ng-model="itemU.description" rows="5" style="min-width: 90%;"></textarea>
+    <textarea ui-tinymce="tinymceOptions" ng-model="tinymceModel" ng-trim="false" ></textarea>
+    <!-- <textarea type="textarea" ng-model="itemU.description" rows="5" style="min-width: 90%;"></textarea> -->
   </div>
 
 
 <hr>
 <div class="col-md-12">
-  <span class="pwarnings">{{message}}</span>
+  <span class="pwarnings">{{message.info ?  message.info[1].message : message}}</span>
 </div>
 
 <div class="col-md-12 text-center">

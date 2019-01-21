@@ -202,7 +202,9 @@
 
           //**************** Project Update *********************//
           $scope.onProjectUpdate = function(file) {
-
+              $scope.tinymceModel = $scope.tinymceModel;;
+              console.log($scope.tinymceModel);
+              // $scope.itemU.description = $scope.tinymceModel;
             // console.log(file);
               $scope.message = "";
                   $scope.upload = Upload.upload({
@@ -214,18 +216,20 @@
                             }
                   }).success(function(data, status, headers, config) {
                       $scope.message = data;
-                      $scope.updateIndex = null;
                       console.log($scope.message);
 
                       var uitem = {};
-                      uitem.name = $scope.message.info[0].updateitem[0].name;
+
+                      uitem.id = $scope.message.info[0].updateitem[0].id;
+                      uitem.title = $scope.message.info[0].updateitem[0].title;
                       uitem.description = $scope.message.info[0].updateitem[0].description;
-                      uitem.price = $scope.message.info[0].updateitem[0].price;
+                      uitem.url = $scope.message.info[0].updateitem[0].url;
                       if (file) {
                         $scope.itemU.image = $scope.message.info[0].updateitem[0].image;
                       }
                       uitem.image = $scope.message.info[0].updateitem[0].image;
-                      uitem.id = $scope.message.info[0].updateitem[0].id;
+                      uitem.started = $scope.message.info[0].updateitem[0].started;
+                      uitem.finished = $scope.message.info[0].updateitem[0].finished;
                       uitem.authority_id = $scope.message.info[0].updateitem[0].authority_id;
 
                       // console.log(newitem);
@@ -233,11 +237,7 @@
                       aCtrl.items[1].projects[rid] = uitem;
                       console.log(aCtrl.items[1].projects);
                       console.log(rid);
-
-                      // aCtrl.items[0].all.push(updateitem);
-                      // $scope.itemU = uitem;
-                      // console.log($scope.itemU);
-
+                      $scope.updateIndexProject = null
 
                   }).error(function(data, status) {
                       $scope.message = data;
@@ -273,6 +273,8 @@
                    })
                 .then(function(response) {
                     $scope.itemU = response.data.item[0];
+                    $scope.tinymceModel = $scope.itemU.description;
+
                     console.log($scope.itemU);
                     return response.data.item;
                 });
