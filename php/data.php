@@ -30,6 +30,10 @@ if (isset($db)) {
   $tb = new Table();
   $res = $tb->get_ParentResult('authority', 'photos');
 
+  // print_r ($res);
+  $res[0]['about'] = html_entity_decode($res[0]['about']);
+  $res[0]['about'] = str_replace('"','\"',$res[0]['about']);
+
   $outp1 ='{"all":['.json_encode($res).']}';
 } else {
   $outp1 ='{"all":["No items found"]}';
@@ -103,13 +107,13 @@ function Projects($dbname, $db, $res, $records_number, $records_per_page)
         $page_projects[$l][$i] = array_shift($res);
         switch ($dbname) {
           case 'projects':
-            $db->select('photos','filename',null,'project_id='.$page_projects[$l][$i]['id']);
+            $db->select('photos','image',null,'project_id='.$page_projects[$l][$i]['id']);
             break;
           case 'papers':
-            $db->select('photos','filename',null,'paper_id='.$page_projects[$l][$i]['id']);
+            $db->select('photos','image',null,'paper_id='.$page_projects[$l][$i]['id']);
             break;
           case 'teams':
-            $db->select('photos','filename',null,'team_id='.$page_projects[$l][$i]['id']);
+            $db->select('photos','image',null,'team_id='.$page_projects[$l][$i]['id']);
             break;
           // default:
           //   // code...
@@ -117,7 +121,7 @@ function Projects($dbname, $db, $res, $records_number, $records_per_page)
         }
         $photo = $db->getResult();
         if (isset($photo[0])) {
-          $page_projects[$l][$i]['image'] = $photo[0]["filename"];
+          $page_projects[$l][$i]['image'] = $photo[0]["image"];
         } else {
           $page_projects[$l][$i]['image'] = "temp.jpg";
         }
@@ -129,13 +133,13 @@ function Projects($dbname, $db, $res, $records_number, $records_per_page)
       $page_projects[$l][$i] = array_shift($res);
       switch ($dbname) {
         case 'projects':
-          $db->select('photos','filename',null,'project_id='.$page_projects[$l][$i]['id']);
+          $db->select('photos','image',null,'project_id='.$page_projects[$l][$i]['id']);
           break;
         case 'papers':
-          $db->select('photos','filename',null,'paper_id='.$page_projects[$l][$i]['id']);
+          $db->select('photos','image',null,'paper_id='.$page_projects[$l][$i]['id']);
           break;
         case 'teams':
-          $db->select('photos','filename',null,'team_id='.$page_projects[$l][$i]['id']);
+          $db->select('photos','image',null,'team_id='.$page_projects[$l][$i]['id']);
           break;
         // default:
         //   // code...
@@ -144,7 +148,7 @@ function Projects($dbname, $db, $res, $records_number, $records_per_page)
 
       $photo = $db->getResult();
       if (isset($photo[0])) {
-        $page_projects[$l][$i]['image'] = $photo[0]["filename"];
+        $page_projects[$l][$i]['image'] = $photo[0]["image"];
       } else {
         $page_projects[$l][$i]['image'] = "temp.jpg";
       }
@@ -153,13 +157,16 @@ function Projects($dbname, $db, $res, $records_number, $records_per_page)
 
   switch ($dbname) {
     case 'projects':
+    print_r ($page_projects[0]);
+      $page_projects[0]['description'] = html_entity_decode($page_projects[0]['description']);
+      $page_projects[0]['description'] = str_replace('"','\"',$page_projects[0]['description']);
       $proj = '{"projects":['.json_encode($page_projects).']}';
       break;
     case 'papers':
-      $proj = '{"papers":['.json_encode($page_projects).']}';
+      $proj = htmlspecialchars_decode('{"papers":['.json_encode($page_projects).']}');
       break;
     case 'teams':
-      $proj = '{"teams":['.json_encode($page_projects).']}';
+      $proj = htmlspecialchars_decode('{"teams":['.json_encode($page_projects).']}');
       break;
     // default:
     //   // code...

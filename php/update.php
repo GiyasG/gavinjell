@@ -79,7 +79,7 @@ function toDbase($items, $newFileName) {
 $db->update('authority',array('title'=>$items['title'],
                               'name'=>$items['name'],
                               'surname'=>$items['surname'],
-                              'about'=>$items['about'],
+                              'about'=>htmlspecialchars($items['about']),
                               'sex'=>$items['sex'],
                               'position'=>$items['position'],
                               'dob'=>$items['dob']),
@@ -91,7 +91,7 @@ $db->update('authority',array('title'=>$items['title'],
         echo "ERROR 1";
 			die('Cant connect1: ' . mysql_error());
     } else {
-      $db->update('photos',array('filename'=>$newFileName,
+      $db->update('photos',array('image'=>$newFileName,
                                  'description'=>$items['title']." ".$items['name']." ".$items['surname']),
                                  'authority_id='.$items['id']);
                 $res1 = $db->getResult();

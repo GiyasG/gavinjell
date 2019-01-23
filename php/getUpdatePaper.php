@@ -24,11 +24,11 @@ if (isset($postdata->id)) {
       foreach ($res as $rs) {
           if ($outp != "") {$outp .= ",";}
 
-          $db->select('photos','filename',null,'paper_id='.$rs['id']);
+          $db->select('photos','image',null,'paper_id='.$rs['id']);
           $photo = $db->getResult();
           if (isset($photo[0])) {
             // print_r ($photo);
-            $outp .= '{"image":"'.$photo[0]["filename"].'",';
+            $outp .= '{"image":"'.$photo[0]["image"].'",';
           } else {
             $outp .= '{"image":"temp.jpg",';
           }

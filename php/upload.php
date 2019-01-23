@@ -48,7 +48,7 @@ if ($adminOk) {
     echo ($outp);
     return;
   } elseif (!isset($items['about'])) {
-    $outp2 = '{"message": "Please fill date of about field"}';
+    $outp2 = '{"message": "Please fill about field"}';
     $outp1 = '{"newitem": "null"}';
     $outp  = '{"info":['.$outp1.','.$outp2.']}';
     echo ($outp);
@@ -119,7 +119,7 @@ function toDbase($items, $newFileName) {
                                 'name'=>$items['name'],
                                 'surname'=>$items['surname'],
                                 'about'=>$items['about'],
-                                'sex'=>$items['genders']['model'], 
+                                'sex'=>$items['genders']['model'],
                                 'position'=>$items['position'],
                                 'dob'=>$items['dob']
           ));
@@ -133,7 +133,7 @@ function toDbase($items, $newFileName) {
   {
   die('Cant connect: ' . mysql_error());
 } else {
-        $db->insert('photos',array('authority_id'=>$db->lastId, 'filename'=>$newFileName,
+        $db->insert('photos',array('authority_id'=>$db->lastId, 'image'=>$newFileName,
                     'description'=>$items['title']." ".$items['name']." ".$items['surname'],
                     ));
         $res1 = $db->getResult();

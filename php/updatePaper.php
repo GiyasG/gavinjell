@@ -88,7 +88,7 @@ $db->update('papers',array('title'=>$items['title'],
         echo "ERROR 1";
 			die('Cant connect1: ' . mysql_error());
     } else {
-      $db->update('photos',array('filename'=>$newFileName,
+      $db->update('photos',array('image'=>$newFileName,
                   'description'=>$items['description']),
                   'paper_id='.$items['id']);
                 $res1 = $db->getResult();

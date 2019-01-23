@@ -22,25 +22,14 @@ require '../vendor/autoload.php';
   if (isset($db)) {
     $tb = new Table();
     $res = $tb->get_ParentResult('authority', 'photos');
-  // print_r ($res);
-    $outp3 = "";
-
-    foreach ($res as $rs) {
-        if ($outp3 != "") {$outp3 .= ",";}
-        $outp3 .= '{"id":"'.$rs["id"].'",';
-        $outp3 .= '"title":"'.$rs["title"].'",';
-        $outp3 .= '"name":"'.$rs["name"].'",';
-        $outp3 .= '"surname":"'.$rs["surname"].'",';
-        $outp3 .= '"about":"'.$rs["about"].'",';
-        $outp3 .= '"image":"'.$rs["filename"].'",';
-        $outp3 .= '"position":"'.$rs["position"].'"}';
-        // echo ($rs["about"]);
-    }
-
-    $outp3 ='{"all":['.$outp3.']}';
-  } else {
-    $outp3 ='{"all":["No items found"]}';
-  }
+    $res[0]['about'] = html_entity_decode($res[0]['about']);
+    $res[0]['about'] = str_replace('"','\"',$res[0]['about']);
+    // echo ($res[0]['about']);
+  $outp3 ='{"all":['.json_encode($res).']}';
+  // echo (json_encode($outp3));
+} else {
+  $outp3 ='{"all":["No items found"]}';
+}
 
 $outp = '{"isloggedin":['.$outp1.','.$outp2.','.$outp3.']}';
 echo ($outp);

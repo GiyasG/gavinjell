@@ -5,7 +5,7 @@
   .component('items', {
     templateUrl: 'src/template/admin.template.html',
     bindings: {
-      items: '<'
+      items: '<',
         }
   });
 

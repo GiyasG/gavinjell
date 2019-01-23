@@ -11,12 +11,13 @@
   .directive('paperUpdate', PaperUpdateDirective);
 
 
-  AdminController.$inject = ['$scope', '$http', 'Upload', 'items'];
+  AdminController.$inject = ['$scope', '$http', '$sce', 'Upload', 'items'];
 
-    function AdminController($scope, $http, Upload, items) {
+    function AdminController($scope, $http, $sce, Upload, items) {
 
         var aCtrl = this;
         aCtrl.items = items;
+        // aCtrl.items[0].all[0].about = $sce.trustAsHtml(aCtrl.items[0].all[0].about);
         $scope.updateIndexItem = null;
         $scope.updateIndexProject = null;
         $scope.updateIndexPaper = null;
@@ -24,11 +25,14 @@
         $scope.AddNewProject = false;
         $scope.AddNewPaper = false;
         $scope.hasRoleAdmin = aCtrl.items[4].AdminIsIn;
+        $scope.tinymceModel = "";
+        // console.log($scope.tinymceModel);
         console.log($scope.hasRoleAdmin);
 
         //**************** Data for Dbase Upload ********************//
           $scope.itemU = {};
           $scope.fElements = {};
+          $scope.fElements.about = "";
           $scope.fElements.genders = {
             model: null,
             sex: ["male","female"]
@@ -41,9 +45,12 @@
           // console.log($scope.fElements.genders.sex);
         //**********************************************************//
         //**************** Authoriyu Add new record *********************//
-        $scope.onFileSelect = function(file) {
-          // console.log(file);
+        $scope.onFileSelect = function(file, abauth) {
+          console.log(abauth);
+          $scope.fElements.about = abauth;
+          console.log($scope.fElements.about);
             $scope.message = "";
+
                 $scope.upload = Upload.upload({
                     url: 'php/upload.php',
                     method: 'POST',
@@ -66,7 +73,7 @@
                       newitem.position = $scope.message.info[0].newitem[0].position;
                       newitem.dob = $scope.message.info[0].newitem[0].dob;
                       newitem.sex = $scope.message.info[0].newitem[0].genders.model;
-                      newitem.filename = $scope.message.info[0].newitem[0].filename;
+                      newitem.image = $scope.message.info[0].newitem[0].filename;
 
                       aCtrl.items[0].all.push(newitem);
 
@@ -107,10 +114,12 @@
                  })
               .then(function(response) {
                 console.log(response.data);
-                  $scope.itemU = response.data.item[0];
+                  $scope.itemU = response.data.item[0][0];
                   $scope.fElements.genders.model = $scope.itemU.sex;
                   console.log($scope.itemU);
                   console.log($scope.fElements);
+                  // $scope.tinymceData.about = response.data.item[0].about;
+
                   return response.data.item;
               });
             }
@@ -148,11 +157,11 @@
                     }
                       uitem.image = $scope.uadata.info[0].updateitem[0].image;
 
-                      console.log("aCtrl = "+aCtrl.items[0].all);
-                      var rid = aCtrl.items[0].all.findIndex(x => x.authority_id === uitem.authority_id);
+                      console.log("aCtrl = "+aCtrl.items[0].all[0]);
+                      var rid = aCtrl.items[0].all[0].findIndex(x => x.authority_id === uitem.authority_id);
                       console.log(rid);
-                      aCtrl.items[0].all[rid] = uitem;
-                      console.log(aCtrl.items[0].all);
+                      aCtrl.items[0].all[0][rid] = uitem;
+                      console.log(aCtrl.items[0].all[0]);
                       console.log($scope.itemU);
 
                   }).error(function(data, status) {
@@ -202,10 +211,6 @@
 
           //**************** Project Update *********************//
           $scope.onProjectUpdate = function(file) {
-              $scope.tinymceModel = $scope.tinymceModel;;
-              console.log($scope.tinymceModel);
-              // $scope.itemU.description = $scope.tinymceModel;
-            // console.log(file);
               $scope.message = "";
                   $scope.upload = Upload.upload({
                       url: 'php/updateProject.php',
@@ -233,9 +238,9 @@
                       uitem.authority_id = $scope.message.info[0].updateitem[0].authority_id;
 
                       // console.log(newitem);
-                      var rid = aCtrl.items[1].projects.findIndex(x => x.id === $scope.itemU.id);
-                      aCtrl.items[1].projects[rid] = uitem;
-                      console.log(aCtrl.items[1].projects);
+                      var rid = aCtrl.items[1].projects[0].findIndex(x => x.id === $scope.itemU.id);
+                      aCtrl.items[1].projects[0][rid] = uitem;
+                      console.log(aCtrl.items[1].projects[0]);
                       console.log(rid);
                       $scope.updateIndexProject = null
 
@@ -255,9 +260,9 @@
                 .then(function(response) {
                     // console.log(response.data.info);
                     // console.log(aCtrl.items[1].projects);
-                    var rid = aCtrl.items[1].projects.findIndex(x => x.id === id);
-                    // console.log(rid);
-                    aCtrl.items[1].projects.splice(rid, 1);
+                    var rid = aCtrl.items[1].projects[0][0].findIndex(x => x.id === id);
+                    console.log(rid);
+                    aCtrl.items[1].projects[0][0].splice(rid, 1);
                     return response.data.info;
                 });
           };
@@ -272,9 +277,7 @@
                   headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
                    })
                 .then(function(response) {
-                    $scope.itemU = response.data.item[0];
-                    $scope.tinymceModel = $scope.itemU.description;
-
+                    $scope.itemU = response.data.item[0][0];
                     console.log($scope.itemU);
                     return response.data.item;
                 });
@@ -469,7 +472,7 @@
       function ProjectUpdateDirective () {
         return {
           templateUrl: 'src/template/project-update.html'
-                  }
+          }
         }
 
         function PaperAddDirective () {

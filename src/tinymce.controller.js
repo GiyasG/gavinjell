@@ -6,15 +6,23 @@
 
   TinyMceController.$inject = ['$scope'];
   function TinyMceController($scope) {
+
+
     $scope.tinymceModel = 'Initial content';
 
     $scope.getContent = function() {
       console.log('Editor content:', $scope.tinymceModel);
     };
 
-    $scope.setContent = function() {
-      $scope.tinymceModel = 'Time: ' + (new Date());
+    $scope.setContent = function(db) {
+      if (db=="proj") {
+        $scope.tinymceModel = $scope.itemU.description;
+      }
     };
+
+    $scope.tinymceData = {
+      description: ""
+    }
 
     $scope.tinymceOptions = {
       plugins: 'link image code',

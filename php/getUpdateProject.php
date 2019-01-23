@@ -17,32 +17,17 @@ if (isset($postdata->id)) {
   $res = $db->getResult();
 
 // print_r($res);
+
   if (!$res) {
     die('Cant connect: ' . mysql_error());
   } else {
-    $outp = "";
-      foreach ($res as $rs) {
-          if ($outp != "") {$outp .= ",";}
-
-          $db->select('photos','filename',null,'project_id='.$rs['id']);
-          $photo = $db->getResult();
-          if (isset($photo[0])) {
-            // print_r ($photo);
-            $outp .= '{"image":"'.$photo[0]["filename"].'",';
-          } else {
-            $outp .= '{"image":"temp.jpg",';
-          }
-
-          $outp .= '"id":"'.$rs["id"].'",';
-          $outp .= '"authority_id":"'.$rs["authority_id"].'",';
-          $outp .= '"title":"'.$rs["title"].'",';
-          $outp .= '"description":"'.$rs["description"].'",';
-          $outp .= '"url":"'.$rs["url"].'",';
-          $outp .= '"started":"'.$rs["started"].'",';
-          $outp .= '"finished":"'.$rs["finished"].'"}';
-      }
-
-      $outp ='{"item":['.$outp.']}';
+    $db->select('photos','image',null,'project_id='.$res[0]['id']);
+    $photo = $db->getResult();
+    if (isset($photo[0])) {
+      $res[0]['image'] = $photo[0]["image"];
+    }
+    $outp = json_encode($res);
+    $outp =htmlspecialchars_decode('{"item":['.$outp.']}');
     echo ($outp);
 
   }

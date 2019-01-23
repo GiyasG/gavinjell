@@ -279,6 +279,12 @@ class Database{
 		  return $data;
 		}
 
+		public function test_inputs($data) {
+		  $data = trim($data);
+		  $data = htmlspecialchars($data);
+		  return $data;
+		}
+
 }
 
 class Table extends Database {

@@ -115,7 +115,7 @@ function toDbase($items, $newFileName) {
   die('Cant connect: ' . mysql_error());
 } else {
         $db->insert('photos',array('paper_id'=>$db->lastId,
-                    'filename'=>$newFileName,
+                    'image'=>$newFileName,
                     'description'=>$items['title']));
         $res1 = $db->getResult();
         if (!$res1) {

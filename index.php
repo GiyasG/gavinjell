@@ -10,7 +10,8 @@
 <script type="text/javascript" src="bower_components/tinymce/tinymce.js"></script>
 <!-- <script type="text/javascript" src="bower_components/angular/angular.js"></script> -->
 <script src="lib/angular.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+<script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 
 <script src="lib/angular-ui-router.min.js"></script>
 <script src="lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
@@ -20,7 +21,7 @@
 
 
 <script src="lib/jquery.min.js"></script>
-<script src="lib//bootstrap.min.js"></script>
+<script src="lib/bootstrap.min.js"></script>
 
 <script src="src/shopapp.module.js"></script>
 <script src="src/loading/loading.component.js"></script>

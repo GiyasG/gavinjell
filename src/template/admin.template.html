@@ -15,7 +15,7 @@
 
 <admin-add ng-if="AddNewRecord"></admin-add>
 
-<div ng-repeat="item in aCtrl.items[0].all" ng-init="sectionIndex = $index">
+<div ng-repeat="item in aCtrl.items[0].all[0]" ng-init="sectionIndex = $index">
 	<div ng-if="sectionIndex != updateIndexItem" class="row">
 
     <div class="col-md-2">
@@ -30,7 +30,7 @@
 
         <div class="col-md-6">
             <p> {{item.title}} {{item.name}} {{item.surname}}</p>
-            <p> {{item.about}} </p>
+            <p ng-bind-html="item.about"></p>
         </div>
     </div>
     <admin-update ng-if="sectionIndex == updateIndexItem"></admin-update>
@@ -58,7 +58,8 @@
 	</div>
 	<div class="col-md-6">
 			<p> {{item.title}} </p>
-			<p>{{item.description.slice(0, 200)}} ...</p>
+			<p ng-bind-html="item.description.slice(0, 200)"></p>
+			<!-- <p>{{item.description.slice(0, 200)}} ...</p> -->
 	</div>
 </div>
 	<project-update ng-if="sectionIndex == updateIndexProject"></project-update>

@@ -23,11 +23,10 @@
     <input class="form-control"  type="date" ng-model="itemU.finished" value="{{itemU.finished}}"/>
 </div>
 
-  <div class="well col-md-6">
     <span>Description</span>
-    <textarea ui-tinymce="tinymceOptions" ng-model="tinymceModel" ng-trim="false" ></textarea>
-    <!-- <textarea type="textarea" ng-model="itemU.description" rows="5" style="min-width: 90%;"></textarea> -->
-  </div>
+    <div class="well col-md-6">
+     <textarea data-ui-tinymce id="tinymce+itemU.id" data-ng-model="itemU.description"></textarea>
+    </div>
 
 
 <hr>

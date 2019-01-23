@@ -20,13 +20,13 @@
 <div ui-view="verifyemail"></div>
 <div ui-view="changepassword"></div>
 
-    <div class="container col-md-9 column-in-center" ng-repeat="item in hCtrl.isloggedin[2].all" ng-init="sectionIndex = $index">
+    <div class="container col-md-9 column-in-center" ng-repeat="item in hCtrl.isloggedin[2].all[0]" ng-init="sectionIndex = $index">
             <div class="col-md-4 cell">
                 <img style="width: 200px;" ng-src="img/{{item.image}}"  alt="photo"/>
             </div>
 
             <div class="col-md-7">
-                <p> {{item.about}} </p>
+                <p ng-bind-html="item.about"></p>
                 <p> {{item.title}} {{item.name}} {{item.surname}} </p>
                 <!-- <p>{{item.position}}</p> -->
             </div>
