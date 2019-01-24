@@ -44,6 +44,13 @@ if (isset($db)) {
   $records_number  = sizeof($res);
   $records_per_page = 3;
 
+  for ($i=0; $i < $records_number; $i++) {
+      $res[$i]['about'] = html_entity_decode($res[$i]['about']);
+      $res[$i]['about'] = str_replace('"','\"',$res[$i]['about']);
+      $res[$i]['description'] = html_entity_decode($res[$i]['description']);
+      $res[$i]['description'] = str_replace('"','\"',$res[$i]['description']);
+  }
+
   if ($choosendb == "projects") {
     $proj = Projects("projects", $db, $res, $records_number, $records_per_page);
   }  elseif ($choosendb == "admin") {
@@ -59,6 +66,13 @@ $res = $tb->get_ParentResult('authority', 'papers');
 $records_number  = sizeof($res);
 $records_per_page = 3;
 
+for ($i=0; $i < $records_number; $i++) {
+    $res[$i]['about'] = html_entity_decode($res[$i]['about']);
+    $res[$i]['about'] = str_replace('"','\"',$res[$i]['about']);
+    $res[$i]['description'] = html_entity_decode($res[$i]['description']);
+    $res[$i]['description'] = str_replace('"','\"',$res[$i]['description']);
+}
+
 if ($choosendb == "papers") {
   $papr = Projects("papers", $db, $res, $records_number, $records_per_page);
 }  elseif ($choosendb == "admin") {
@@ -73,6 +87,13 @@ if ($choosendb == "papers") {
 $res = $tb->get_ParentResult('authority', 'teams');
 $records_number  = sizeof($res);
 $records_per_page = 3;
+
+for ($i=0; $i < $records_number; $i++) {
+    $res[$i]['about'] = html_entity_decode($res[$i]['about']);
+    $res[$i]['about'] = str_replace('"','\"',$res[$i]['about']);
+    // $res[$i]['description'] = html_entity_decode($res[$i]['description']);
+    // $res[$i]['description'] = str_replace('"','\"',$res[$i]['description']);
+}
 
 if ($choosendb == "teams") {
   $team = Projects("teams", $db, $res, $records_number, $records_per_page);
@@ -105,6 +126,13 @@ function Projects($dbname, $db, $res, $records_number, $records_per_page)
     for ($l=0; $l <= $whole_pages-1; $l++) {
       for ($i=0; $i < $records_per_page; $i++) {
         $page_projects[$l][$i] = array_shift($res);
+        if (isset($page_projects[$l][$i]['about'])) {
+          $page_projects[$l][$i]['about'] = html_entity_decode($page_projects[$l][$i]['about']);
+          $page_projects[$l][$i]['about'] = str_replace('"','\"',$page_projects[$l][$i]['about']);
+        } elseif (isset($page_projects[$l][$i]['description'])) {
+          $page_projects[$l][$i]['description'] = html_entity_decode($page_projects[$l][$i]['description']);
+          $page_projects[$l][$i]['description'] = str_replace('"','\"',$page_projects[$l][$i]['description']);
+        }
         switch ($dbname) {
           case 'projects':
             $db->select('photos','image',null,'project_id='.$page_projects[$l][$i]['id']);
@@ -157,16 +185,13 @@ function Projects($dbname, $db, $res, $records_number, $records_per_page)
 
   switch ($dbname) {
     case 'projects':
-    print_r ($page_projects[0]);
-      $page_projects[0]['description'] = html_entity_decode($page_projects[0]['description']);
-      $page_projects[0]['description'] = str_replace('"','\"',$page_projects[0]['description']);
       $proj = '{"projects":['.json_encode($page_projects).']}';
       break;
     case 'papers':
-      $proj = htmlspecialchars_decode('{"papers":['.json_encode($page_projects).']}');
+      $proj = '{"papers":['.json_encode($page_projects).']}';
       break;
     case 'teams':
-      $proj = htmlspecialchars_decode('{"teams":['.json_encode($page_projects).']}');
+      $proj = '{"teams":['.json_encode($page_projects).']}';
       break;
     // default:
     //   // code...
@@ -186,6 +211,8 @@ function Projects($dbname, $db, $res, $records_number, $records_per_page)
         break;
     }
   }
+
   return $proj;
 }
+
 ?>

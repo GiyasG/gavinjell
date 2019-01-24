@@ -20,28 +20,16 @@ if (isset($postdata->id)) {
   if (!$res) {
     die('Cant connect: ' . mysql_error());
   } else {
-    $outp = "";
-      foreach ($res as $rs) {
-          if ($outp != "") {$outp .= ",";}
+    $res[0]['description'] = html_entity_decode($res[0]['description']);
+    $res[0]['description'] = str_replace('"','\'',$res[0]['description']);
 
-          $db->select('photos','image',null,'paper_id='.$rs['id']);
+          $db->select('photos','image',null,'paper_id='.$res[0]['id']);
           $photo = $db->getResult();
           if (isset($photo[0])) {
-            // print_r ($photo);
-            $outp .= '{"image":"'.$photo[0]["image"].'",';
-          } else {
-            $outp .= '{"image":"temp.jpg",';
+            $res[0]['image'] = $photo[0]["image"];
           }
+    $outp = json_encode($res);
 
-          $outp .= '"id":"'.$rs["id"].'",';
-          $outp .= '"authority_id":"'.$rs["authority_id"].'",';
-          $outp .= '"title":"'.$rs["title"].'",';
-          $outp .= '"url":"'.$rs["url"].'",';
-          $outp .= '"description":"'.$rs["description"].'",';
-          $outp .= '"published":"'.$rs["published"].'"}';
-      }
-
-      $outp ='{"item":['.$outp.']}';
     echo ($outp);
 
   }

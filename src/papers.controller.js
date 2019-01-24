@@ -4,9 +4,9 @@
   angular.module('ShopApp')
   .controller('PapersController', PapersController);
 
-  PapersController.$inject = ['items', '$http'];
+  PapersController.$inject = ['items', '$http', '$sce'];
 
-  function PapersController(items, $http) {
+  function PapersController(items, $http, $sce) {
     var papersCtrl = this;
     papersCtrl.items = items;
     console.log("pCtrl: "+papersCtrl.items);

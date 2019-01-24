@@ -4,9 +4,9 @@
   angular.module('ShopApp')
   .controller('ProjectsController', ProjectsController);
 
-  ProjectsController.$inject = ['items', '$http'];
+  ProjectsController.$inject = ['items', '$http', '$sce'];
 
-  function ProjectsController(items, $http) {
+  function ProjectsController(items, $http, $sce) {
     var projectsCtrl = this;
     projectsCtrl.items = items;
     projectsCtrl.totalPages = [];

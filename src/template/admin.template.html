@@ -58,8 +58,7 @@
 	</div>
 	<div class="col-md-6">
 			<p> {{item.title}} </p>
-			<p ng-bind-html="item.description.slice(0, 200)"></p>
-			<!-- <p>{{item.description.slice(0, 200)}} ...</p> -->
+			<p ng-bind-html="item.description"></p>
 	</div>
 </div>
 	<project-update ng-if="sectionIndex == updateIndexProject"></project-update>
@@ -82,10 +81,34 @@
 	</div>
 	<div class="col-md-6">
 			<p> {{item.title}} </p>
-			<p> {{item.description.slice(0, 200)}} </p>
+			<p ng-bind-html="item.description"></p>
 	</div>
 </div>
 	<paper-update ng-if="sectionIndex == updateIndexPaper"></paper-update>
+	<hr>
+</div>
+</div>
+
+<!-- TEAM -->
+<div class="well">
+<div class="text-center"><h4>Update or delete team members</h4></div>
+
+<div ng-repeat="item in aCtrl.items[2].teams[0][0]" ng-init="sectionIndex = $index">
+	<div ng-if="sectionIndex != updateIndexTeam" class="row">
+ 	<div class="col-md-2">
+ 		<button class="btn btn-success" ng-click="UpdateTeam(item.authority_id, item.id, sectionIndex)">Update</button>
+ 		<button class="btn btn-warning" ng-click="DeleteTeam(item.authority_id, item.id)">Delete</button>
+ 		<!-- <p>{{sectionIndex}}</p> -->
+ 	</div>
+	<div class="col-md-2 well text-center">
+			<img class="imgfit" ng-src="img/{{item.image}}"  alt="photo"/>
+	</div>
+	<div class="col-md-6">
+		<p> {{item.title}} {{item.name}} {{item.surname}}</p>
+		<p ng-bind-html="item.about"></p>
+	</div>
+</div>
+	<team-update ng-if="sectionIndex == updateIndexTeam"></team-update>
 	<hr>
 </div>
 </div>

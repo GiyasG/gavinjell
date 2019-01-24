@@ -8,9 +8,9 @@
   .directive('sessionRegister', SessionRegisterDirective)
   .directive('forgottenPassword', ForgottenPassordDirective);
 
-  HomeController.$inject = ['$scope', '$http', 'isloggedin', '$uibModal', '$log', 'Upload'];
+  HomeController.$inject = ['$scope', '$http', 'isloggedin', '$uibModal', '$log', 'Upload', '$sce'];
 
-    function HomeController($scope, $http, isloggedin, $uibModal, $log, Upload) {
+    function HomeController($scope, $http, isloggedin, $uibModal, $log, Upload, $sce) {
 
         var hCtrl = this;
         //**************** Data for Dbase Upload ********************//

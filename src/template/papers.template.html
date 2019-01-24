@@ -11,12 +11,13 @@
 							<img class="imgfit" ng-src="img/{{item.image}}"  alt="photo"/>
 						</div>
 						<div class="col-md-8">
+							<p ng-bind-html="item.description"></p>
+						</div>
+						<div class="col-md-12">
 							<p>URL: {{item.url}}</p>
 							<p>Publishing date: {{item.published}}</p>
 						</div>
-						<div class="col-md-12">
-            	<text> {{item.description}} </text>
-						</div>
+						<hr>
        </div>
 </div>
 <div class="col-md-5  column-in-center">

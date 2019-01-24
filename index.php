@@ -12,7 +12,6 @@
 <script src="lib/angular.min.js"></script>
 <script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-
 <script src="lib/angular-ui-router.min.js"></script>
 <script src="lib/ui-bootstrap-tpls-2.5.0.min.js"></script>
 <!-- <script src="lib/ui-bootstrap-0.11.2.min.js"></script> -->

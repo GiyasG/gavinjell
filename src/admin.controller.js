@@ -21,9 +21,11 @@
         $scope.updateIndexItem = null;
         $scope.updateIndexProject = null;
         $scope.updateIndexPaper = null;
+        $scope.updateIndexTeam = null;
         $scope.AddNewRecord = false;
         $scope.AddNewProject = false;
         $scope.AddNewPaper = false;
+        $scope.AddNewTeam = false;
         $scope.hasRoleAdmin = aCtrl.items[4].AdminIsIn;
         $scope.tinymceModel = "";
         // console.log($scope.tinymceModel);
@@ -39,12 +41,13 @@
          };
          $scope.fProjects = {};
          $scope.fPapers = {};
+         $scope.fTeams = {};
 
           // console.log(aCtrl.items[0].all.length);
           // console.log(aCtrl.items[0].all);
           // console.log($scope.fElements.genders.sex);
         //**********************************************************//
-        //**************** Authoriyu Add new record *********************//
+        //**************** Authority Add new record *********************//
         $scope.onFileSelect = function(file, abauth) {
           console.log(abauth);
           $scope.fElements.about = abauth;
@@ -114,13 +117,13 @@
                  })
               .then(function(response) {
                 console.log(response.data);
-                  $scope.itemU = response.data.item[0][0];
+                  $scope.itemU = response.data[0];
                   $scope.fElements.genders.model = $scope.itemU.sex;
                   console.log($scope.itemU);
                   console.log($scope.fElements);
                   // $scope.tinymceData.about = response.data.item[0].about;
 
-                  return response.data.item;
+                  return response.data[0];
               });
             }
 
@@ -277,9 +280,9 @@
                   headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
                    })
                 .then(function(response) {
-                    $scope.itemU = response.data.item[0][0];
+                    $scope.itemU = response.data[0];
                     console.log($scope.itemU);
-                    return response.data.item;
+                    return response.data;
                 });
               }
 
@@ -387,12 +390,134 @@
                       headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
                        })
                     .then(function(response) {
-                        $scope.itemU = response.data.item[0];
+                        $scope.itemU = response.data[0];
                         console.log($scope.itemU);
-                        return response.data.item;
+                        return response.data;
                     });
                   }
 
+                  //**************** Team Add new record *********************//
+                  $scope.onTeamSelect = function(file) {
+                    console.log($scope.fElements.about);
+                      $scope.message = "";
+
+                          $scope.upload = Upload.upload({
+                              url: 'php/uploadTeam.php',
+                              method: 'POST',
+                              file: file,
+                              data: {
+                                        'item': $scope.fTeams
+                                    }
+                          }).success(function(data, status, headers, config) {
+                              $scope.message = data;
+
+
+                              if ($scope.message.info[0].newitem[0].id) {
+
+                                var newitem = {};
+                                newitem.id = $scope.message.info[0].newitem[0].id;
+                                newitem.title = $scope.message.info[0].newitem[0].title;
+                                newitem.name = $scope.message.info[0].newitem[0].name;
+                                newitem.surname = $scope.message.info[0].newitem[0].surname;
+                                newitem.about = $scope.message.info[0].newitem[0].about;
+                                newitem.position = $scope.message.info[0].newitem[0].position;
+                                newitem.dob = $scope.message.info[0].newitem[0].dob;
+                                newitem.sex = $scope.message.info[0].newitem[0].genders.model;
+                                newitem.image = $scope.message.info[0].newitem[0].filename;
+
+                                aCtrl.items[0].all.push(newitem);
+
+                                console.log($scope.message.info[0].newitem[0].id);
+                                $scope.AddNewTeam = false;
+                                $scope.fTeams = {};
+                              }
+                          }).error(function(data, status) {
+                              $scope.message = data;
+                          });
+                  };
+
+                  //************************************************//
+                  $scope.DeleteTeam = function(id) {
+                      console.log("id is: "+id);
+                    $http({
+                          method  : 'POST',
+                          url     : 'php/DeleteTeam.php',
+                          data    : {id: id},
+                          headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
+                           })
+                        .then(function(response) {
+                            console.log(response.data.info);
+                            var rid = aCtrl.items[0].teams.findIndex(x => x.id === id);
+                            aCtrl.items[0].all.splice(rid, 1);
+                            return response.data.info;
+                        });
+                  };
+
+                  $scope.UpdateTeam = function (id, sid) {
+                    $scope.message = "";
+                    $scope.updateIndexTeam = sid;
+                    $http({
+                          method  : 'POST',
+                          url     : 'php/getUpdateTeam.php',
+                          data    : {id: id},
+                          headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
+                           })
+                        .then(function(response) {
+                          console.log(response.data);
+                            $scope.itemU = response.data[0];
+                            $scope.fElements.genders.model = $scope.itemU.sex;
+                            console.log($scope.itemU);
+                            console.log($scope.fElements);
+                            // $scope.tinymceData.about = response.data.item[0].about;
+
+                            return response.data[0];
+                        });
+                      }
+
+
+                    //**************** Authority Update *********************//
+                    $scope.onFileUpdate = function(file) {
+                      if ($scope.fElements.genders.model != null) {
+                        $scope.itemU.sex = $scope.fElements.genders.model;
+                      }
+                        $scope.message = "";
+                            $scope.upload = Upload.upload({
+                                url: 'php/update.php',
+                                method: 'POST',
+                                file: file,
+                                data: {
+                                          'item': $scope.itemU
+                                      }
+                            }).success(function(data, status, headers, config) {
+                                $scope.uadata = data;
+                                $scope.updateIndex = null;
+
+                                var uitem = {};
+
+                                uitem.authority_id = $scope.uadata.info[0].updateitem[0].id;
+                                uitem.title = $scope.uadata.info[0].updateitem[0].title;
+                                uitem.name = $scope.uadata.info[0].updateitem[0].name;
+                                uitem.surname = $scope.uadata.info[0].updateitem[0].surname;
+                                uitem.about = $scope.uadata.info[0].updateitem[0].about;
+                                uitem.position = $scope.uadata.info[0].updateitem[0].position;
+                                uitem.dob = $scope.uadata.info[0].updateitem[0].dob;
+                                uitem.sex = $scope.uadata.info[0].updateitem[0].sex;
+                              if (file) {
+                                $scope.itemU.image = $scope.uadata.info[0].updateitem[0].image;
+                              }
+                                uitem.image = $scope.uadata.info[0].updateitem[0].image;
+
+                                console.log("aCtrl = "+aCtrl.items[0].all[0]);
+                                var rid = aCtrl.items[0].all[0].findIndex(x => x.authority_id === uitem.authority_id);
+                                console.log(rid);
+                                aCtrl.items[0].all[0][rid] = uitem;
+                                console.log(aCtrl.items[0].all[0]);
+                                console.log($scope.itemU);
+
+                            }).error(function(data, status) {
+                                $scope.message.info[1].message = data;
+                            });
+                    };
           //************************************************//
 
         $scope.AddItem = function() {

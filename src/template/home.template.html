@@ -25,9 +25,9 @@
                 <img style="width: 200px;" ng-src="img/{{item.image}}"  alt="photo"/>
             </div>
 
-            <div class="col-md-7">
-                <p ng-bind-html="item.about"></p>
-                <p> {{item.title}} {{item.name}} {{item.surname}} </p>
+            <div class="col-md-8">
+                <p class="text-justify" ng-bind-html="item.about"></p>
+                <h3 class="text-right"> {{item.title}} {{item.name}} {{item.surname}} </h3>
                 <!-- <p>{{item.position}}</p> -->
             </div>
     </div>

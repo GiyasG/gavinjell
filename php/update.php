@@ -79,7 +79,7 @@ function toDbase($items, $newFileName) {
 $db->update('authority',array('title'=>$items['title'],
                               'name'=>$items['name'],
                               'surname'=>$items['surname'],
-                              'about'=>htmlspecialchars($items['about']),
+                              'about'=>htmlentities($items['about']),
                               'sex'=>$items['sex'],
                               'position'=>$items['position'],
                               'dob'=>$items['dob']),
