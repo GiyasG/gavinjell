@@ -1,22 +1,7 @@
-<h4>
-<a ng-show="hasRoleAdmin" ui-sref="admin">Admin</a>
-</h4>
-<div class="auth_link">
-
-  <button ng-if="showLogin"
-    class="btn btn-primary"
-    ng-click="hCtrl.open()">Login
-  </button>
-
-  <button ng-if="!showLogin"
-  class="btn btn-primary"
-  ng-click="logoutForm()">Log out
-  </button>
-
-</div>
+<nav-bar>
+</nav-bar>
 
 <!-- <session-cart ng-if="showCart"></session-cart> -->
-
 <div ui-view="verifyemail"></div>
 <div ui-view="changepassword"></div>
 

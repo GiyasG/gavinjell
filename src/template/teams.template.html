@@ -1,9 +1,6 @@
-
+<nav-bar></nav-bar>
 <div class="container">
-	<h2> Dr. Jell's Lab </h2>
-	<a ui-sref="home">Home</a>
-	<span class="glyphicon glyphicon-triangle-right"></span>
-	<span> Our team </span>
+	<h2> Our team </h2>
 	<hr>
 <div class="col-md-12"  ng-repeat="item in teamsCtrl.PagesTeams[0]">
 
@@ -11,10 +8,10 @@
 			<img class="imgfit" ng-src="img/{{item.image}}"  alt="photo"/>
 		</div>
 		<div class="col-md-8">
-			<p> {{item.title}} {{item.name}} {{item.surname}}</p>
+			<p ng-bind-html="item.about"></p>
 		</div>
 		<div class="col-md-12">
-			<text> {{item.about}}</text>
+			<p> {{item.title}} {{item.name}} {{item.surname}}</p>
 		</div>
 </div>
 </div>

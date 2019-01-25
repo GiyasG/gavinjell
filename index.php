@@ -69,16 +69,18 @@
     <loading class="loading-indicator"></loading>
 
 <div ui-view class="container">
+  <div ui-view="nav"></div>
   <div ui-view="content"></div>
   <!-- <div ui-view="basket"></div> -->
   <div ui-view="admin"></div>
   <hr>
-  <footer>
-    <div class="center">
-      <p>Dr. Jell's Lab 2018 <span class="glyphicon glyphicon-copyright-mark"></span></p>
-    </div>
-  </footer>
 </div>
+<hr>
+<footer>
+  <div class="container text-center">
+    <p>Dr. Jell's Lab 2018 <span class="glyphicon glyphicon-copyright-mark"></span></p>
+  </div>
+</footer>
 
 
 </body>

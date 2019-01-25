@@ -3,6 +3,7 @@
 
   angular.module('ShopApp')
   .controller('HomeController', HomeController)
+  .directive('navBar', NavBarDirective)
   .directive('sessionCart', SessionCartDirective)
   .directive('sessionLogin', SessionLoginDirective)
   .directive('sessionRegister', SessionRegisterDirective)
@@ -172,7 +173,13 @@ $http({
           };
 };
 
-    function SessionCartDirective () {
+  function NavBarDirective () {
+    return {
+      templateUrl: 'src/template/nav-bar.html'
+    }
+  };
+
+  function SessionCartDirective () {
       return {
         templateUrl: 'src/template/session-cart.html'
       }

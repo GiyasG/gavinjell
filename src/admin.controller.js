@@ -8,7 +8,9 @@
   .directive('projectAdd', ProjectAddDirective)
   .directive('projectUpdate', ProjectUpdateDirective)
   .directive('paperAdd', PaperAddDirective)
-  .directive('paperUpdate', PaperUpdateDirective);
+  .directive('paperUpdate', PaperUpdateDirective)
+  .directive('teamAdd', TeamAddDirective)
+  .directive('teamUpdate', TeamUpdateDirective);
 
 
   AdminController.$inject = ['$scope', '$http', '$sce', 'Upload', 'items'];
@@ -17,7 +19,7 @@
 
         var aCtrl = this;
         aCtrl.items = items;
-        // aCtrl.items[0].all[0].about = $sce.trustAsHtml(aCtrl.items[0].all[0].about);
+        console.log(aCtrl.items[2].papers[0]);// aCtrl.items[0].all[0].about = $sce.trustAsHtml(aCtrl.items[0].all[0].about);
         $scope.updateIndexItem = null;
         $scope.updateIndexProject = null;
         $scope.updateIndexPaper = null;
@@ -42,6 +44,10 @@
          $scope.fProjects = {};
          $scope.fPapers = {};
          $scope.fTeams = {};
+         $scope.fTeams.genders = {
+           model: null,
+           sex: ["male","female"]
+        };
 
           // console.log(aCtrl.items[0].all.length);
           // console.log(aCtrl.items[0].all);
@@ -202,7 +208,7 @@
                         newitem.authority_id = $scope.message.info[0].newitem[0].authority_id;
                         newitem.image = $scope.message.info[0].newitem[0].image;
 
-                        aCtrl.items[1].projects.push(newitem);
+                        aCtrl.items[1].projects[0][0].push(newitem);
                         console.log(aCtrl.items[1].projects);
                         $scope.AddNewProject = false;
                         $scope.fProjects = {};
@@ -240,10 +246,10 @@
                       uitem.finished = $scope.message.info[0].updateitem[0].finished;
                       uitem.authority_id = $scope.message.info[0].updateitem[0].authority_id;
 
-                      // console.log(newitem);
-                      var rid = aCtrl.items[1].projects[0].findIndex(x => x.id === $scope.itemU.id);
-                      aCtrl.items[1].projects[0][rid] = uitem;
-                      console.log(aCtrl.items[1].projects[0]);
+                      console.log(aCtrl.items[1]); //.projects[0]);
+                      var rid = aCtrl.items[1].projects[0][0].findIndex(x => x.id === $scope.itemU.id);
+                      aCtrl.items[1].projects[0][0][rid] = uitem;
+                      // console.log(aCtrl.items[1].projects[0]);
                       console.log(rid);
                       $scope.updateIndexProject = null
 
@@ -312,8 +318,8 @@
                             newitem.authority_id = $scope.message.info[0].newitem[0].authority_id;
                             newitem.image = $scope.message.info[0].newitem[0].image;
 
-                            aCtrl.items[2].papers.push(newitem);
-                            console.log(aCtrl.items[2].papers);
+                            aCtrl.items[2].papers[0][0].push(newitem);
+                            console.log(aCtrl.items[2].papers[0]);
                             $scope.AddNewPaper = false;
                             $scope.fPapers = {};
                           }
@@ -350,11 +356,14 @@
                           uitem.id = $scope.message.info[0].updateitem[0].id;
                           uitem.authority_id = $scope.message.info[0].updateitem[0].authority_id;
 
-                          // console.log(newitem);
-                          var rid = aCtrl.items[2].papers.findIndex(x => x.id === $scope.itemU.id);
-                          aCtrl.items[2].papers[rid] = uitem;
+                          console.log(aCtrl.items[2]);
+                          console.log("ID:"+$scope.itemU.id);
+                          var rid = aCtrl.items[2].papers[0][0].findIndex(x => x.id === $scope.itemU.id);
+                          aCtrl.items[2].papers[0][0][rid] = uitem;
                           console.log(aCtrl.items[2].papers);
                           console.log(rid);
+                          $scope.updateIndexPaper = null
+
 
                       }).error(function(data, status) {
                           $scope.message = data;
@@ -373,9 +382,9 @@
                     .then(function(response) {
                       // console.log(response.data.info);
                       // console.log(aCtrl.items[1].projects);
-                      var rid = aCtrl.items[2].papers.findIndex(x => x.id === id);
+                      var rid = aCtrl.items[2].papers[0][0].findIndex(x => x.id === id);
                       // console.log(rid);
-                      aCtrl.items[2].papers.splice(rid, 1);
+                      aCtrl.items[2].papers[0][0].splice(rid, 1);
                       return response.data.info;
                     });
               };
@@ -416,6 +425,7 @@
 
                                 var newitem = {};
                                 newitem.id = $scope.message.info[0].newitem[0].id;
+                                newitem.authority_id = $scope.message.info[0].newitem[0].authority_id;
                                 newitem.title = $scope.message.info[0].newitem[0].title;
                                 newitem.name = $scope.message.info[0].newitem[0].name;
                                 newitem.surname = $scope.message.info[0].newitem[0].surname;
@@ -425,7 +435,7 @@
                                 newitem.sex = $scope.message.info[0].newitem[0].genders.model;
                                 newitem.image = $scope.message.info[0].newitem[0].filename;
 
-                                aCtrl.items[0].all.push(newitem);
+                                aCtrl.items[3].teams[0][0].push(newitem);
 
                                 console.log($scope.message.info[0].newitem[0].id);
                                 $scope.AddNewTeam = false;
@@ -437,37 +447,38 @@
                   };
 
                   //************************************************//
-                  $scope.DeleteTeam = function(id) {
+                  $scope.DeleteTeam = function(aid, id) {
                       console.log("id is: "+id);
                     $http({
                           method  : 'POST',
                           url     : 'php/DeleteTeam.php',
-                          data    : {id: id},
+                          data    : {aid: aid, id: id},
                           headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
                            })
                         .then(function(response) {
                             console.log(response.data.info);
-                            var rid = aCtrl.items[0].teams.findIndex(x => x.id === id);
-                            aCtrl.items[0].all.splice(rid, 1);
+                            console.log(aCtrl.items[3].teams[0]);
+                            var rid = aCtrl.items[3].teams[0][0].findIndex(x => x.id === id);
+                            aCtrl.items[0].items[3].teams[0][0].splice(rid, 1);
                             return response.data.info;
                         });
                   };
 
-                  $scope.UpdateTeam = function (id, sid) {
+                  $scope.UpdateTeam = function (aid, id, sid) {
                     $scope.message = "";
                     $scope.updateIndexTeam = sid;
                     $http({
                           method  : 'POST',
                           url     : 'php/getUpdateTeam.php',
-                          data    : {id: id},
+                          data    : {ida: aid, id: id},
                           headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
                            })
                         .then(function(response) {
                           console.log(response.data);
                             $scope.itemU = response.data[0];
-                            $scope.fElements.genders.model = $scope.itemU.sex;
+                            $scope.fTeams.genders.model = $scope.itemU.sex;
                             console.log($scope.itemU);
-                            console.log($scope.fElements);
+                            console.log($scope.fTeams);
                             // $scope.tinymceData.about = response.data.item[0].about;
 
                             return response.data[0];
@@ -475,14 +486,14 @@
                       }
 
 
-                    //**************** Authority Update *********************//
-                    $scope.onFileUpdate = function(file) {
-                      if ($scope.fElements.genders.model != null) {
-                        $scope.itemU.sex = $scope.fElements.genders.model;
+                    //**************** Team Update *********************//
+                    $scope.onTeamUpdate = function(file) {
+                      if ($scope.fTeams.genders.model != null) {
+                        $scope.itemU.sex = $scope.fTeams.genders.model;
                       }
                         $scope.message = "";
                             $scope.upload = Upload.upload({
-                                url: 'php/update.php',
+                                url: 'php/updateTeam.php',
                                 method: 'POST',
                                 file: file,
                                 data: {
@@ -494,7 +505,8 @@
 
                                 var uitem = {};
 
-                                uitem.authority_id = $scope.uadata.info[0].updateitem[0].id;
+                                uitem.id = $scope.uadata.info[0].updateitem[0].id;
+                                uitem.authority_id = $scope.uadata.info[0].updateitem[0].authority_id;
                                 uitem.title = $scope.uadata.info[0].updateitem[0].title;
                                 uitem.name = $scope.uadata.info[0].updateitem[0].name;
                                 uitem.surname = $scope.uadata.info[0].updateitem[0].surname;
@@ -508,11 +520,13 @@
                                 uitem.image = $scope.uadata.info[0].updateitem[0].image;
 
                                 console.log("aCtrl = "+aCtrl.items[0].all[0]);
-                                var rid = aCtrl.items[0].all[0].findIndex(x => x.authority_id === uitem.authority_id);
+                                var rid = aCtrl.items[3].teams[0][0].findIndex(x => x.id === uitem.id);
                                 console.log(rid);
-                                aCtrl.items[0].all[0][rid] = uitem;
-                                console.log(aCtrl.items[0].all[0]);
+                                aCtrl.items[3].teams[0][0][rid] = uitem;
+                                console.log(aCtrl.items[3].teams[0]);
                                 console.log($scope.itemU);
+                                $scope.updateIndexTeam = null
+
 
                             }).error(function(data, status) {
                                 $scope.message.info[1].message = data;
@@ -573,6 +587,25 @@
           $scope.itemU.authority_id = aid;
 
         }
+        //************************************************//
+
+        $scope.AddTeam = function(id) {
+          $scope.AddNewTeam = true;
+          $scope.fTeams.id = id;
+        }
+
+        $scope.CloseAddTeam = function() {
+          $scope.AddNewTeam = false;
+        }
+
+        $scope.CancelUpdateTeam = function(aid, id) {
+          $scope.updateIndexTeam = null;
+          $scope.itemU.id = id;
+          $scope.itemU.authority_id = aid;
+
+        }
+
+
     };
 
     //************************************************//
@@ -611,4 +644,16 @@
             templateUrl: 'src/template/paper-update.html'
                     }
           }
+
+          function TeamAddDirective () {
+            return {
+              templateUrl: 'src/template/team-add.html'
+              }
+            }
+
+          function TeamUpdateDirective () {
+            return {
+              templateUrl: 'src/template/team-update.html'
+                      }
+            }
 })();
