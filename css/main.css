@@ -269,3 +269,12 @@ div span {
 	margin-top: 10px;
 	margin-bottom: 0px;
 }
+
+.inline {
+	clear: right;
+	float: left;
+}
+.rbn {
+	border-radius: 100%;
+	margin-top: 5px;
+}

@@ -27,6 +27,26 @@
           <!-- <textarea type="textarea" ng-model="fProjects.description" rows="5" style="min-width: 90%;"></textarea> -->
         </div>
 
+        <div class="well col-md-12">
+        <div>Add authors</div>
+        <select class="inline" ng-model="fProjects.authors.model">
+          <option value="" selected>Select</option>
+          <option ng-repeat="option in aCtrl.items[3].teams[0][0]"
+          value="{{option.id}}"
+          ng-disabled="disabledTM[option.title+option.name+option.surname]">
+          {{option.title}} {{option.name}} {{option.surname}}
+        </option>
+        </select>
+        <button class="glyphicon glyphicon-plus rbn" ng-click="addTM(fProjects.authors.model, 'add')"></button>
+
+        <span ng-repeat="item in author.name">{{item.title}} {{item.name}} {{item.surname}}
+          <button class="glyphicon glyphicon-minus rbn"
+          ng-if="item.name"
+          ng-click="DeleteTM(item.id, 'add')">
+          </button>
+         </span>
+
+        </div>
     <div class="col-md-12">
       <span class="pwarnings">{{message.info[1].message}}</span>
     </div>

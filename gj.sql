@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 16, 2019 at 01:03 PM
+-- Generation Time: Jan 25, 2019 at 02:06 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.0
 
@@ -46,7 +46,7 @@ CREATE TABLE `authority` (
 --
 
 INSERT INTO `authority` (`id`, `title`, `name`, `surname`, `position`, `about`, `dob`, `sex`, `created_at`, `updated_at`) VALUES
-(1, 'Dr', 'Gavin', 'Jell', 'Head of Lab', 'Welcome to the lab of the Programme Director/course tutor for the  MSc in Nanotechnology and Regenerative Medicine (UCL).Here you can find the information regarding ongoing and finished projects as well as be acquainted with the lab\'s publications. Meet our team members, become a member of our community to share new ideas.  ', '1977-12-31', 'male', '2019-01-07 06:42:08', '2019-01-16 11:20:49');
+(1, 'Dr', 'Gavin', 'Jell', 'Head of Lab', '&lt;p&gt;&lt;strong&gt;I&amp;rsquo;m the Programme Director&lt;/strong&gt;/ &lt;strong&gt;course tutor for the&lt;/strong&gt; &amp;nbsp;&lt;a href=&quot;&amp;quot;&amp;quot;http:/www.ucl.ac.uk/nanomed&amp;quot;&amp;quot;&quot;&gt;MSc in Nanotechnology and Regenerative Medicine&amp;nbsp;&lt;/a&gt;(UCL) on which I lecture, designed modules and currently run the Tissue Engineering module. I teach/lecture on a wide range of regenerative medicine related topics including; cell-material interactions, nanotechnology in tissue engineering, bone and cartilage tissue regeneration, angiogenesis, hypoxia and stem cells. I also lecture on the role of nanotechnology in medicine (including nanotoxicity) and more generic lectures on experimental planning and critical analysis of research papers.&lt;br /&gt;&lt;br /&gt;Other teaching activities: Graduate Tutor&amp;nbsp;(taught)&amp;nbsp;for the Division of Surgery; Royal Free Division of Surgery Education Lead, Divisional Post-Graduate Teaching Assistant Coordinator on which I run a &amp;ldquo;Developing Learning and Teaching in Higher Education&amp;rdquo; course for PGs who teach.&amp;nbsp;&lt;br /&gt;&lt;br /&gt;I&amp;rsquo;m also passionate about increasing awareness and participation in science and I&amp;rsquo;m proud to have been involved in a number of schemes which encourage this including; the &amp;nbsp;In2scienceUK placement scheme&amp;nbsp;(2013-current),&amp;nbsp;Next Generation Project&amp;nbsp;&amp;nbsp;(ICL 2007-2009),&amp;nbsp;Nuffield Science bursaries,&amp;nbsp;&amp;nbsp;International Scientific Youth Forum,&lt;/p&gt;\n&lt;p&gt;STEMNET andUCL Masterclass, Outreach.&lt;/p&gt;', '1977-12-31', 'male', '2019-01-07 06:42:08', '2019-01-25 09:55:10');
 
 -- --------------------------------------------------------
 
@@ -100,7 +100,7 @@ CREATE TABLE `papers` (
 --
 
 INSERT INTO `papers` (`id`, `authority_id`, `title`, `description`, `url`, `published`, `created_at`, `updated_at`) VALUES
-(2, 1, 'Paper 2', 'About nano particles', 'www.paper2.org', '2018-12-02', '2019-01-07 08:39:03', '2019-01-07 08:39:03');
+(12, 1, 'Zzzzzzz', '&lt;p&gt;&lt;em&gt;ZZZZZzz&lt;/em&gt;&lt;/p&gt;\n&lt;p&gt;&lt;em&gt;z&lt;/em&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;&lt;span style=\'text-decoration: underline;\'&gt;&lt;em&gt;XXXXXXXXX&lt;/em&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;', 'Zzzzzz', '2018-12-31', '2019-01-25 09:25:17', '2019-01-25 09:54:46');
 
 -- --------------------------------------------------------
 
@@ -125,7 +125,7 @@ CREATE TABLE `photos` (
   `paper_id` int(10) UNSIGNED DEFAULT NULL,
   `project_id` int(10) UNSIGNED DEFAULT NULL,
   `team_id` int(10) UNSIGNED DEFAULT NULL,
-  `filename` varchar(512) NOT NULL,
+  `image` varchar(512) NOT NULL,
   `description` text,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -135,11 +135,14 @@ CREATE TABLE `photos` (
 -- Dumping data for table `photos`
 --
 
-INSERT INTO `photos` (`id`, `authority_id`, `paper_id`, `project_id`, `team_id`, `filename`, `description`, `created_at`, `updated_at`) VALUES
-(7, 1, NULL, NULL, NULL, '190116110127gavin.jpg', 'Dr Gavin Jell', '2019-01-11 12:27:00', '2019-01-16 10:35:27'),
-(12, NULL, NULL, 1, NULL, '181230051234puma1.jpg', 'Project 1', '2019-01-14 13:46:17', '2019-01-14 13:46:17'),
-(38, NULL, NULL, 17, NULL, '190116100144hif.jpg', 'Cell', '2019-01-16 09:52:44', '2019-01-16 09:52:44'),
-(39, NULL, NULL, 18, NULL, '190116110127hif.jpg', 'A', '2019-01-16 09:54:55', '2019-01-16 10:59:27');
+INSERT INTO `photos` (`id`, `authority_id`, `paper_id`, `project_id`, `team_id`, `image`, `description`, `created_at`, `updated_at`) VALUES
+(7, 1, NULL, NULL, NULL, '190124070130gavin.jpg', 'Dr Gavin Jell', '2019-01-11 12:27:00', '2019-01-24 06:12:30'),
+(42, NULL, NULL, NULL, 1, '190125060136Medina_Guliyeva.jpg', 'Ms Medina Guliyeva', '2019-01-16 12:27:23', '2019-01-25 05:38:36'),
+(78, NULL, NULL, 40, NULL, '1901231101181.jpg', 'Bio', '2019-01-23 10:58:18', '2019-01-24 05:38:23'),
+(79, NULL, NULL, 41, NULL, '190123120138bio2.jpg', 'Tech', '2019-01-23 11:16:07', '2019-01-24 06:27:48'),
+(84, NULL, NULL, 44, NULL, '190125080101bio1.jpg', 'z', '2019-01-25 07:48:01', '2019-01-25 07:48:01'),
+(85, NULL, 12, NULL, NULL, '190125110149hif.jpg', 'Zzzzzzz', '2019-01-25 09:25:17', '2019-01-25 10:09:49'),
+(87, NULL, NULL, NULL, 5, '190125110138woman4.jpg', 'D D D', '2019-01-25 10:01:31', '2019-01-25 10:09:38');
 
 -- --------------------------------------------------------
 
@@ -164,9 +167,9 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`id`, `authority_id`, `title`, `description`, `url`, `started`, `finished`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Project 1', 'It is all about project 1', 'www.project1.org', '2019-01-01', '2019-01-06', '2019-01-07 08:25:30', '2019-01-07 08:25:30'),
-(17, 1, 'Cell', 'Cell', 'cell', '2018-12-31', '2019-01-08', '2019-01-16 09:52:44', '2019-01-16 09:52:44'),
-(18, 1, 'M', 'A', 'M', '2018-12-31', '2019-01-08', '2019-01-16 09:54:55', '2019-01-16 09:54:55');
+(40, 1, 'Bio', '&lt;p&gt;&lt;strong&gt;&lt;span style=&quot;text-decoration: underline;&quot;&gt;&lt;em&gt;Lorem ipsum&lt;/em&gt;&lt;/span&gt;&lt;/strong&gt; dolor &lt;em&gt;sit amet&lt;/em&gt;, consectetur adipiscing elit. Aliquam pulvinar dapibus lectus, vitae gravida metus. Vestibulum rutrum dui nec suscipit iaculis.&lt;/p&gt;\n&lt;p style=&quot;padding-left: 30px;&quot;&gt;&lt;strong&gt;&lt;em&gt;Vivamus eget metus ut nisi fermentum aliquam.&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;', 'bio.org', '2018-12-31', '2019-01-10', '2019-01-23 10:58:18', '2019-01-25 09:28:45'),
+(41, 1, 'Tech', '&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong&gt;Lorem ipsum&lt;/strong&gt; dolor sit amet, consectetur adipiscing elit. &lt;strong&gt;Aliquam pulvinar ...&lt;/strong&gt;&lt;/p&gt;', 'tech.org', '2018-12-31', '2019-01-10', '2019-01-23 11:16:07', '2019-01-25 09:14:16'),
+(44, 1, 'z', '&lt;p&gt;&lt;strong&gt;HHHHHHHHHHHHHHHHHH&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;&lt;strong&gt;yyyyyyyy&lt;/strong&gt;&lt;/p&gt;', 'z', '2019-01-01', '2019-01-15', '2019-01-25 07:48:01', '2019-01-25 09:54:58');
 
 -- --------------------------------------------------------
 
@@ -198,6 +201,14 @@ CREATE TABLE `teams` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `teams`
+--
+
+INSERT INTO `teams` (`id`, `authority_id`, `title`, `name`, `surname`, `position`, `about`, `dob`, `sex`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Ms', 'Medina', 'Guliyeva', 'phD student', '&lt;p&gt;&lt;strong&gt;Lorem ipsum dolor sit amet,&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;consectetur adipiscing elit. Aliquam pulvinar dapibus lectus, vitae gravida metus. Vestibulum rutrum dui nec suscipit iaculis. Vivamus eget metus ut nisi fermentum aliquam. Nulla facilisi. Vestibulum dapibus quam nisi. Nam blandit tortor eget convallis blandit. Aenean vitae neque in lorem consequat &lt;strong&gt;semper. Quisque sodales at magna in viverra.&lt;/strong&gt;&lt;/p&gt;', '1998-08-10', 'female', '2019-01-16 12:25:51', '2019-01-25 10:00:20'),
+(5, 1, 'D', 'D', 'D', 'D', '&lt;p&gt;Dddddddd&lt;/p&gt;', '2018-12-31', 'female', '2019-01-25 10:01:31', '2019-01-25 10:04:45');
 
 --
 -- Indexes for dumped tables
@@ -265,7 +276,8 @@ ALTER TABLE `projects_team`
 -- Indexes for table `teams`
 --
 ALTER TABLE `teams`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `team_ibfk_1` (`authority_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -275,7 +287,7 @@ ALTER TABLE `teams`
 -- AUTO_INCREMENT for table `authority`
 --
 ALTER TABLE `authority`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `contact`
@@ -287,25 +299,25 @@ ALTER TABLE `contact`
 -- AUTO_INCREMENT for table `papers`
 --
 ALTER TABLE `papers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `photos`
 --
 ALTER TABLE `photos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -316,12 +328,6 @@ ALTER TABLE `teams`
 --
 ALTER TABLE `contact`
   ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`authority_id`) REFERENCES `authority` (`id`);
-
---
--- Constraints for table `contact`
---
-ALTER TABLE `teams`
-  ADD CONSTRAINT `team_ibfk_1` FOREIGN KEY (`authority_id`) REFERENCES `authority` (`id`);
 
 --
 -- Constraints for table `contacts_team`
@@ -364,6 +370,12 @@ ALTER TABLE `projects`
 ALTER TABLE `projects_team`
   ADD CONSTRAINT `FK_project` FOREIGN KEY (`project_id`) REFERENCES `projects` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_project_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`);
+
+--
+-- Constraints for table `teams`
+--
+ALTER TABLE `teams`
+  ADD CONSTRAINT `team_ibfk_1` FOREIGN KEY (`authority_id`) REFERENCES `authority` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

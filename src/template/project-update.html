@@ -23,10 +23,32 @@
     <input class="form-control"  type="date" ng-model="itemU.finished" value="{{itemU.finished}}"/>
 </div>
 
-    <span>Description</span>
-    <div class="well col-md-6">
-     <textarea data-ui-tinymce id="tinymce+itemU.id" data-ng-model="itemU.description"></textarea>
-    </div>
+<span>Description</span>
+<div class="well col-md-6">
+  <textarea data-ui-tinymce id="tinymce+itemU.id" data-ng-model="itemU.description"></textarea>
+</div>
+
+<div class="well col-md-12">
+<div>Add authors</div>
+<select class="inline" ng-model="fProjects.authors.model">
+  <option value="" selected>Select</option>
+  <option ng-repeat="option in fProjects.authors"
+  value="{{option.id}}"
+  ng-disabled="disabledTM[option.name]">
+  {{option.name}}
+</option>
+</select>
+<button class="glyphicon glyphicon-plus rbn" ng-click="addTM(fProjects.authors.model, 'update')"></button>
+
+<span ng-repeat="item in author.name">{{item}}
+  <button class="glyphicon glyphicon-minus rbn"
+  ng-if="item"
+  ng-click="DeleteTM(item.id, 'update')">
+  </button>
+ </span>
+
+</div>
+
 
 
 <hr>

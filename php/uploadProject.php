@@ -125,6 +125,13 @@ function toDbase($items, $newFileName) {
         if (!$res1) {
           die('Cant connect: ' . mysql_error());
         } else {
+
+          foreach ($items['author']['name'] as $key => $value) {
+            // echo ($items['author']['name'][$key]['id']);
+            $db->insert('projects_team',array('project_id'=>$db->lastId,
+            'team_id'=>$items['author']['name'][$key]['id']
+          ));
+          }
           return $res;
         }
     }

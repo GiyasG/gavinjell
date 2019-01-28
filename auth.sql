@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2018 at 03:06 PM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 7.2.10
+-- Generation Time: Jan 25, 2019 at 02:06 PM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -47,8 +47,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `username`, `status`, `verified`, `resettable`, `roles_mask`, `registered`, `last_login`, `force_logout`) VALUES
-(2, 'mail@mail.com', '$2y$10$b53/HHpnrO.OwoA.O2WcEe1sIr5DJHpnTahY3ur9H9mdCMvxP8Dme', 'mail', 0, 1, 1, 1, 1539606423, 1540885136, 0),
-(48, 'aguila.scorpius@gmail.com', '$2y$10$5dROxJC7wJ4J0U08AhGWiO.iGrwHDEOPqGWTKTUju8ovIfb1vMni.', 'Aguila', 0, 1, 1, 0, 1541078106, NULL, 0);
+(51, 'mail@mail.com', '$2y$10$GFHedta3DXvdZ5pq1X1GxO9gg23W6e/ylBglL1zL3QrZesqvil6.O', 'pass1234', 0, 1, 1, 1, 1546511568, 1548421406, 0),
+(50, 'aguila.scorpius@gmail.com', '$2y$10$5qz7rRGdSQ9V4dVq8t0AF.IlNqvrmcuELVelKYSYu5Dt/.qcXe0HK', 'Aguilla', 0, 0, 1, 0, 1546511454, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -70,8 +70,7 @@ CREATE TABLE `users_confirmations` (
 --
 
 INSERT INTO `users_confirmations` (`id`, `user_id`, `email`, `selector`, `token`, `expires`) VALUES
-(51, 48, 'aguila.scorpius@gmail.com', 'FMKuphtX0ykrgosm', '$2y$10$SihPfP/EvBK8ZeViqLFnEuQYLHuhP//SC.EWMi.o./97e8Ondox6W', 1541164506),
-(52, 48, 'aguila.scorpius@gmail.com', 'OXrGIm9azF-gAspK', '$2y$10$ccjkVuSpZjUckXKrpT4MyOmh7Z/opieeRuDDSxJtd/3S6Ih/uY4SW', 1541164564);
+(55, 50, 'aguila.scorpius@gmail.com', 'A39PEkU39wUyCZze', '$2y$10$cuDwE1f/ybe1wO4HEqbTM.On8fCL9YwG9xOvlUUgVr5pEwTW.3Lp6', 1546597854);
 
 -- --------------------------------------------------------
 
@@ -87,6 +86,13 @@ CREATE TABLE `users_remembered` (
   `expires` int(10) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `users_remembered`
+--
+
+INSERT INTO `users_remembered` (`id`, `user`, `selector`, `token`, `expires`) VALUES
+(34, 51, '153yTl4bZvMeTi49Xy79XaSP', '$2y$10$J2v8wT.8tXDxJBvpcFLrLecPYMF8smG6xXyNfkgO3hw6yBjkZ67Pa', 1550380015);
+
 -- --------------------------------------------------------
 
 --
@@ -101,14 +107,6 @@ CREATE TABLE `users_resets` (
   `expires` int(10) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `users_resets`
---
-
-INSERT INTO `users_resets` (`id`, `user`, `selector`, `token`, `expires`) VALUES
-(4, 48, 'DeELyYh3WAnKaPgAeZE4', '$2y$10$nNBwpPbmXXqM397nd/ACCOYcHfYcC0I1ennipcIwvkgWn7zD2RWFm', 1541186527),
-(3, 48, 'CC4u3Xy9WyPp1lrzYM0d', '$2y$10$bGxbRYiwBrxl9eudn0WVY.46VvKCPoIZxnP3AXuixv4ZTtScc8OX2', 1541185812);
-
 -- --------------------------------------------------------
 
 --
@@ -121,6 +119,14 @@ CREATE TABLE `users_throttling` (
   `replenished_at` int(10) UNSIGNED NOT NULL,
   `expires_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users_throttling`
+--
+
+INSERT INTO `users_throttling` (`bucket`, `tokens`, `replenished_at`, `expires_at`) VALUES
+('CUeQSH1MUnRpuE3Wqv_fI3nADvMpK_cg6VpYK37vgIw', 3.00264, 1546511568, 1546943568),
+('ejWtPDKvxt-q7LZ3mFjzUoIWKJYzu47igC8Jd9mffFk', 69.8239, 1548421405, 1548961405);
 
 --
 -- Indexes for dumped tables
@@ -173,25 +179,25 @@ ALTER TABLE `users_throttling`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `users_confirmations`
 --
 ALTER TABLE `users_confirmations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `users_remembered`
 --
 ALTER TABLE `users_remembered`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `users_resets`
 --
 ALTER TABLE `users_resets`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

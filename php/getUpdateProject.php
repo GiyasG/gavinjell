@@ -25,6 +25,24 @@ if (isset($postdata->id)) {
       $res[0]['description'] = html_entity_decode($res[0]['description']);
       $res[0]['description'] = str_replace('"','\'',$res[0]['description']);
 
+      $db->select('teams','id, title, name, surname');
+      $team = $db->getResult();
+      // print_r ($team);
+      // echo "Team:";
+      if (isset($team)) {
+        foreach ($team as $key => $value) {
+          // echo "key: ";
+          // print_r ($key);
+          // echo "value: ";
+          // print_r ($value);
+
+          $res[0]['team'][$key]["id"] = $team[$key]["id"];
+          $res[0]['team'][$key]['name'] = $team[$key]["title"]." ".$team[$key]["name"]." ".$team[$key]["surname"];
+        }
+        // print_r (json_encode($res[0]['team']));
+
+      }
+
     $db->select('photos','image',null,'project_id='.$res[0]['id']);
     $photo = $db->getResult();
     if (isset($photo[0])) {
