@@ -19,7 +19,7 @@
 
         var aCtrl = this;
         aCtrl.items = items;
-        // console.log(aCtrl.items[2].papers[0]);// aCtrl.items[0].all[0].about = $sce.trustAsHtml(aCtrl.items[0].all[0].about);
+        // console.log(aCtrl.items[1].projects[0]);// aCtrl.items[0].all[0].about = $sce.trustAsHtml(aCtrl.items[0].all[0].about);
         $scope.updateIndexItem = null;
         $scope.updateIndexProject = null;
         $scope.updateIndexPaper = null;
@@ -319,7 +319,10 @@
                    })
                 .then(function(response) {
                     $scope.itemU = response.data[0];
-                    console.log($scope.itemU.team);
+                    console.log($scope.itemU);
+                    console.log($scope.itemU.author[0].team_id);
+                    $scope.disabledTM[$scope.itemU.author[0].team_id] = true;
+                    console.log($scope.disabledTM);
                     $scope.fProjects.authors = $scope.itemU.team;
                     console.log($scope.fProjects.authors);
                     return response.data;
@@ -659,10 +662,11 @@
             case "update":
             var rid = $scope.fProjects.authors.findIndex(x => x.id === model);
             console.log(rid);
-            $scope.disabledTM[$scope.fProjects.authors[rid].name] = true;
+            $scope.disabledTM[$scope.fProjects.authors[rid].id] = true;
             $scope.author.name.push($scope.fProjects.authors[rid].name);
             console.log($scope.fProjects.authors[rid]);
             console.log($scope.author.name);
+            console.log($scope.disabledTM);
                 break;
             default:
           }
@@ -690,6 +694,16 @@
             $scope.disabledTM[$scope.author.name[rid]] = false;
             $scope.author.name.splice(rid,1);
             // $scope.fProjects.authors.splice(rid1,1);
+                break;
+            case "updater":
+                $scope.disabledTM[$scope.itemU.author[0].team_id] = false;
+
+                // var rid = $scope.itemU.author.findIndex(x => x.id === model);
+                // var rid1 = $scope.fProjects.authors.findIndex(x => x.id === model);
+                // console.log($scope.fProjects.authors);
+                // $scope.disabledTM[$scope.author.name[rid]] = false;
+                // $scope.author.name.splice(rid,1);
+                // $scope.fProjects.authors.splice(rid1,1);
                 break;
             default:
 

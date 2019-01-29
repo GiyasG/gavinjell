@@ -39,7 +39,7 @@
         </select>
         <button class="glyphicon glyphicon-plus rbn" ng-click="addTM(fProjects.authors.model, 'add')"></button>
 
-        <span ng-repeat="item in author.name">{{item.title}} {{item.name}} {{item.surname}}
+        <span ng-repeat="item in author.name">{{item.titlet}} {{item.name}} {{item.surname}}
           <button class="glyphicon glyphicon-minus rbn"
           ng-if="item.name"
           ng-click="DeleteTM(item.id, 'add')">

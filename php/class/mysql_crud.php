@@ -303,4 +303,22 @@ class Table extends Database {
 		$val = parent::getResult();
 		return $val;
 	}
+
+	// ('teams', 'projects_team', 'projects', $res[$key]['id']);
+	function get_JointResult($tbl1, $tbl2, $tbl3, $pr_id) {
+		// echo ($tbl1." ".$tbl2." ".$pr_id);
+
+		$tbl1s = substr($tbl1, 0, -1);
+		$tbl3s = substr($tbl3, 0, -1);
+		// echo " INNER JOIN ".$tbl2." ON ".$tbl1.".id = ".$tbl2.".".$tbl1s."_id AND ".$tbl2.".".$tbl3s."_id = ".$pr_id." INNER JOIN ".$tbl3." ON ".$tbl2.".".$tbl3s."_id = ".$tbl3.".id";
+		parent::connect();
+		parent::setName('SET NAMES \'utf8\'');
+		// echo " INNER JOIN ".$tbl2." ON ".$tbl1.".id = ".$tbl2.".".$tbl1s."_id AND ".$tbl2.".".$tbl3s."_id = '".$pr_id."' INNER JOIN ".$tbl3." ON ".$tbl2.".".$tbl3s."_id = ".$tbl3.".id";
+		// echo $tbl2." ON ".$tbl1.".id = ".$tbl2.".".$tbl1s."_id AND ".$tbl2.".".$tbl3s."_id = '".$pr_id."' INNER JOIN ".$tbl3." ON ".$tbl2.".".$tbl3s."_id = ".$tbl3.".id";
+		parent::select($tbl1,"*", $tbl2." ON ".$tbl1.".id = ".$tbl2.".".$tbl1s."_id AND ".$tbl2.".".$tbl3s."_id = '".$pr_id."' INNER JOIN ".$tbl3." ON ".$tbl2.".".$tbl3s."_id = ".$tbl3.".id");
+		//
+		$val = parent::getResult();
+		return $val;
+	}
+
 }

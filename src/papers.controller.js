@@ -21,6 +21,8 @@
 
     papersCtrl.currentPage = 0;
     papersCtrl.PagesPapers.push(papersCtrl.items[2].papers[0][0]);
+    window.scrollTo(0, 0);
+
     papersCtrl.NextPage = function (pn) {
       console.log(pn);
       if (parseInt(pn)<0) {

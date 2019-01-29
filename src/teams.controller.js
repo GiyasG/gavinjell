@@ -21,6 +21,8 @@
 
     teamsCtrl.currentPage = 0;
     teamsCtrl.PagesTeams.push(teamsCtrl.items[3].teams[0][0]);
+    window.scrollTo(0, 0);
+
     teamsCtrl.NextPage = function (pn) {
       console.log(pn);
       if (parseInt(pn)<0) {

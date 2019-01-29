@@ -9,6 +9,8 @@
   function ProjectsController(items, $http, $sce) {
     var projectsCtrl = this;
     projectsCtrl.items = items;
+    // console.log(projectsCtrl.items);
+
     projectsCtrl.totalPages = [];
     projectsCtrl.PagesProjects = [];
     for (var i = 1; i <= projectsCtrl.items[1].projects[0].length; i++) {
@@ -19,6 +21,9 @@
 
     projectsCtrl.currentPage = 0;
     projectsCtrl.PagesProjects.push(projectsCtrl.items[1].projects[0][0]);
+
+    window.scrollTo(0, 0);
+
     projectsCtrl.NextPage = function (pn) {
       console.log(pn);
       if (parseInt(pn)<0) {
@@ -30,9 +35,9 @@
       }
       projectsCtrl.PagesProjects[0] = projectsCtrl.items[1].projects[0][pn];
       projectsCtrl.currentPage = pn;
+      console.log(projectsCtrl.PagesProjects[0]);
     };
     // console.log(projectsCtrl.totalPages);
-    // console.log(projectsCtrl.PagesProjects[0]);
     // console.log(projectsCtrl.items[1].projects[0]);
   }
 })();

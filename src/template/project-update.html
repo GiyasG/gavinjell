@@ -34,7 +34,7 @@
   <option value="" selected>Select</option>
   <option ng-repeat="option in fProjects.authors"
   value="{{option.id}}"
-  ng-disabled="disabledTM[option.name]">
+  ng-disabled="disabledTM[option.id]">
   {{option.name}}
 </option>
 </select>
@@ -46,6 +46,16 @@
   ng-click="DeleteTM(item.id, 'update')">
   </button>
  </span>
+
+ <div ng-if="itemU.author">Authors:</div>
+ <span ng-repeat="person in itemU.author">
+   {{person.title}} {{person.name}} {{person.surname}}
+   <button class="glyphicon glyphicon-minus rbn"
+   ng-if="item"
+   ng-click="DeleteTM(person.id, 'updater')">
+   </button>
+ </span>
+
 
 </div>
 

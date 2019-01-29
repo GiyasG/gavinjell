@@ -108,7 +108,7 @@ function toDbase($items, $newFileName) {
               'authority_id'=>$items['id']
           ));
 
-  // echo $db->lastId;
+  $projectLastId = $db->lastId;
   // echo $db->getSql();
 
   $res = $db->getResult();
@@ -117,7 +117,7 @@ function toDbase($items, $newFileName) {
   {
   die('Cant connect: ' . mysql_error());
 } else {
-        $db->insert('photos',array('project_id'=>$db->lastId,
+        $db->insert('photos',array('project_id'=>$projectLastId,
                     'image'=>$newFileName,
                     'description'=>$items['title']
                     ));
@@ -125,12 +125,14 @@ function toDbase($items, $newFileName) {
         if (!$res1) {
           die('Cant connect: ' . mysql_error());
         } else {
-
-          foreach ($items['author']['name'] as $key => $value) {
-            // echo ($items['author']['name'][$key]['id']);
-            $db->insert('projects_team',array('project_id'=>$db->lastId,
-            'team_id'=>$items['author']['name'][$key]['id']
-          ));
+          if (isset($items['author']['name'])) {
+            foreach ($items['author']['name'] as $key => $value) {
+              // echo ($items['author']['name'][$key]['id']);
+              $db->insert('projects_team',array('project_id'=>$projectLastId,
+              'team_id'=>$items['author']['name'][$key]['id']));
+              $res2 = $db->getResult();
+              // print_r ($res2);
+            }
           }
           return $res;
         }

@@ -41,6 +41,18 @@ if (isset($db)) {
 
 /* PROJECTS */
   $res = $tb->get_ParentResult('authority', 'projects');
+
+    foreach ($res as $key1 => $value1) {
+      $res_joint = $tb->get_JointResult('teams', 'projects_team', 'projects', $res[$key1]['id']);
+      if ($res_joint) {
+        foreach ($res_joint as $key2 => $value2) {
+          $res[$key1]['author'][$key2]['team_id'] = $res_joint[$key2]['team_id'];
+          $res[$key1]['author'][$key2]['name'] = $res_joint[$key2]['name'];
+          $res[$key1]['author'][$key2]['title'] = $res_joint[$key2]['titlet'];
+          $res[$key1]['author'][$key2]['surname'] = $res_joint[$key2]['surname'];
+        }
+      }
+    }
   $records_number  = sizeof($res);
   $records_per_page = 3;
 

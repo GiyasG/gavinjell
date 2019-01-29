@@ -13,10 +13,22 @@ if (isset($postdata->id)) {
   $db->connect();
   $db->setName('SET NAMES \'utf8\'');
 
+  // if (isset($db)) {
   $db->select('projects','*',null,'authority_id='.$postdata->ida.' and id='.$postdata->id); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
   $res = $db->getResult();
 
-
+  $tb = new Table();
+  foreach ($res as $key1 => $value1) {
+    $res_joint = $tb->get_JointResult('teams', 'projects_team', 'projects', $res[$key1]['id']);
+    if ($res_joint) {
+      foreach ($res_joint as $key2 => $value2) {
+        $res[$key1]['author'][$key2]['team_id'] = $res_joint[$key2]['team_id'];
+        $res[$key1]['author'][$key2]['name'] = $res_joint[$key2]['name'];
+        $res[$key1]['author'][$key2]['title'] = $res_joint[$key2]['titlet'];
+        $res[$key1]['author'][$key2]['surname'] = $res_joint[$key2]['surname'];
+      }
+    }
+  }
 // print_r($res);
 
   if (!$res) {
@@ -25,22 +37,15 @@ if (isset($postdata->id)) {
       $res[0]['description'] = html_entity_decode($res[0]['description']);
       $res[0]['description'] = str_replace('"','\'',$res[0]['description']);
 
-      $db->select('teams','id, title, name, surname');
+      $db->select('teams','id, titlet, name, surname');
       $team = $db->getResult();
       // print_r ($team);
       // echo "Team:";
       if (isset($team)) {
         foreach ($team as $key => $value) {
-          // echo "key: ";
-          // print_r ($key);
-          // echo "value: ";
-          // print_r ($value);
-
           $res[0]['team'][$key]["id"] = $team[$key]["id"];
-          $res[0]['team'][$key]['name'] = $team[$key]["title"]." ".$team[$key]["name"]." ".$team[$key]["surname"];
+          $res[0]['team'][$key]['name'] = $team[$key]["titlet"]." ".$team[$key]["name"]." ".$team[$key]["surname"];
         }
-        // print_r (json_encode($res[0]['team']));
-
       }
 
     $db->select('photos','image',null,'project_id='.$res[0]['id']);
