@@ -115,7 +115,7 @@ function toDbase($items, $newFileName) {
   $db->connect();
   $db->setName('SET NAMES \'utf8\'');
 
-  $db->insert('teams',array('title'=>$items['title'],
+  $db->insert('teams',array('titlet'=>$items['title'],
                                 'name'=>$items['name'],
                                 'surname'=>$items['surname'],
                                 'about'=>$items['about'],

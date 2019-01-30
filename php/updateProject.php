@@ -95,6 +95,12 @@ $db->update('projects',array('title'=>$items['title'],
           			if (!$res1) {
                   echo "ERROR 2";
                 } else {
+                  foreach ($items['author'] as $key => $value) {
+                    $db->insert('projects_team',array('project_id'=>$items['id'],
+                    'team_id'=>$items['author'][$key]['id']));
+                    $res2 = $db->getResult();
+                    // print_r ($res2);
+                  }
                   // echo 'UPDATED';
                 }
     }

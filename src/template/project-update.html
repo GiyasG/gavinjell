@@ -32,18 +32,18 @@
 <div>Add authors</div>
 <select class="inline" ng-model="fProjects.authors.model">
   <option value="" selected>Select</option>
-  <option ng-repeat="option in fProjects.authors"
+  <option ng-repeat="option in itemU.team"
   value="{{option.id}}"
   ng-disabled="disabledTM[option.id]">
   {{option.name}}
 </option>
 </select>
-<button class="glyphicon glyphicon-plus rbn" ng-click="addTM(fProjects.authors.model, 'update')"></button>
+<button class="glyphicon glyphicon-plus rbn" ng-click="addTM(fProjects.authors.model)"></button>
 
-<span ng-repeat="item in author.name">{{item}}
+<span class="well" ng-repeat="item in author">{{item.name}}
   <button class="glyphicon glyphicon-minus rbn"
   ng-if="item"
-  ng-click="DeleteTM(item.id, 'update')">
+  ng-click="DeleteTM(item.id, itemU.id, 'update')">
   </button>
  </span>
 
@@ -52,7 +52,7 @@
    {{person.title}} {{person.name}} {{person.surname}}
    <button class="glyphicon glyphicon-minus rbn"
    ng-if="item"
-   ng-click="DeleteTM(person.id, 'updater')">
+   ng-click="DeleteTM(person.team_id, itemU.id, 'updater')">
    </button>
  </span>
 
