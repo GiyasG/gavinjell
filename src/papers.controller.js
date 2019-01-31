@@ -4,12 +4,18 @@
   angular.module('ShopApp')
   .controller('PapersController', PapersController);
 
-  PapersController.$inject = ['items', '$http', '$sce'];
+  PapersController.$inject = ['items', '$http', '$sce', '$scope'];
 
-  function PapersController(items, $http, $sce) {
+  function PapersController(items, $http, $sce, $scope) {
     var papersCtrl = this;
     papersCtrl.items = items;
-    console.log("pCtrl: "+papersCtrl.items);
+
+    $scope.isPrevious = {
+    "background-color" : "lightblue"
+   };
+    $scope.isNext = {
+      "background-color" : "lightblue"
+    };
 
     papersCtrl.totalPages = [];
     papersCtrl.PagesPapers = [];
@@ -35,10 +41,6 @@
       papersCtrl.PagesPapers[0] = papersCtrl.items[2].papers[0][pn];
       papersCtrl.currentPage = pn;
     };
-    // console.log(papersCtrl.totalPages);
-    // console.log(papersCtrl.PagesPapers[0]);
-    // console.log(papersCtrl.items[1].papers[0]);
-
 
   }
 })();

@@ -14,24 +14,33 @@
 							<p>URL: {{item.url}}</p>
 		      		<p>Started: {{item.started}}</p>
 							<p>Closure date:{{item.finished}}</p>
+							<div ng-if="item.author">Authors:
+								<span ng-repeat="person in item.author" ng-init="sectionIndex = $index">
+									<span ng-show="sectionIndex > 0">, </span>{{person.title}}. {{person.name}} {{person.surname}}</span>
+							</div>
 					</div>
-					<div ng-if="item.author">Authors:</div>
-					<span ng-repeat="person in item.author">
-						{{person.title}} {{person.name}} {{person.surname}}
-					</span>
 		    </div>
 
 	</div>
 	<div class="col-md-5  column-in-center">
-			<ul ng-repeat="num in projectsCtrl.totalPages" class="pagination">
-				<button ng-if="num==1" class="disabled"
-								ng-click="projectsCtrl.NextPage(projectsCtrl.currentPage-1)">Previous</button>
+			<ul class="pagination">
+				<button ng-show="projectsCtrl.currentPage-1>=0"
+								ng-style="isPrevious"
+								ng-click="projectsCtrl.NextPage(projectsCtrl.currentPage-1)">
+								Previous
+				</button>
 			</ul>
 			<ul ng-repeat="num in projectsCtrl.totalPages" class="pagination pg-blue">
-				<button class="active" ng-click="projectsCtrl.NextPage(num-1)">{{num}}</button>
+				<button class="active"
+								ng-click="projectsCtrl.NextPage(num-1)">
+								{{num}}
+				</button>
 			</ul>
-			<ul ng-repeat="num in projectsCtrl.totalPages" class="pagination pg-blue">
-				<button ng-if="num==projectsCtrl.totalPagesNumber"
-				 				ng-click="projectsCtrl.NextPage(projectsCtrl.currentPage+1)">Next</button>
+			<ul class="pagination pg-blue">
+				<button ng-show="projectsCtrl.totalPagesNumber-1!=projectsCtrl.currentPage"
+								ng-style="isNext"
+				 				ng-click="projectsCtrl.NextPage(projectsCtrl.currentPage+1)">
+								Next
+				</button>
 			</ul>
 	</div>

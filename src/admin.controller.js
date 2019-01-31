@@ -276,11 +276,8 @@
                       console.log(aCtrl.items[1]); //.projects[0]);
                       var rid = aCtrl.items[1].projects[0][0].findIndex(x => x.id === $scope.itemU.id);
                       aCtrl.items[1].projects[0][0][rid] = uitem;
-                      // console.log(aCtrl.items[1].projects[0]);
                       console.log(rid);
                       $scope.updateIndexProject = null
-                      // $scope.author.id = [];
-                      // $scope.author.names = [];
                       $scope.disabledTM = {};
                       $scope.author = [];
                   }).error(function(data, status) {
@@ -371,9 +368,12 @@
 
               //**************** Project Update *********************//
               $scope.onPaperUpdate = function(file) {
-
-                // console.log(file);
                   $scope.message = "";
+                  if ($scope.author) {
+                    $scope.itemU.author = $scope.author
+                  }
+                  console.log("itemU update Paper:");
+                  console.log($scope.itemU);
                       $scope.upload = Upload.upload({
                           url: 'php/updatePaper.php',
                           method: 'POST',
@@ -383,10 +383,10 @@
                                 }
                       }).success(function(data, status, headers, config) {
                           $scope.message = data;
-                          $scope.updateIndex = null;
                           console.log($scope.message);
 
                           var uitem = {};
+
                           uitem.title = $scope.message.info[0].updateitem[0].title;
                           uitem.description = $scope.message.info[0].updateitem[0].description;
                           uitem.url = $scope.message.info[0].updateitem[0].url;
@@ -398,14 +398,12 @@
                           uitem.authority_id = $scope.message.info[0].updateitem[0].authority_id;
 
                           console.log(aCtrl.items[2]);
-                          console.log("ID:"+$scope.itemU.id);
                           var rid = aCtrl.items[2].papers[0][0].findIndex(x => x.id === $scope.itemU.id);
                           aCtrl.items[2].papers[0][0][rid] = uitem;
-                          console.log(aCtrl.items[2].papers);
                           console.log(rid);
                           $scope.updateIndexPaper = null
-
-
+                          $scope.disabledTM = {};
+                          $scope.author = [];
                       }).error(function(data, status) {
                           $scope.message = data;
                       });
@@ -429,7 +427,7 @@
                       return response.data.info;
                     });
               };
-
+              // **************** GetUpdatePaper *********************//
               $scope.UpdatePaper = function (aid, id, sid) {
                 $scope.message = "";
                 $scope.updateIndexPaper = sid;
@@ -441,7 +439,19 @@
                        })
                     .then(function(response) {
                         $scope.itemU = response.data[0];
+                        console.log(response.data);
                         console.log($scope.itemU);
+                        if ($scope.itemU.author) {
+                          console.log($scope.itemU.author[0].team_id);
+
+                          angular.forEach($scope.itemU.author, function(value, key){
+                            console.log(key +" "+value);
+                            $scope.disabledTM[$scope.itemU.author[key].team_id] = true;
+                          });
+                          console.log($scope.disabledTM);
+                        }
+                        $scope.fPapers.authors = $scope.itemU.team;
+                        console.log($scope.fPapers.authors);
                         return response.data;
                     });
                   }
@@ -599,7 +609,7 @@
           $scope.AddNewProject = true;
           $scope.fProjects.id = id;
           $scope.disabledTM = {};
-          $scope.author.name = [];
+          $scope.author = [];
           console.log($scope.fProjects);
         }
 
@@ -620,6 +630,8 @@
         $scope.AddPaper = function(id) {
           $scope.AddNewPaper = true;
           $scope.fPapers.id = id;
+          $scope.disabledTM = {};
+          $scope.author = [];
         }
 
         $scope.CloseAddPaper = function() {
@@ -630,7 +642,8 @@
           $scope.updateIndexPaper = null;
           $scope.itemU.id = id;
           $scope.itemU.authority_id = aid;
-
+          $scope.disabledTM = {};
+          $scope.author = [];
         }
         //************************************************//
 
@@ -663,15 +676,9 @@
               valueToPush.name = aCtrl.items[3].teams[0][0][rid].titlet+" "
               + aCtrl.items[3].teams[0][0][rid].name+" "
               + aCtrl.items[3].teams[0][0][rid].surname;
-              // console.log(valueToPush);
-              // console.log($scope.author);
               $scope.author.push(valueToPush);
             }
           }
-          // console.log(rid);
-          // console.log($scope.fProjects.authors[rid]);
-          // console.log($scope.fProjects.authors[rid]);
-          // console.log($scope.author.name);
 
         $scope.DeleteTM = function(model, pid, crudtype) {
           console.log(model);
@@ -690,8 +697,13 @@
             console.log(pid);
             console.log($scope.author);
             var rid = $scope.author.findIndex(x => x.id === model);
-            var rid1 = $scope.fProjects.authors.findIndex(x => x.id === model);
-            console.log($scope.fProjects.authors);
+            if ($scope.fProjects.authors) {
+              var rid1 = $scope.fProjects.authors.findIndex(x => x.id === model);
+              console.log($scope.fProjects.authors);
+            } else if ($scope.fPapers.authors) {
+              var rid1 = $scope.fPapers.authors.findIndex(x => x.id === model);
+              console.log($scope.fPapers.authors);
+            }
             $scope.disabledTM[$scope.author[rid].id] = false;
             console.log($scope.disabledTM);
             $scope.author.splice(rid,1);

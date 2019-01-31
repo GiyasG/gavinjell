@@ -18,7 +18,12 @@ if ($adminOk) {
     $db->connect();
     $db->delete('projects_team', 'project_id ='.$_POST["projectid"].' and team_id ='.$_POST["teamid"]); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
     $res = $db->getResult();
-
+    print_r ($res);
+    if ($res[0]==0) {
+      $db->delete('papers_team', 'paper_id ='.$_POST["projectid"].' and team_id ='.$_POST["teamid"]); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
+      $res1 = $db->getResult();
+      print_r ($res1);
+    }
   if (!$res) {
       die('Cant connect: ' . mysql_error());
     } else {

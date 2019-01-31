@@ -4,12 +4,18 @@
   angular.module('ShopApp')
   .controller('ProjectsController', ProjectsController);
 
-  ProjectsController.$inject = ['items', '$http', '$sce'];
+  ProjectsController.$inject = ['items', '$http', '$sce', '$scope'];
 
-  function ProjectsController(items, $http, $sce) {
+  function ProjectsController(items, $http, $sce, $scope) {
     var projectsCtrl = this;
     projectsCtrl.items = items;
     // console.log(projectsCtrl.items);
+    $scope.isPrevious = {
+    "background-color" : "lightblue"
+   };
+    $scope.isNext = {
+      "background-color" : "lightblue"
+    };
 
     projectsCtrl.totalPages = [];
     projectsCtrl.PagesProjects = [];
@@ -33,11 +39,15 @@
       } else {
         window.scrollTo(0, 0);
       }
+
       projectsCtrl.PagesProjects[0] = projectsCtrl.items[1].projects[0][pn];
       projectsCtrl.currentPage = pn;
-      console.log(projectsCtrl.PagesProjects[0]);
+      // console.log(projectsCtrl.PagesProjects[0]);
+      console.log(projectsCtrl.totalPagesNumber);
+      console.log(pn);
+
     };
-    // console.log(projectsCtrl.totalPages);
+    // console.log(projectsCtrl.totalPagesNumber);
     // console.log(projectsCtrl.items[1].projects[0]);
   }
 })();

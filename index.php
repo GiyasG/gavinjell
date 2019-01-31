@@ -2,9 +2,9 @@
 <html lang="en" ng-app="ShopApp">
 <head>
 <meta charset="utf-8">
-<title>Items view</title>
+<title>Dr. Jell's Lab</title>
 
-<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/main.css">
 <!-- <link rel="stylesheet" href="css/styles.css"> -->
 <script type="text/javascript" src="bower_components/tinymce/tinymce.js"></script>
@@ -75,9 +75,8 @@
   <div ui-view="admin"></div>
   <hr>
 </div>
-<hr>
-<footer>
-  <div class="container text-center">
+<footer class="navbar-inverse">
+  <div class="text-center">
     <p>Dr. Jell's Lab 2018 <span class="glyphicon glyphicon-copyright-mark"></span></p>
   </div>
 </footer>
