@@ -76,7 +76,7 @@ function toDbase($items, $newFileName) {
 	$db->setName('SET NAMES \'utf8\'');
 
 
-$db->update('teams',array('titlet'=>$items['title'],
+$db->update('teams',array('titlet'=>$items['titlet'],
                               'name'=>$items['name'],
                               'surname'=>$items['surname'],
                               'about'=>htmlentities($items['about']),
@@ -92,7 +92,7 @@ $db->update('teams',array('titlet'=>$items['title'],
 			die('Cant connect1: ' . mysql_error());
     } else {
       $db->update('photos',array('image'=>$newFileName,
-                                 'description'=>$items['title']." ".$items['name']." ".$items['surname']),
+                                 'description'=>$items['titlet']." ".$items['name']." ".$items['surname']),
                                  'team_id='.$items['id']);
                 $res1 = $db->getResult();
           			if (!$res1) {
