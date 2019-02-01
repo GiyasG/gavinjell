@@ -45,11 +45,14 @@
 <script src="src/teams.component.js"></script>
 <script src="src/teams.controller.js"></script>
 
-<script src="src/cart.component.js"></script>
+<!-- <script src="src/contact.component.js"></script>
+<script src="src/contact.controller.js"></script> -->
+
+<!-- <script src="src/cart.component.js"></script>
 <script src="src/cart.controller.js"></script>
 
 <script src="src/checkout.component.js"></script>
-<script src="src/checkout.controller.js"></script>
+<script src="src/checkout.controller.js"></script> -->
 
 <script src="src/verify.component.js"></script>
 <script src="src/verify.controller.js"></script>
@@ -73,7 +76,7 @@
   <div ui-view="content"></div>
   <!-- <div ui-view="basket"></div> -->
   <div ui-view="admin"></div>
-  <hr>
+
 </div>
 <footer class="navbar-inverse">
   <div class="text-center">

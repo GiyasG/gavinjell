@@ -68,26 +68,26 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
   }
 
 
-  var checkout = {
-    name: 'checkout',
-    // parent: 'home',
-    url: '/checkout',
-    // params: { basket: null },
-    views: {
-         'basket@': {
-          templateUrl: 'src/template/checkout.template.html',
-          controller: 'CheckoutController as bCtrl',
-        }
-      },
-      resolve: {
-                  // basketitems: function(ShopDataService, $stateParams) {
-                  //   console.log("basket in route: "+$stateParams.basket);
-                  //   return ShopDataService.CheckoutItems($stateParams.basket);
-                    cart: function(ShopDataService) {
-                    return ShopDataService.CheckoutItems();
-                  }
-                }
-  }
+  // var checkout = {
+  //   name: 'checkout',
+  //   // parent: 'home',
+  //   url: '/checkout',
+  //   // params: { basket: null },
+  //   views: {
+  //        'basket@': {
+  //         templateUrl: 'src/template/checkout.template.html',
+  //         controller: 'CheckoutController as bCtrl',
+  //       }
+  //     },
+  //     resolve: {
+  //                 // basketitems: function(ShopDataService, $stateParams) {
+  //                 //   console.log("basket in route: "+$stateParams.basket);
+  //                 //   return ShopDataService.CheckoutItems($stateParams.basket);
+  //                   cart: function(ShopDataService) {
+  //                   return ShopDataService.CheckoutItems();
+  //                 }
+  //               }
+  // }
 
   var emailconfirmed = {
     name: 'verifyemail',
@@ -148,7 +148,7 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
   .state(projects)
   .state(papers)
   .state(teams)
-  .state(checkout)
+  // .state(checkout)
   .state(emailconfirmed)
   .state(passwordconfirmed)
   .state(admin)

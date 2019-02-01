@@ -46,7 +46,9 @@
        return response.data.items;
      });
    };
-      service.CheckoutItems = function (basket) {
+
+
+    service.CheckoutItems = function (basket) {
         // console.log("basket in service: "+basket);
         // var basketitems = basket;
         // return basketitems

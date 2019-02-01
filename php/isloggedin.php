@@ -31,6 +31,19 @@ require '../vendor/autoload.php';
   $outp3 ='{"all":["No items found"]}';
 }
 
-$outp = '{"isloggedin":['.$outp1.','.$outp2.','.$outp3.']}';
+if (isset($db)) {
+  $tb = new Table();
+  $res = $tb->get_ParentResult('authority', 'contact');
+
+  // print_r ($res);
+  // $res[0]['about'] = html_entity_decode($res[0]['about']);
+  // $res[0]['about'] = str_replace('"','\"',$res[0]['about']);
+
+  $outp4 ='{"contact":['.json_encode($res).']}';
+} else {
+  $outp4 ='{"contact":["No items found"]}';
+}
+
+$outp = '{"isloggedin":['.$outp1.','.$outp2.','.$outp3.','.$outp4.']}';
 echo ($outp);
 ?>
