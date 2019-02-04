@@ -13,6 +13,10 @@
 						<div class="col-md-12">
 							<p>URL: {{item.url}}</p>
 							<p>Publishing date: {{item.published}}</p>
+							<div ng-if="item.author">Authors:
+								<span ng-repeat="person in item.author" ng-init="sectionIndex = $index">
+									<span ng-show="sectionIndex > 0">, </span>{{person.title}}. {{person.name}} {{person.surname}}</span>
+							</div>
 						</div>
 						<hr>
        </div>

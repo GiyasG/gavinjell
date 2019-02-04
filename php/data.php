@@ -129,8 +129,17 @@ if ($choosendb == "teams") {
   $team ='{"teams":null}';
 }
 
+if (isset($db)) {
+  $tb = new Table();
+  $res = $tb->get_ParentResult('authority', 'contact');
 
-$outp = '{"items":['.$outp1.','.$proj.','.$papr.','.$team.','.$outp3.']}';
+  $cnt ='{"contact":['.json_encode($res).']}';
+} else {
+  $cnt ='{"contact":["No items found"]}';
+}
+
+
+$outp = '{"items":['.$outp1.','.$proj.','.$papr.','.$team.','.$cnt.','.$outp3.']}';
 
 $db->disconnect();
 

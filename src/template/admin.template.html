@@ -5,7 +5,7 @@
 <div class="well">
 
 <div class="text-center"><h4>Add, update or delete</h4></div>
-<button  ng-if="!AddNewRecord" class="btn btn-success" ng-click="AddItem()">Add new item</button>
+<button  ng-if="!AddNewRecord && !aCtrl.items[0].all[0]" class="btn btn-success" ng-click="AddItem()">Add new item</button>
 <hr>
 
 <admin-add ng-if="AddNewRecord"></admin-add>
@@ -30,14 +30,41 @@
     </div>
     <admin-update ng-if="sectionIndex == updateIndexItem"></admin-update>
     <hr>
+		<button ng-if="!AddNewContact" class="btn btn-success" ng-click="AddContact(item.authority_id)">Add new contact</button>
 		<button ng-if="!AddNewProject" class="btn btn-success" ng-click="AddProject(item.authority_id)">Add new project</button>
 		<button ng-if="!AddNewPaper" class="btn btn-success" ng-click="AddPaper(item.authority_id)">Add new publication</button>
 		<button ng-if="!AddNewTeam" class="btn btn-success" ng-click="AddTeam(item.authority_id)">Add new team memeber</button>
 		<hr>
+		<contact-add ng-if="AddNewContact"></contact-add>
 		<project-add ng-if="AddNewProject"></project-add>
 		<paper-add ng-if="AddNewPaper"></paper-add>
 		<team-add ng-if="AddNewTeam"></team-add>
 </div>
+</div>
+
+
+<div class="well">
+<div class="text-center"><h4>Update or delete Contact</h4></div>
+
+		<div ng-repeat="item in aCtrl.items[4].contact[0]" ng-init="sectionIndex = $index">
+				 <div ng-if="sectionIndex != updateIndexContact" class="row">
+						<div class="col-md-2">
+							<button class="btn btn-success" ng-click="UpdateContact(item.authority_id, item.id, sectionIndex)">Update</button>
+							<button class="btn btn-warning" ng-click="DeleteContact(item.authority_id, item.id)">Delete</button>
+							<!-- <p>{{sectionIndex}}</p> -->
+						</div>
+						<div class="col-md-6">
+							<span>Type of property</span> <p>{{item.propertytype}}</p>
+						  <span>Country</span> <p>{{item.country}}</p>
+						  <span>City</span>  <p>{{item.city}}</p>
+						  <span>Postcode</span>  <p>{{item.postcode}}</p>
+						  <span>Street</span>	  <p>{{item.street}}</p>
+						  <span>Phone number</span>  <p>{{item.phone}}</p>
+						  <span>E-mail</span>  <p>{{item.email}}</p>
+						</div>
+				</div>
+				<contact-update ng-if="sectionIndex == updateIndexContact"></contact-update>
+		</div>
 </div>
 
 <div class="well">
@@ -88,26 +115,37 @@
 
 <!-- TEAM -->
 <div class="well">
-<div class="text-center"><h4>Update or delete team members</h4></div>
+		<div class="text-center"><h4>Update or delete team members</h4></div>
 
-<div ng-repeat="item in aCtrl.items[3].teams[0][0]" ng-init="sectionIndex = $index">
-	<div ng-if="sectionIndex != updateIndexTeam" class="row">
- 	<div class="col-md-2">
- 		<button class="btn btn-success" ng-click="UpdateTeam(item.authority_id, item.id, sectionIndex)">Update</button>
- 		<button class="btn btn-warning" ng-click="DeleteTeam(item.authority_id, item.id)">Delete</button>
- 		<!-- <p>{{sectionIndex}}</p> -->
- 	</div>
-	<div class="col-md-2 well text-center">
-			<img class="imgfit" ng-src="img/{{item.image}}"  alt="photo"/>
-	</div>
-	<div class="col-md-6">
-		<p> {{item.titlet}} {{item.name}} {{item.surname}}</p>
-		<p ng-bind-html="item.about"></p>
-	</div>
-</div>
-	<team-update ng-if="sectionIndex == updateIndexTeam"></team-update>
-	<hr>
-</div>
+		<div ng-repeat="item in aCtrl.items[3].teams[0][0]" ng-init="sectionIndex = $index">
+					<div ng-if="sectionIndex != updateIndexTeam" class="row">
+				 	<div class="col-md-2">
+				 		<button class="btn btn-success" ng-click="UpdateTeam(item.authority_id, item.id, sectionIndex)">Update</button>
+				 		<button class="btn btn-warning" ng-click="DeleteTeam(item.authority_id, item.id)">Delete</button>
+
+				 		<!-- <p>{{sectionIndex}}</p> -->
+				 	</div>
+					<div class="col-md-2 well text-center">
+							<img class="imgfit" ng-src="img/{{item.image}}"  alt="photo"/>
+					</div>
+					<div class="col-md-9">
+						<p> {{item.titlet}} {{item.name}} {{item.surname}}</p>
+						<p ng-bind-html="item.about"></p>
+					</div>
+				</div>
+
+			<div ng-if="sectionIndex != updateIndexTeam" class="row">
+			<div class="col-md-4">
+				<button class="btn btn-info" ng-click="AddTeamContact(item.authority_id, item.id, sectionIndex)">Add contact for {{item.titlet}} {{item.name}} {{item.surname}}</button>
+			</div>
+			<div class="col-md-8">
+				<teamcontact-add ng-if="AddNewTeamcontact && (sectionIndex == updateIndexTeamcontact)"></teamcontact-add>
+				<teamcontact-update ng-if="!AddNewTeamcontact && (sectionIndex == updateIndexTeamcontact)"></teamcontact-update>
+				<team-update ng-if="sectionIndex == updateIndexTeam"></team-update>
+			</div>
+		</div>
+		<hr>
+		</div>
 </div>
 
 </div>

@@ -99,7 +99,10 @@
 <div class="container text-center">
   <h3> Contact </h3>
   <div ng-repeat="item in hCtrl.isloggedin[3].contact[0]">
-    <h4 class="text-center"> {{item.street}} {{item.city}} {{item.country}} {{item.postcode}}</h4>
-    <h4 class="text-center"> {{item.phone}} {{item.email}}</h4>
+    <h4 class="text-center"> {{item.street}}, {{item.city}}, {{item.country}}, {{item.postcode}}</h4>
+    <h4 class="text-center">
+                             Phone: <a href="tel:{{item.phone}}">{{item.phone}}</a>
+                             E-mail: <a href="mailto:{{item.email}}">{{item.email}}</a>
+      </h4>
   </div>
 </div>

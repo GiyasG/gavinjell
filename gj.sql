@@ -70,6 +70,25 @@ CREATE TABLE `contact` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tcontact`
+--
+
+CREATE TABLE `tcontact` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `authority_id` int(10) UNSIGNED NOT NULL,
+  `propertytype` varchar(20) NOT NULL,
+  `country` varchar(20) NOT NULL,
+  `city` varchar(20) NOT NULL,
+  `postcode` varchar(6) NOT NULL,
+  `street` varchar(40) DEFAULT NULL,
+  `phone` varchar(13) DEFAULT '+994XXXXXXXXX',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `contacts_team`
 --
 
@@ -191,7 +210,7 @@ CREATE TABLE `projects_team` (
 CREATE TABLE `teams` (
   `id` int(10) UNSIGNED NOT NULL,
   `authority_id` int(10) UNSIGNED NOT NULL,
-  `title` varchar(3) NOT NULL,
+  `titlet` varchar(3) NOT NULL,
   `name` varchar(20) NOT NULL,
   `surname` varchar(20) NOT NULL,
   `position` varchar(40) NOT NULL,
@@ -206,7 +225,7 @@ CREATE TABLE `teams` (
 -- Dumping data for table `teams`
 --
 
-INSERT INTO `teams` (`id`, `authority_id`, `title`, `name`, `surname`, `position`, `about`, `dob`, `sex`, `created_at`, `updated_at`) VALUES
+INSERT INTO `teams` (`id`, `authority_id`, `titlet`, `name`, `surname`, `position`, `about`, `dob`, `sex`, `created_at`, `updated_at`) VALUES
 (1, 1, 'Ms', 'Medina', 'Guliyeva', 'phD student', '&lt;p&gt;&lt;strong&gt;Lorem ipsum dolor sit amet,&lt;/strong&gt;&lt;/p&gt;\n&lt;p&gt;consectetur adipiscing elit. Aliquam pulvinar dapibus lectus, vitae gravida metus. Vestibulum rutrum dui nec suscipit iaculis. Vivamus eget metus ut nisi fermentum aliquam. Nulla facilisi. Vestibulum dapibus quam nisi. Nam blandit tortor eget convallis blandit. Aenean vitae neque in lorem consequat &lt;strong&gt;semper. Quisque sodales at magna in viverra.&lt;/strong&gt;&lt;/p&gt;', '1998-08-10', 'female', '2019-01-16 12:25:51', '2019-01-25 10:00:20'),
 (5, 1, 'D', 'D', 'D', 'D', '&lt;p&gt;Dddddddd&lt;/p&gt;', '2018-12-31', 'female', '2019-01-25 10:01:31', '2019-01-25 10:04:45');
 
@@ -227,12 +246,18 @@ ALTER TABLE `contact`
   ADD PRIMARY KEY (`id`),
   ADD KEY `authority_id` (`authority_id`);
 
+  --
+  -- Indexes for table `tcontact`
+  --
+  ALTER TABLE `tcontact`
+    ADD PRIMARY KEY (`id`);
+
 --
 -- Indexes for table `contacts_team`
 --
 ALTER TABLE `contacts_team`
   ADD PRIMARY KEY (`contact_id`,`team_id`),
-  ADD KEY `FK_contact_team` (`team_id`);
+  ADD KEY `FK_tcontact_team` (`team_id`);
 
 --
 -- Indexes for table `papers`
@@ -333,7 +358,7 @@ ALTER TABLE `contact`
 -- Constraints for table `contacts_team`
 --
 ALTER TABLE `contacts_team`
-  ADD CONSTRAINT `FK_contact` FOREIGN KEY (`contact_id`) REFERENCES `contact` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_tcontact` FOREIGN KEY (`contact_id`) REFERENCES `tcontact` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_contact_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE;
 
 --

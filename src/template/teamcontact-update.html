@@ -1,0 +1,31 @@
+<!-- <span>{{sectionIndex}}</span> -->
+<div class="row well">
+
+  <div class="well col-md-3">
+    <span>Type of property</span>
+    <input class="form-control" type="text" ng-model="itemU.propertytype" value=""/>
+    <span>Country</span>
+    <input class="form-control" type="text" ng-model="itemU.country" value=""/>
+    <span>City</span>
+    <input class="form-control" type="text" ng-model="itemU.city" value=""/>
+    <span>Postcode</span>
+    <input class="form-control" type="text" ng-model="itemU.postcode" value=""/>
+    <span>Street</span>
+    <input class="form-control" type="text" ng-model="itemU.street" value=""/>
+    <span>Phone number</span>
+    <input class="form-control" type="text" ng-model="itemU.phone" value=""/>
+    <span>E-mail</span>
+    <input class="form-control" type="email" ng-model="itemU.email" value=""/>
+  </div>
+
+<hr>
+<div class="col-md-12">
+  <span class="pwarnings">{{uadata.info ?  uadata.info[1].message : uadata }}</span>
+</div>
+
+<div class="col-md-12 text-center">
+  <button class="btn btn-success" ng-click="onTeamUpdate(File)">Save</button>
+  <button class="btn btn-success" ng-click="CancelUpdateTeam(itemU.id)">Cancel</button>
+</div>
+
+</div>

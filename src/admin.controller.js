@@ -5,12 +5,16 @@
   .controller('AdminController', AdminController)
   .directive('adminAdd', AdminAddDirective)
   .directive('adminUpdate', AdminUpdateDirective)
+  .directive('contactAdd', ContactAddDirective)
+  .directive('contactUpdate', ContactUpdateDirective)
   .directive('projectAdd', ProjectAddDirective)
   .directive('projectUpdate', ProjectUpdateDirective)
   .directive('paperAdd', PaperAddDirective)
   .directive('paperUpdate', PaperUpdateDirective)
   .directive('teamAdd', TeamAddDirective)
-  .directive('teamUpdate', TeamUpdateDirective);
+  .directive('teamUpdate', TeamUpdateDirective)
+  .directive('teamcontactAdd', TeamcontactAddDirective)
+  .directive('teamcontactUpdate', TeamcontactUpdateDirective);
 
 
   AdminController.$inject = ['$scope', '$http', '$sce', 'Upload', 'items'];
@@ -19,16 +23,21 @@
 
         var aCtrl = this;
         aCtrl.items = items;
-        // console.log(aCtrl.items[1].projects[0]);// aCtrl.items[0].all[0].about = $sce.trustAsHtml(aCtrl.items[0].all[0].about);
+        console.log(aCtrl.items[1].projects[0]);// aCtrl.items[0].all[0].about = $sce.trustAsHtml(aCtrl.items[0].all[0].about);
         $scope.updateIndexItem = null;
         $scope.updateIndexProject = null;
         $scope.updateIndexPaper = null;
         $scope.updateIndexTeam = null;
+        $scope.updateIndexContact = null;
+        $scope.updateIndexTeamcontact = null;
+
         $scope.AddNewRecord = false;
         $scope.AddNewProject = false;
         $scope.AddNewPaper = false;
         $scope.AddNewTeam = false;
-        $scope.hasRoleAdmin = aCtrl.items[4].AdminIsIn;
+        $scope.AddNewTeamcontact = false;
+        $scope.AddNewContact = false;
+        $scope.hasRoleAdmin = aCtrl.items[5].AdminIsIn;
         $scope.tinymceModel = "";
         // console.log($scope.tinymceModel);
         console.log($scope.hasRoleAdmin);
@@ -44,6 +53,8 @@
          $scope.fProjects = {};
          $scope.fPapers = {};
          $scope.fTeams = {};
+         $scope.fContact = {};
+         $scope.fTeamcontact = {};
          $scope.fTeams.genders = {
            model: null,
            sex: ["male","female"]
@@ -193,6 +204,118 @@
 
                   }).error(function(data, status) {
                       $scope.message.info[1].message = data;
+                  });
+          };
+
+          //**************** Contact Add new record *********************//
+          $scope.onContactSelect = function() {
+              $scope.message = "";
+                  $scope.upload = Upload.upload({
+                      url: 'php/uploadContact.php',
+                      method: 'POST',
+                      // file: file,
+                      data: {
+                                'item': $scope.fContact
+                            }
+                  }).success(function(data, status, headers, config) {
+                      $scope.message = data;
+
+
+                      if ($scope.message.info[0].newitem[0].id) {
+
+                        var newitem = {};
+                        newitem.id = $scope.message.info[0].newitem[0].id;
+                        newitem.propertytype = $scope.message.info[0].newitem[0].propertytype;
+                        newitem.country = $scope.message.info[0].newitem[0].country;
+                        newitem.city = $scope.message.info[0].newitem[0].city;
+                        newitem.postcode = $scope.message.info[0].newitem[0].postcode;
+                        newitem.street = $scope.message.info[0].newitem[0].street;
+                        newitem.phone = $scope.message.info[0].newitem[0].phone;
+                        newitem.email = $scope.message.info[0].newitem[0].email;
+                        newitem.authority_id = $scope.message.info[0].newitem[0].authority_id;
+
+                        aCtrl.items[4].all.push(newitem);
+
+                        console.log($scope.message.info[0].newitem[0].id);
+                        $scope.AddNewContact = false;
+                        $scope.fContact = {};
+                      }
+                  }).error(function(data, status) {
+                      $scope.message = data;
+                  });
+          };
+
+          //************************************************//
+          $scope.DeleteContact = function(aid, id) {
+              console.log("id is: "+id);
+            $http({
+                  method  : 'POST',
+                  url     : 'php/DeleteContact.php',
+                  data    : {aid: aid, id: id},
+                  headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
+                   })
+                .then(function(response) {
+                    console.log(response.data.info);
+                    var rid = aCtrl.items[4].contact[0].findIndex(x => x.id === id);
+                    console.log(rid);
+                    aCtrl.items[4].contact[0].splice(rid, 1);
+                    return response.data.info;
+                });
+          };
+
+          $scope.UpdateContact = function (aid, id, sid) {
+            $scope.message = "";
+            $scope.updateIndexContact = sid;
+            $http({
+                  method  : 'POST',
+                  url     : 'php/getUpdateContact.php',
+                  data    : {aid: aid, id: id},
+                  headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
+                   })
+                .then(function(response) {
+                  console.log(response.data);
+                    $scope.itemU = response.data[0];
+                    console.log($scope.itemU);
+                    console.log($scope.fContact);
+                    return response.data[0];
+                });
+              }
+
+
+          //**************** Contact Update *********************//
+          $scope.onContactUpdate = function() {
+              $scope.message = "";
+              console.log("itemU update Contact:");
+              console.log($scope.itemU);
+                  $scope.upload = Upload.upload({
+                      url: 'php/updateContact.php',
+                      method: 'POST',
+                      // file: file,
+                      data: {
+                                'item': $scope.itemU
+                            }
+                  }).success(function(data, status, headers, config) {
+                      $scope.message = data;
+                      console.log($scope.message);
+                      var uitem = {};
+
+                      uitem.id = $scope.message.info[0].updateitem[0].id;
+                      uitem.propertytype = $scope.message.info[0].updateitem[0].propertytype;
+                      uitem.country = $scope.message.info[0].updateitem[0].country;
+                      uitem.city = $scope.message.info[0].updateitem[0].city;
+                      uitem.postcode = $scope.message.info[0].updateitem[0].postcode;
+                      uitem.street = $scope.message.info[0].updateitem[0].street;
+                      uitem.phone = $scope.message.info[0].updateitem[0].phone;
+                      uitem.email = $scope.message.info[0].updateitem[0].email;
+                      uitem.authority_id = $scope.message.info[0].updateitem[0].authority_id;
+
+                      console.log(aCtrl.items[4]); //.projects[0]);
+                      var rid = aCtrl.items[4].contact[0][0].findIndex(x => x.id === $scope.itemU.id);
+                      aCtrl.items[4].contact[0][0][rid] = uitem;
+                      console.log(rid);
+                      $scope.updateIndexConatct = null
+                  }).error(function(data, status) {
+                      $scope.message = data;
                   });
           };
 
@@ -585,6 +708,146 @@
                     };
           //************************************************//
 
+
+
+
+
+          //**************** TeamContact Add new record *********************//
+          $scope.onTeamcontactSelect = function(aid, id) {
+            console.log(aid+" "+id);
+              $scope.message = "";
+                  $scope.upload = Upload.upload({
+                      url: 'php/uploadTeamcontact.php',
+                      method: 'POST',
+                      // file: file,
+                      data: {
+                                'item': $scope.fTeamcontact,
+                                'aid' : aid,
+                                'id' : id
+                            }
+                  }).success(function(data, status, headers, config) {
+                      $scope.message = data;
+
+
+                      if ($scope.message.info[0].newitem[0].id) {
+
+                        var newitem = {};
+                        newitem.id = $scope.message.info[0].newitem[0].id;
+                        newitem.propertytype = $scope.message.info[0].newitem[0].propertytype;
+                        newitem.country = $scope.message.info[0].newitem[0].country;
+                        newitem.city = $scope.message.info[0].newitem[0].city;
+                        newitem.postcode = $scope.message.info[0].newitem[0].postcode;
+                        newitem.street = $scope.message.info[0].newitem[0].street;
+                        newitem.phone = $scope.message.info[0].newitem[0].phone;
+                        newitem.email = $scope.message.info[0].newitem[0].email;
+                        newitem.authority_id = $scope.message.info[0].newitem[0].authority_id;
+
+                        aCtrl.items[3].teams[0][0].push(newitem);
+
+                        console.log($scope.message.info[0].newitem[0].id);
+                        $scope.AddNewTeamcontact = false;
+                        $scope.fTeamcontact = {};
+                      }
+                  }).error(function(data, status) {
+                      $scope.message = data;
+                  });
+          };
+
+          //************************************************//
+          $scope.DeleteTeam = function(aid, id) {
+              console.log("id is: "+id);
+            $http({
+                  method  : 'POST',
+                  url     : 'php/DeleteTeam.php',
+                  data    : {aid: aid, id: id},
+                  headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
+                   })
+                .then(function(response) {
+                    console.log(response.data.info);
+                    console.log(aCtrl.items[3].teams[0]);
+                    var rid = aCtrl.items[3].teams[0][0].findIndex(x => x.id === id);
+                    aCtrl.items[0].items[3].teams[0][0].splice(rid, 1);
+                    return response.data.info;
+                });
+          };
+
+          $scope.UpdateTeam = function (aid, id, sid) {
+            $scope.message = "";
+            $scope.updateIndexTeam = sid;
+            $http({
+                  method  : 'POST',
+                  url     : 'php/getUpdateTeam.php',
+                  data    : {ida: aid, id: id},
+                  headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
+                   })
+                .then(function(response) {
+                  console.log(response.data);
+                    $scope.itemU = response.data[0];
+                    $scope.fTeams.genders.model = $scope.itemU.sex;
+                    console.log($scope.itemU);
+                    console.log($scope.fTeams);
+                    // $scope.tinymceData.about = response.data.item[0].about;
+
+                    return response.data[0];
+                });
+              }
+
+
+            //**************** Team Update *********************//
+            $scope.onTeamUpdate = function(file) {
+              if ($scope.fTeams.genders.model != null) {
+                $scope.itemU.sex = $scope.fTeams.genders.model;
+              }
+                $scope.message = "";
+                    $scope.upload = Upload.upload({
+                        url: 'php/updateTeam.php',
+                        method: 'POST',
+                        file: file,
+                        data: {
+                                  'item': $scope.itemU
+                              }
+                    }).success(function(data, status, headers, config) {
+                        $scope.uadata = data;
+                        $scope.updateIndex = null;
+
+                        var uitem = {};
+
+                        uitem.id = $scope.uadata.info[0].updateitem[0].id;
+                        uitem.authority_id = $scope.uadata.info[0].updateitem[0].authority_id;
+                        uitem.title = $scope.uadata.info[0].updateitem[0].title;
+                        uitem.name = $scope.uadata.info[0].updateitem[0].name;
+                        uitem.surname = $scope.uadata.info[0].updateitem[0].surname;
+                        uitem.about = $scope.uadata.info[0].updateitem[0].about;
+                        uitem.position = $scope.uadata.info[0].updateitem[0].position;
+                        uitem.dob = $scope.uadata.info[0].updateitem[0].dob;
+                        uitem.sex = $scope.uadata.info[0].updateitem[0].sex;
+                      if (file) {
+                        $scope.itemU.image = $scope.uadata.info[0].updateitem[0].image;
+                      }
+                        uitem.image = $scope.uadata.info[0].updateitem[0].image;
+
+                        console.log("aCtrl = "+aCtrl.items[0].all[0]);
+                        var rid = aCtrl.items[3].teams[0][0].findIndex(x => x.id === uitem.id);
+                        console.log(rid);
+                        aCtrl.items[3].teams[0][0][rid] = uitem;
+                        console.log(aCtrl.items[3].teams[0]);
+                        console.log($scope.itemU);
+                        $scope.updateIndexTeam = null
+
+
+                    }).error(function(data, status) {
+                        $scope.message.info[1].message = data;
+                    });
+            };
+  //************************************************//
+
+
+
+
+
+
+
+
         $scope.AddItem = function() {
           $scope.AddNewRecord = true;
         }
@@ -663,6 +926,48 @@
 
         }
 
+        //************************************************//
+        $scope.AddTeamContact = function(aid, id, sid) {
+          $scope.AddNewTeamcontact = true;
+          $scope.updateIndexTeamcontact = sid;
+          console.log($scope.AddNewTeamcontact);
+          console.log(aid);
+          console.log(id);
+          console.log(sid);
+          $scope.fTeamcontact.id = id;
+        }
+
+        $scope.CloseAddTeamcontact = function() {
+          $scope.AddNewTeamcontact = false;
+          $scope.updateIndexTeamcontact = null;
+        }
+
+        $scope.CancelUpdateTeamcontact = function(aid, id) {
+          $scope.updateIndexTeamcontact = null;
+          $scope.itemU.id = id;
+          $scope.itemU.authority_id = aid;
+
+        }
+
+        //************************************************//
+
+        $scope.AddContact = function(id) {
+          $scope.AddNewContact = true;
+          $scope.fContact.id = id;
+        }
+
+        $scope.CloseAddContact = function() {
+          $scope.AddNewContact = false;
+        }
+
+        $scope.CancelUpdateContact = function(aid, id) {
+          $scope.updateIndexContact = null;
+          $scope.itemU.id = id;
+          $scope.itemU.authority_id = aid;
+
+        }
+
+        //************************************************//
         $scope.addTM = function(model) {
           console.log(model);
             var rid = aCtrl.items[3].teams[0][0].findIndex(x => x.id === model);
@@ -758,6 +1063,19 @@
                 }
       }
 
+      function ContactAddDirective () {
+        return {
+          templateUrl: 'src/template/contact-add.html'
+          }
+        }
+
+      function ContactUpdateDirective () {
+        return {
+          templateUrl: 'src/template/contact-update.html'
+                  }
+        }
+
+
       function ProjectAddDirective () {
         return {
           templateUrl: 'src/template/project-add.html'
@@ -793,4 +1111,18 @@
               templateUrl: 'src/template/team-update.html'
                       }
             }
+
+            function TeamcontactAddDirective () {
+              return {
+                templateUrl: 'src/template/teamcontact-add.html'
+                }
+              }
+
+            function TeamcontactUpdateDirective () {
+              return {
+                templateUrl: 'src/template/teamcontact-update.html'
+                        }
+              }
+
+
 })();
