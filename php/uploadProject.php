@@ -104,7 +104,7 @@ function toDbase($items, $newFileName) {
               'url'=>$items['url'],
               'started'=>$items['started'],
               'finished'=>$items['finished'],
-              'description'=>$items['description'],
+              'description'=>htmlentities($items['description']),
               'authority_id'=>$items['id']
           ));
 

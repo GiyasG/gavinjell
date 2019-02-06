@@ -74,7 +74,7 @@ function toDbase($items, $newFileName) {
   $db = new Database();
 	$db->connect();
 	$db->setName('SET NAMES \'utf8\'');
-
+  // echo $items['description'];
 
 $db->update('papers',array('title'=>$items['title'],
             'description'=>htmlentities($items['description']),

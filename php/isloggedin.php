@@ -33,7 +33,7 @@ require '../vendor/autoload.php';
 
 if (isset($db)) {
   $tb = new Table();
-  $res = $tb->get_ParentResult('authority', 'contact');
+  $res = $tb->get_ParentResult('authority', 'contacts');
 
   // print_r ($res);
   // $res[0]['about'] = html_entity_decode($res[0]['about']);

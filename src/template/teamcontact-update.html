@@ -1,7 +1,4 @@
 <!-- <span>{{sectionIndex}}</span> -->
-<div class="row well">
-
-  <div class="well col-md-3">
     <span>Type of property</span>
     <input class="form-control" type="text" ng-model="itemU.propertytype" value=""/>
     <span>Country</span>
@@ -16,16 +13,11 @@
     <input class="form-control" type="text" ng-model="itemU.phone" value=""/>
     <span>E-mail</span>
     <input class="form-control" type="email" ng-model="itemU.email" value=""/>
-  </div>
 
 <hr>
 <div class="col-md-12">
   <span class="pwarnings">{{uadata.info ?  uadata.info[1].message : uadata }}</span>
 </div>
 
-<div class="col-md-12 text-center">
-  <button class="btn btn-success" ng-click="onTeamUpdate(File)">Save</button>
-  <button class="btn btn-success" ng-click="CancelUpdateTeam(itemU.id)">Cancel</button>
-</div>
-
-</div>
+  <button class="btn btn-success" ng-click="onTeamcontactUpdate()">Save</button>
+  <button class="btn btn-success" ng-click="CancelUpdateTeamcontact(itemU.id)">Cancel</button>

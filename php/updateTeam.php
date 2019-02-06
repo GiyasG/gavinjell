@@ -88,15 +88,15 @@ $db->update('teams',array('titlet'=>$items['titlet'],
 			$res = $db->getResult();
 			if (!$res)
 			{
-        echo "ERROR 1";
-			die('Cant connect1: ' . mysql_error());
+        print_r ($res);
+ 			  die('Cant connect1: ');
     } else {
       $db->update('photos',array('image'=>$newFileName,
                                  'description'=>$items['titlet']." ".$items['name']." ".$items['surname']),
                                  'team_id='.$items['id']);
                 $res1 = $db->getResult();
           			if (!$res1) {
-                  echo "ERROR 2";
+                  print_r ($res1);
                 } else {
                   // echo 'UPDATED';
                 }

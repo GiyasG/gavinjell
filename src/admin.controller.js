@@ -369,6 +369,8 @@
               if ($scope.author) {
                 $scope.itemU.author = $scope.author
               }
+              console.log($scope.itemU);
+
               console.log("itemU update Project:");
               console.log($scope.itemU);
                   $scope.upload = Upload.upload({
@@ -633,7 +635,8 @@
                             console.log(response.data.info);
                             console.log(aCtrl.items[3].teams[0]);
                             var rid = aCtrl.items[3].teams[0][0].findIndex(x => x.id === id);
-                            aCtrl.items[0].items[3].teams[0][0].splice(rid, 1);
+                            console.log(rid);
+                            aCtrl.items[3].teams[0][0].splice(rid, 1);
                             return response.data.info;
                         });
                   };
@@ -641,6 +644,7 @@
                   $scope.UpdateTeam = function (aid, id, sid) {
                     $scope.message = "";
                     $scope.updateIndexTeam = sid;
+                    console.log($scope.updateIndexTeam);
                     $http({
                           method  : 'POST',
                           url     : 'php/getUpdateTeam.php',
@@ -665,6 +669,7 @@
                       if ($scope.fTeams.genders.model != null) {
                         $scope.itemU.sex = $scope.fTeams.genders.model;
                       }
+                      console.log($scope.itemU);
                         $scope.message = "";
                             $scope.upload = Upload.upload({
                                 url: 'php/updateTeam.php',
@@ -685,6 +690,7 @@
                                 uitem.name = $scope.uadata.info[0].updateitem[0].name;
                                 uitem.surname = $scope.uadata.info[0].updateitem[0].surname;
                                 uitem.about = $scope.uadata.info[0].updateitem[0].about;
+                                console.log(uitem.about);
                                 uitem.position = $scope.uadata.info[0].updateitem[0].position;
                                 uitem.dob = $scope.uadata.info[0].updateitem[0].dob;
                                 uitem.sex = $scope.uadata.info[0].updateitem[0].sex;
@@ -713,8 +719,8 @@
 
 
           //**************** TeamContact Add new record *********************//
-          $scope.onTeamcontactSelect = function(aid, id) {
-            console.log(aid+" "+id);
+          $scope.onTeamcontactSelect = function(aid) {
+            console.log(aid+" "+aid);
               $scope.message = "";
                   $scope.upload = Upload.upload({
                       url: 'php/uploadTeamcontact.php',
@@ -722,8 +728,7 @@
                       // file: file,
                       data: {
                                 'item': $scope.fTeamcontact,
-                                'aid' : aid,
-                                'id' : id
+                                'aid' : aid
                             }
                   }).success(function(data, status, headers, config) {
                       $scope.message = data;
@@ -754,11 +759,11 @@
           };
 
           //************************************************//
-          $scope.DeleteTeam = function(aid, id) {
+          $scope.DeleteTeamcontact = function(aid, id) {
               console.log("id is: "+id);
             $http({
                   method  : 'POST',
-                  url     : 'php/DeleteTeam.php',
+                  url     : 'php/DeleteTeamcontact.php',
                   data    : {aid: aid, id: id},
                   headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
                    })
@@ -771,12 +776,12 @@
                 });
           };
 
-          $scope.UpdateTeam = function (aid, id, sid) {
+          $scope.UpdateTeamcontact = function (aid, id, sid) {
             $scope.message = "";
-            $scope.updateIndexTeam = sid;
+            $scope.updateIndexTeamcontact = sid;
             $http({
                   method  : 'POST',
-                  url     : 'php/getUpdateTeam.php',
+                  url     : 'php/getUpdateTeamcontact.php',
                   data    : {ida: aid, id: id},
                   headers : { 'Content-Type': 'application/x-www-form-urlencoded'}
                    })
@@ -794,13 +799,10 @@
 
 
             //**************** Team Update *********************//
-            $scope.onTeamUpdate = function(file) {
-              if ($scope.fTeams.genders.model != null) {
-                $scope.itemU.sex = $scope.fTeams.genders.model;
-              }
+            $scope.onTeamcontactUpdate = function(file) {
                 $scope.message = "";
                     $scope.upload = Upload.upload({
-                        url: 'php/updateTeam.php',
+                        url: 'php/updateTeamcontact.php',
                         method: 'POST',
                         file: file,
                         data: {
@@ -812,19 +814,15 @@
 
                         var uitem = {};
 
-                        uitem.id = $scope.uadata.info[0].updateitem[0].id;
-                        uitem.authority_id = $scope.uadata.info[0].updateitem[0].authority_id;
-                        uitem.title = $scope.uadata.info[0].updateitem[0].title;
-                        uitem.name = $scope.uadata.info[0].updateitem[0].name;
-                        uitem.surname = $scope.uadata.info[0].updateitem[0].surname;
-                        uitem.about = $scope.uadata.info[0].updateitem[0].about;
-                        uitem.position = $scope.uadata.info[0].updateitem[0].position;
-                        uitem.dob = $scope.uadata.info[0].updateitem[0].dob;
-                        uitem.sex = $scope.uadata.info[0].updateitem[0].sex;
-                      if (file) {
-                        $scope.itemU.image = $scope.uadata.info[0].updateitem[0].image;
-                      }
-                        uitem.image = $scope.uadata.info[0].updateitem[0].image;
+                        uitem.id = $scope.message.info[0].updateitem[0].id;
+                        uitem.propertytype = $scope.message.info[0].updateitem[0].propertytype;
+                        uitem.country = $scope.message.info[0].updateitem[0].country;
+                        uitem.city = $scope.message.info[0].updateitem[0].city;
+                        uitem.postcode = $scope.message.info[0].updateitem[0].postcode;
+                        uitem.street = $scope.message.info[0].updateitem[0].street;
+                        uitem.phone = $scope.message.info[0].updateitem[0].phone;
+                        uitem.email = $scope.message.info[0].updateitem[0].email;
+                        uitem.authority_id = $scope.message.info[0].updateitem[0].authority_id;
 
                         console.log("aCtrl = "+aCtrl.items[0].all[0]);
                         var rid = aCtrl.items[3].teams[0][0].findIndex(x => x.id === uitem.id);
@@ -832,7 +830,7 @@
                         aCtrl.items[3].teams[0][0][rid] = uitem;
                         console.log(aCtrl.items[3].teams[0]);
                         console.log($scope.itemU);
-                        $scope.updateIndexTeam = null
+                        $scope.updateIndexTeamcontact = null
 
 
                     }).error(function(data, status) {

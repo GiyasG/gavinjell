@@ -14,7 +14,7 @@ if (isset($postdata->id)) {
   $db->setName('SET NAMES \'utf8\'');
 
   // if (isset($db)) {
-  $db->select('contact','*',null,'authority_id='.$postdata->aid.' and id='.$postdata->id); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
+  $db->select('contacts','*',null,'authority_id='.$postdata->aid.' and id='.$postdata->id); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
   $res = $db->getResult();
 
   if (!$res) {

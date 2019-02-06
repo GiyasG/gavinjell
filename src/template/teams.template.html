@@ -13,6 +13,19 @@
 		<div class="col-md-12">
 			<p> {{item.title}} {{item.name}} {{item.surname}}</p>
 		</div>
+		<div class="col-md-12">
+			<h4>Projects participation:</h4>
+			<p>
+		  	<span ng-repeat="prj in item.project"  ng-init="sectionIndex = $index"> <span ng-show="sectionIndex > 0">, </span>{{prj.title}} </span>
+		 	</p>
+		</div>
+		<div class="col-md-12">
+			<h4>Publications participation:</h4>
+			<p>
+		  	<span ng-repeat="ppr in item.paper"  ng-init="sectionIndex = $index"> <span ng-show="sectionIndex > 0">, </span> {{ppr.title}} </span>
+		 	</p>
+		</div>
+<hr>
 </div>
 </div>
 

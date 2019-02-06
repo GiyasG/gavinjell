@@ -63,12 +63,12 @@ if (isset($db)) {
       $res[$i]['description'] = str_replace('"','\"',$res[$i]['description']);
   }
 
-  if ($choosendb == "projects") {
+  if ($choosendb == "projects" && $records_number != 0) {
     $proj = Projects("projects", $db, $res, $records_number, $records_per_page);
-  }  elseif ($choosendb == "admin") {
+  }  elseif ($choosendb == "admin" && $records_number != 0) {
     $records_per_page = $records_number;
     $proj = Projects("projects",$db, $res, $records_number, $records_per_page);
-  } elseif ($choosendb != "projects" && $choosendb != "admin") {
+  } elseif ($choosendb != "projects" && $choosendb != "admin" || $records_number == 0) {
     $proj ='{"projects":null}';
   }
 
@@ -98,19 +98,62 @@ for ($i=0; $i < $records_number; $i++) {
     $res[$i]['description'] = str_replace('"','\"',$res[$i]['description']);
 }
 
-if ($choosendb == "papers") {
+if ($choosendb == "papers" && $records_number != 0) {
   $papr = Projects("papers", $db, $res, $records_number, $records_per_page);
-}  elseif ($choosendb == "admin") {
+}  elseif ($choosendb == "admin" && $records_number != 0) {
   $records_per_page = $records_number;
   $papr = Projects("papers",$db, $res, $records_number, $records_per_page);
-} elseif ($choosendb != "papers" && $choosendb != "admin") {
+} elseif ($choosendb != "papers" && $choosendb != "admin" || $records_number == 0) {
   $papr ='{"papers":null}';
 }
 
 /* TEAMS */
 
 $res = $tb->get_ParentResult('authority', 'teams');
+
+foreach ($res as $key1 => $value1) {
+  $res_contact = $tb->get_JointResult('tcontacts', 'contacts_team', 'teams', $res[$key1]['id']);
+  // print_r ($res_joint);
+  if ($res_contact) {
+    foreach ($res_contact as $key2 => $value2) {
+      // echo $key2;
+      // print_r ($value2);
+      $res[$key1]['contact'][$key2]['contact_id'] = $res_contact[$key2]['tcontact_id'];
+      $res[$key1]['contact'][$key2]['country'] = $res_contact[$key2]['country'];
+      $res[$key1]['contact'][$key2]['city'] = $res_contact[$key2]['city'];
+      $res[$key1]['contact'][$key2]['street'] = $res_contact[$key2]['street'];
+      $res[$key1]['contact'][$key2]['postcode'] = $res_contact[$key2]['postcode'];
+      $res[$key1]['contact'][$key2]['phone'] = $res_contact[$key2]['phone'];
+      $res[$key1]['contact'][$key2]['email'] = $res_contact[$key2]['email'];
+    }
+  }
+}
+foreach ($res as $key1 => $value1) {
+  $res_project = $tb->get_JointResult('projects', 'projects_team', 'teams', $res[$key1]['id']);
+  // print_r ($res_project);
+  if ($res_project) {
+    foreach ($res_project as $key2 => $value2) {
+      $res[$key1]['project'][$key2]['project_id'] = $res_project[$key2]['project_id'];
+      $res[$key1]['project'][$key2]['title'] = $res_project[$key2]['title'];
+    }
+  }
+}
+foreach ($res as $key1 => $value1) {
+  $res_paper = $tb->get_JointResult('papers', 'papers_team', 'teams', $res[$key1]['id']);
+  // print_r ($res_paper);
+  if ($res_paper) {
+    foreach ($res_paper as $key2 => $value2) {
+      $res[$key1]['paper'][$key2]['paper_id'] = $res_paper[$key2]['paper_id'];
+      $res[$key1]['paper'][$key2]['title'] = $res_paper[$key2]['title'];
+    }
+  }
+}
+
+
+
 $records_number  = sizeof($res);
+  // print_r ($res);
+  // echo "RECORDS number: ".$records_number;
 $records_per_page = 3;
 
 for ($i=0; $i < $records_number; $i++) {
@@ -120,18 +163,20 @@ for ($i=0; $i < $records_number; $i++) {
     // $res[$i]['description'] = str_replace('"','\"',$res[$i]['description']);
 }
 
-if ($choosendb == "teams") {
+if ($choosendb == "teams" && $records_number != 0) {
   $team = Projects("teams", $db, $res, $records_number, $records_per_page);
-}  elseif ($choosendb == "admin") {
+  // print_r ($team);
+}  elseif ($choosendb == "admin" && $records_number != 0) {
   $records_per_page = $records_number;
   $team = Projects("teams",$db, $res, $records_number, $records_per_page);
-} elseif ($choosendb != "teams" && $choosendb != "admin") {
+} elseif ($choosendb != "teams" && $choosendb != "admin" || $records_number == 0) {
   $team ='{"teams":null}';
 }
 
+// ************* Contact ***************** //
 if (isset($db)) {
   $tb = new Table();
-  $res = $tb->get_ParentResult('authority', 'contact');
+  $res = $tb->get_ParentResult('authority', 'contacts');
 
   $cnt ='{"contact":['.json_encode($res).']}';
 } else {
@@ -144,14 +189,16 @@ $outp = '{"items":['.$outp1.','.$proj.','.$papr.','.$team.','.$cnt.','.$outp3.']
 $db->disconnect();
 
 echo ($outp);
-
+// ************************** //
 function Projects($dbname, $db, $res, $records_number, $records_per_page)
 {
   $proj = "";
-
-  $whole_pages =  floor($records_number/$records_per_page);
-  // echo "whole: ".$whole_pages;
+  $whole_pages = floor($records_number/$records_per_page);
   $last_page = $records_number-($whole_pages*$records_per_page);
+  // echo "DBname: ".$dbname;
+  // echo "Records per page: ".$records_per_page;
+  // echo "records number: ".$records_number;
+  // echo "whole: ".$whole_pages;
   // echo "last: ".$last_page;
   $pages = $whole_pages + $last_page;
   $page_projects = [];

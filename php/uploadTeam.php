@@ -118,7 +118,7 @@ function toDbase($items, $newFileName) {
   $db->insert('teams',array('titlet'=>$items['title'],
                                 'name'=>$items['name'],
                                 'surname'=>$items['surname'],
-                                'about'=>$items['about'],
+                                'about'=>htmlentities($items['about']),
                                 'sex'=>$items['genders']['model'],
                                 'position'=>$items['position'],
                                 'dob'=>$items['dob'],

@@ -80,7 +80,7 @@ function toDbase($items) {
   $db->connect();
   $db->setName('SET NAMES \'utf8\'');
 
-  $db->insert('contact',array('propertytype'=>$items['propertytype'],
+  $db->insert('contacts',array('propertytype'=>$items['propertytype'],
               'country'=>$items['country'],
               'city'=>$items['city'],
               'postcode'=>$items['postcode'],

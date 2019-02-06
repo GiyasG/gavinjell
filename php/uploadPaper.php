@@ -101,7 +101,7 @@ function toDbase($items, $newFileName) {
   $db->insert('papers',array('title'=>$items['title'],
               'url'=>$items['url'],
               'published'=>$items['published'],
-              'description'=>$items['description'],
+              'description'=>htmlentities($items['description']),
               'authority_id'=>$items['id']
             ));
 

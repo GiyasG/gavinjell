@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `authority` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` varchar(2) NOT NULL,
   `name` varchar(20) NOT NULL,
   `surname` varchar(20) NOT NULL,
@@ -38,7 +38,8 @@ CREATE TABLE `authority` (
   `dob` date NOT NULL,
   `sex` varchar(6) DEFAULT 'male',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -55,7 +56,7 @@ INSERT INTO `authority` (`id`, `title`, `name`, `surname`, `position`, `about`, 
 --
 
 CREATE TABLE `contact` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `authority_id` int(10) UNSIGNED NOT NULL,
   `propertytype` varchar(20) NOT NULL,
   `country` varchar(20) NOT NULL,
@@ -63,18 +64,20 @@ CREATE TABLE `contact` (
   `postcode` varchar(6) NOT NULL,
   `street` varchar(40) DEFAULT NULL,
   `phone` varchar(13) DEFAULT '+994XXXXXXXXX',
+  `email` varchar(249) COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tcontact`
+-- Table structure for table `tcontacts`
 --
 
-CREATE TABLE `tcontact` (
-  `id` int(10) UNSIGNED NOT NULL,
+CREATE TABLE `tcontacts` (
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `authority_id` int(10) UNSIGNED NOT NULL,
   `propertytype` varchar(20) NOT NULL,
   `country` varchar(20) NOT NULL,
@@ -82,8 +85,10 @@ CREATE TABLE `tcontact` (
   `postcode` varchar(6) NOT NULL,
   `street` varchar(40) DEFAULT NULL,
   `phone` varchar(13) DEFAULT '+994XXXXXXXXX',
+  `email` varchar(249) COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -104,14 +109,15 @@ CREATE TABLE `contacts_team` (
 --
 
 CREATE TABLE `papers` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `authority_id` int(10) UNSIGNED NOT NULL,
   `title` varchar(40) NOT NULL,
   `description` text,
   `url` varchar(512) DEFAULT NULL,
   `published` date DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -139,7 +145,7 @@ CREATE TABLE `papers_team` (
 --
 
 CREATE TABLE `photos` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `authority_id` int(10) UNSIGNED DEFAULT NULL,
   `paper_id` int(10) UNSIGNED DEFAULT NULL,
   `project_id` int(10) UNSIGNED DEFAULT NULL,
@@ -147,7 +153,8 @@ CREATE TABLE `photos` (
   `image` varchar(512) NOT NULL,
   `description` text,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -170,7 +177,7 @@ INSERT INTO `photos` (`id`, `authority_id`, `paper_id`, `project_id`, `team_id`,
 --
 
 CREATE TABLE `projects` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `authority_id` int(10) UNSIGNED NOT NULL,
   `title` varchar(40) NOT NULL,
   `description` text,
@@ -178,7 +185,8 @@ CREATE TABLE `projects` (
   `started` date DEFAULT NULL,
   `finished` date DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -208,7 +216,7 @@ CREATE TABLE `projects_team` (
 --
 
 CREATE TABLE `teams` (
-  `id` int(10) UNSIGNED NOT NULL,
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `authority_id` int(10) UNSIGNED NOT NULL,
   `titlet` varchar(3) NOT NULL,
   `name` varchar(20) NOT NULL,
@@ -218,7 +226,8 @@ CREATE TABLE `teams` (
   `dob` date NOT NULL,
   `sex` varchar(6) DEFAULT 'male',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -234,36 +243,22 @@ INSERT INTO `teams` (`id`, `authority_id`, `titlet`, `name`, `surname`, `positio
 --
 
 --
--- Indexes for table `authority`
---
-ALTER TABLE `authority`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `contact`
 --
 ALTER TABLE `contact`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `authority_id` (`authority_id`);
-
-  --
-  -- Indexes for table `tcontact`
-  --
-  ALTER TABLE `tcontact`
-    ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `contacts_team`
 --
 ALTER TABLE `contacts_team`
   ADD PRIMARY KEY (`contact_id`,`team_id`),
-  ADD KEY `FK_tcontact_team` (`team_id`);
+  ADD KEY `FK_tcontacts_team` (`team_id`);
 
 --
 -- Indexes for table `papers`
 --
 ALTER TABLE `papers`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `authority_id` (`authority_id`);
 
 --
@@ -277,7 +272,6 @@ ALTER TABLE `papers_team`
 -- Indexes for table `photos`
 --
 ALTER TABLE `photos`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `authority_id` (`authority_id`),
   ADD KEY `paper_id` (`paper_id`),
   ADD KEY `project_id` (`project_id`),
@@ -287,7 +281,6 @@ ALTER TABLE `photos`
 -- Indexes for table `projects`
 --
 ALTER TABLE `projects`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `authority_id` (`authority_id`);
 
 --
@@ -301,7 +294,6 @@ ALTER TABLE `projects_team`
 -- Indexes for table `teams`
 --
 ALTER TABLE `teams`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `team_ibfk_1` (`authority_id`);
 
 --
@@ -309,56 +301,22 @@ ALTER TABLE `teams`
 --
 
 --
--- AUTO_INCREMENT for table `authority`
---
-ALTER TABLE `authority`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `contact`
---
-ALTER TABLE `contact`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `papers`
---
-ALTER TABLE `papers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT for table `photos`
---
-ALTER TABLE `photos`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
-
---
--- AUTO_INCREMENT for table `projects`
---
-ALTER TABLE `projects`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
-
---
--- AUTO_INCREMENT for table `teams`
---
-ALTER TABLE `teams`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- Constraints for dumped tables
---
-
---
 -- Constraints for table `contact`
 --
 ALTER TABLE `contact`
-  ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`authority_id`) REFERENCES `authority` (`id`)  ON DELETE CASCADE;
+  ADD CONSTRAINT `contact_ibfk_1` FOREIGN KEY (`authority_id`) REFERENCES `authority` (`id`) ON DELETE CASCADE;
+
+  --
+  -- Constraints for table `tcontacts`
+  --
+  ALTER TABLE `tcontacts`
+    ADD CONSTRAINT `tcontacts_ibfk_1` FOREIGN KEY (`authority_id`) REFERENCES `authority` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `contacts_team`
 --
 ALTER TABLE `contacts_team`
-  ADD CONSTRAINT `FK_tcontact` FOREIGN KEY (`contact_id`) REFERENCES `tcontact` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_tcontacts` FOREIGN KEY (`tcontact_id`) REFERENCES `tcontacts` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `FK_contact_team` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE;
 
 --
