@@ -16,7 +16,7 @@ if ($adminOk) {
   if (isset($_POST)) {
     $items = $_POST['item'];
     $aid = $_POST['aid'];
-    print_r ( $_POST);
+    // print_r ( $_POST);
    }
   if (!isset($items['country'])) {
     $outp2 = '{"message": "Please fill a country field"}';
@@ -25,7 +25,7 @@ if ($adminOk) {
     echo ($outp);
     return;
   } elseif (!isset($items['city'])) {
-      $outp2 = '{"message": "Please fill a city date"}';
+      $outp2 = '{"message": "Please fill a city field"}';
       $outp1 = '{"newitem": "null"}';
       $outp  = '{"info":['.$outp1.','.$outp2.']}';
       echo ($outp);
@@ -42,15 +42,29 @@ if ($adminOk) {
     $outp  = '{"info":['.$outp1.','.$outp2.']}';
     echo ($outp);
     return;
+  } elseif (!isset($items['email'])) {
+    $outp2 = '{"message": "fill the email field"}';
+    $outp1 = '{"newitem": "null"}';
+    $outp  = '{"info":['.$outp1.','.$outp2.']}';
+    echo ($outp);
+    return;
+  } elseif (filter_var($items['email'], FILTER_VALIDATE_EMAIL)) {
+    $outp2 = '{"message": "email is not a valid email address"}';
+    $outp1 = '{"newitem": "null"}';
+    $outp  = '{"info":['.$outp1.','.$outp2.']}';
+    echo ($outp);
+    return;
   }
 
   if(empty($errors)==true) {
 
-  if (!isset($items['property'])) {
-    $items['property'] = "";
-  } elseif (!isset($items['phone'])) {
+  if (!isset($items['propertytype'])) {
+    $items['propertytype'] = "";
+  }
+  if (!isset($items['phone'])) {
     $items['phone']="";
-  } elseif (!isset($items['email'])) {
+  }
+  if (!isset($items['email'])) {
     $items['email']="";
   }
           $sid = toDbase($items, $aid);

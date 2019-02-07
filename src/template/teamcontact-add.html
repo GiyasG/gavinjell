@@ -11,11 +11,11 @@
       <span>Phone number</span>
       <input class="form-control" type="text" ng-model="fTeamcontact.phone" value=""/>
       <span>E-mail</span>
-      <input class="form-control" type="email" ng-model="fTeamcontact.email" value=""/>
+      <input class="form-control" type="text" ng-model="fTeamcontact.email" value=""/>
 
       <span class="pwarnings">{{message.info ?  message.info[1].message : message }}</span>
 
-      <button class="btn btn-success" ng-click="onTeamcontactSelect(item.authority_id)">Save
+      <button class="btn btn-success" ng-click="onTeamcontactSelect(item.id)">Save
       </button>
       <button class="btn btn-success" ng-click="CloseAddTeamcontact()">Cancel
       </button>

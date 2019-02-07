@@ -21,12 +21,12 @@ if ($adminOk) {
           $outp1 = '{"updateitem":['.json_encode($items).']}';
           $outp  = '{"info":['.$outp1.','.$outp2.','.$outp3.']}';
 
-          echo ($outp);
-      }else{
+  } else {
   $outp2 = '{"message": "null"}';
   $outp1 = '{"updateitem":"null"}';
   $outp  = '{"info":['.$outp1.','.$outp2.','.$outp3.']}';
 }
+echo ($outp);
 
 //********************************************************************//
 function toDbase($items) {
@@ -52,7 +52,7 @@ $db->update('tcontacts',array('propertytype'=>$items['propertytype'],
         print_r($res);
 			die('Cant connect:');
     } else {
-      print_r($res);
+      // print_r($res);
       return $res;
     }
     $db->disconnect();

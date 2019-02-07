@@ -136,7 +136,7 @@
 						<p ng-bind-html="item.about"></p>
 					</div>
 				</div>
-				<div class="col-md-12" ng-if="!item.contact && sectionIndex != updateIndexTeamcontact">
+				<div class="col-md-12" ng-if="!item.contact.length && sectionIndex != updateIndexTeamcontact">
 					<button class="btn btn-info" ng-click="AddTeamContact(item.authority_id, item.id, sectionIndex)">Add contact for {{item.titlet}} {{item.name}} {{item.surname}}</button>
 				</div>
 				<hr>
@@ -154,7 +154,7 @@
 				<div class="col-md-2" ng-if="sectionIndex != updateIndexTeamcontact">
 					<!-- {{item.id}} -  {{cnt.contact_id}} -->
 					<button class="btn btn-success" ng-click="UpdateTeamcontact(item.id, cnt.contact_id, sectionIndex)">Update</button>
-					<button class="btn btn-warning" ng-click="DeleteTeamcontact(cnt.team_id, cnt.contact_id)">Delete</button>
+					<button class="btn btn-warning" ng-click="DeleteTeamcontact(item.id, cnt.contact_id)">Delete</button>
 				</div>
 				<div class="col-md-7" ng-if="sectionIndex != updateIndexTeamcontact">
 					<p><span>Street:  </span>{{cnt.street}}</p>

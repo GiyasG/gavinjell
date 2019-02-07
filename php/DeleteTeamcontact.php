@@ -3,7 +3,7 @@
 if ( $_POST ) {
     foreach ( $_POST as $key => $value ) {
         $postdata = json_decode($key);
-        print_r ($postdata);
+        // print_r ($postdata);
         // echo ($postdata->id);
     }
   }

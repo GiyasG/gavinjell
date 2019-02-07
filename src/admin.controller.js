@@ -719,8 +719,8 @@
 
 
           //**************** TeamContact Add new record *********************//
-          $scope.onTeamcontactSelect = function(aid) {
-            console.log(aid+" "+aid);
+          $scope.onTeamcontactSelect = function(id) {
+            console.log("id: "+" "+id);
               $scope.message = "";
                   $scope.upload = Upload.upload({
                       url: 'php/uploadTeamcontact.php',
@@ -728,16 +728,18 @@
                       // file: file,
                       data: {
                                 'item': $scope.fTeamcontact,
-                                'aid' : aid
+                                'aid' : id
                             }
                   }).success(function(data, status, headers, config) {
                       $scope.message = data;
 
+                      console.log("from server: ");
+                      console.log($scope.message);
 
                       if ($scope.message.info[0].newitem[0].id) {
-
                         var newitem = {};
-                        newitem.id = $scope.message.info[0].newitem[0].id;
+                        var contact = [{}];
+                        newitem.contact_id = $scope.message.info[0].newitem[0].id;
                         newitem.propertytype = $scope.message.info[0].newitem[0].propertytype;
                         newitem.country = $scope.message.info[0].newitem[0].country;
                         newitem.city = $scope.message.info[0].newitem[0].city;
@@ -746,12 +748,22 @@
                         newitem.phone = $scope.message.info[0].newitem[0].phone;
                         newitem.email = $scope.message.info[0].newitem[0].email;
                         newitem.authority_id = $scope.message.info[0].newitem[0].authority_id;
+                        // newitem.contact = [];
 
-                        aCtrl.items[3].teams[0][0].push(newitem);
+                        console.log("aCtrl before: ");
+                        console.log(aCtrl.items[3].teams[0][0]);
+                        var rid1 = aCtrl.items[3].teams[0][0].findIndex(x => x.id === id);
+                        console.log(rid1);
+                        console.log(aCtrl.items[3].teams[0][0][rid1]);
+                        aCtrl.items[3].teams[0][0][rid1].contact = [];
+                        aCtrl.items[3].teams[0][0][rid1].contact.push(newitem);
 
-                        console.log($scope.message.info[0].newitem[0].id);
+                        console.log("aCtrl after: ");
+                        console.log(aCtrl.items[3].teams[0][0]);
                         $scope.AddNewTeamcontact = false;
                         $scope.fTeamcontact = {};
+                        $scope.updateIndexTeamcontact = null
+
                       }
                   }).error(function(data, status) {
                       $scope.message = data;
@@ -770,8 +782,13 @@
                 .then(function(response) {
                     console.log(response.data.info);
                     console.log(aCtrl.items[3].teams[0]);
-                    var rid = aCtrl.items[3].teams[0][0].findIndex(x => x.id === id);
-                    aCtrl.items[0].items[3].teams[0][0].splice(rid, 1);
+                    var rid1 = aCtrl.items[3].teams[0][0].findIndex(x => x.id === aid);
+                    var rid = aCtrl.items[3].teams[0][0][rid1].contact.findIndex(x => x.id === id);
+                    aCtrl.items[3].teams[0][0][rid1].contact.splice(rid, 1);
+                    if (aCtrl.items[3].teams[0][0][rid1].contact.length===0) {
+                      // console.log("YESYES");
+                      $scope.AddNewTeamcontact = true;
+                    }
                     return response.data.info;
                 });
           };
@@ -788,7 +805,6 @@
                 .then(function(response) {
                   console.log(response.data);
                     $scope.itemU = response.data[0];
-                    $scope.fTeams.genders.model = $scope.itemU.sex;
                     console.log($scope.itemU);
                     console.log($scope.fTeams);
                     // $scope.tinymceData.about = response.data.item[0].about;
@@ -799,18 +815,18 @@
 
 
             //**************** Team Update *********************//
-            $scope.onTeamcontactUpdate = function(file) {
+            $scope.onTeamcontactUpdate = function() {
                 $scope.message = "";
                     $scope.upload = Upload.upload({
                         url: 'php/updateTeamcontact.php',
                         method: 'POST',
-                        file: file,
                         data: {
                                   'item': $scope.itemU
                               }
                     }).success(function(data, status, headers, config) {
-                        $scope.uadata = data;
+                        $scope.message = data;
                         $scope.updateIndex = null;
+                        console.log($scope.message);
 
                         var uitem = {};
 
@@ -824,9 +840,11 @@
                         uitem.email = $scope.message.info[0].updateitem[0].email;
                         uitem.authority_id = $scope.message.info[0].updateitem[0].authority_id;
 
-                        console.log("aCtrl = "+aCtrl.items[0].all[0]);
-                        var rid = aCtrl.items[3].teams[0][0].findIndex(x => x.id === uitem.id);
-                        console.log(rid);
+                        console.log(aCtrl.items[3].teams[0]);
+                        var rid1 = aCtrl.items[3].teams[0][0].findIndex(x => x.id === aid);
+                        var rid = aCtrl.items[3].teams[0][0][rid1].contact.findIndex(x => x.id === id);
+                        // aCtrl.items[3].teams[0][0][rid1].contact.splice(rid, 1);
+
                         aCtrl.items[3].teams[0][0][rid] = uitem;
                         console.log(aCtrl.items[3].teams[0]);
                         console.log($scope.itemU);
