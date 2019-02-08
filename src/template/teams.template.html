@@ -25,11 +25,11 @@
 		  	<span ng-repeat="ppr in item.paper"  ng-init="sectionIndex = $index"> <span ng-show="sectionIndex > 0">, </span> {{ppr.title}} </span>
 		 	</p>
 		</div>
-<hr>
+		<hr class="col-md-12">
 </div>
 </div>
 
-<div class="col-md-5  column-in-center">
+<div class="col-md-6 text-center  column-in-center">
 		<ul class="pagination">
 			<button ng-show="teamsCtrl.currentPage-1>=0"
 							ng-style="isPrevious"

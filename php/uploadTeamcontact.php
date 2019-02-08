@@ -16,6 +16,7 @@ if ($adminOk) {
   if (isset($_POST)) {
     $items = $_POST['item'];
     $aid = $_POST['aid'];
+    $id = $_POST['id'];
     // print_r ( $_POST);
    }
   if (!isset($items['country'])) {
@@ -67,7 +68,7 @@ if ($adminOk) {
   if (!isset($items['email'])) {
     $items['email']="";
   }
-          $sid = toDbase($items, $aid);
+          $sid = toDbase($items, $aid, $id);
 
           if (isset($sid)) {
             $items['authority_id'] = $items['id'];
@@ -88,7 +89,7 @@ if ($adminOk) {
 }
 
 //*******************************************************//
-function toDbase($items, $aid) {
+function toDbase($items, $aid, $id) {
   // echo $items['authority_id'];
   include('class/mysql_crud.php');
 
@@ -103,7 +104,8 @@ function toDbase($items, $aid) {
               'street'=>$items['street'],
               'phone'=>$items['phone'],
               'email'=>$items['email'],
-              'authority_id'=>$aid
+              'authority_id'=>$aid,
+              'team_id'=>$id
           ));
 
   $contactLastId = $db->lastId;

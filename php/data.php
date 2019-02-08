@@ -118,7 +118,7 @@ foreach ($res as $key1 => $value1) {
     foreach ($res_contact as $key2 => $value2) {
       // echo $key2;
       // print_r ($value2);
-      $res[$key1]['contact'][$key2]['contact_id'] = $res_contact[$key2]['tcontact_id'];
+      $res[$key1]['contact'][$key2]['id'] = $res_contact[$key2]['tcontact_id'];
       $res[$key1]['contact'][$key2]['country'] = $res_contact[$key2]['country'];
       $res[$key1]['contact'][$key2]['city'] = $res_contact[$key2]['city'];
       $res[$key1]['contact'][$key2]['street'] = $res_contact[$key2]['street'];

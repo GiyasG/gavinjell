@@ -14,10 +14,11 @@
     <span>E-mail</span>
     <input class="form-control" type="text" ng-model="itemU.email" value=""/>
 
-<hr>
 <div class="col-md-12">
   <span class="pwarnings">{{uadata.info ?  uadata.info[1].message : uadata }}</span>
 </div>
 
   <button class="btn btn-success" ng-click="onTeamcontactUpdate()">Save</button>
-  <button class="btn btn-success" ng-click="CancelUpdateTeamcontact(itemU.contact_id)">Cancel</button>
+  <button class="btn btn-success" ng-click="CancelUpdateTeamcontact(itemU.id)">Cancel</button>
+
+  <hr>

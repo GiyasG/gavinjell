@@ -127,7 +127,7 @@ class Database{
         if($this->tableExists($table)){
         	// The table exists, run the query
 					// echo 'Table exists';
-					// echo '</br>';
+					// echo $q;
         	$query = $this->myconn->query($q);
 			if($query){
 				// If the query returns >= 1 assign the number of rows to numResults
@@ -232,7 +232,7 @@ class Database{
 
 	// Private function to check if table exists for use with queries
 	private function tableExists($table){
-		$tablesInDb = $this->myconn->query('SHOW TABLES WHERE Tables_in_'.$this->db_name.' LIKE \''.$table.'\'');
+	$tablesInDb = $this->myconn->query('SHOW TABLES WHERE Tables_in_'.$this->db_name.' LIKE \''.$table.'\'');
 		// print_r($tablesInDb);
 		// echo '</br>';
         if($tablesInDb){
@@ -289,11 +289,11 @@ class Database{
 
 class Table extends Database {
 
-	function get_ParentResult($tbl1, $tbl2=NULL){
+	function get_ParentResult($tbl1, $tbl2=NULL,$where=NULL){
 		parent::connect();
 		parent::setName('SET NAMES \'utf8\'');
 		if ($tbl2 == NULL) {
-			parent::select($tbl1);
+			parent::select($tbl1,'*',null,$where);
 		} else {
       // ($table, $rows = '*', $join = null, $where = null, $order = null, $limit = null)
 			// ($tbl1, '*', $tbl2 ON $tbl2.$tbl1_id = $tbl1.id)
