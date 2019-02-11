@@ -1,0 +1,54 @@
+<?php
+
+require '../vendor/autoload.php';
+  $db1 = new \PDO('mysql:dbname=auth;host=127.0.0.1;charset=utf8mb4', 'authz', 'xP9tM715UK');
+  $auth = new \Delight\Auth\Auth($db1);
+$outp3 = "";
+if (($auth->isLoggedIn()) && ($auth->hasRole(\Delight\Auth\Role::ADMIN))) {
+  $outp3 = '{"AdminIsIn":true}';
+  $adminOk = true;
+} else {
+  $outp3 = '{"AdminIsIn":false}';
+  $adminOk = false;
+}
+
+if ($adminOk) {
+  if (isset($_POST)) {
+    $id = $_POST['itemid'];
+    $nameofdb = $_POST['nofdb'];
+   }
+}
+// echo $id;
+if (isset($_POST)) {
+  include('class/mysql_crud.php');
+  $db = new Database();
+  $db->connect();
+  $db->select($nameofdb,'*', null, 'id ='.$id);
+
+  $res = $db->getResult();
+  print_r($res);
+  if ($res[0]) {
+    // echo ($res[0]['authority_id']);
+    $db->insert('slides',array('authority_id'=>$res[0]['authority_id'],
+    'nameofdb'=>$nameofdb,
+    'idofdb'=>$id
+  ));
+  $res2 = $db->getResult();
+  $outp1 = '{"newitem":[{"authority_id":'.$res[0]['authority_id'].',
+             "image":"'.$res[0]['image'].'",
+             "nameofdb":"'.$nameofdb.'",
+             "idofdb":'.$id.'}]}';
+  $outp2 = '{"message": "The record uploaded successfully"}';
+  $outp  = '{"info":['.$outp1.','.$outp2.']}';
+  echo ($outp);
+  } else {
+  $outp1 = '{"newitem":"null"}';
+  $outp2 = '{"message": "null"}';
+  $outp  = '{"info":['.$outp1.','.$outp2.']}';
+}
+
+//*******************************************************//
+
+$db->disconnect();
+}
+?>

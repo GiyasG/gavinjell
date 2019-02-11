@@ -73,10 +73,31 @@
              name: null,
            }
           };
+          $scope.fSlides = {};
+          $scope.fSlides.projects = {
+            model: {
+              id: null,
+              name: null,
+            }
+           };
 
+           $scope.fSlides.papers = {
+             model: {
+               id: null,
+               name: null,
+             }
+            };
           $scope.author = [];
 
           $scope.disabledTM ={};
+          $scope.disabledSI ={};
+
+          angular.forEach(aCtrl.items[6].slide[0], function(value, key){
+            console.log(key +" => "+value.id);
+            $scope.disabledSI[value.id+value.title] = true;
+          });
+          console.log($scope.disabledSI);
+
 
           // console.log(aCtrl.items[0].all.length);
           // console.log(aCtrl.items[0].all);
@@ -310,10 +331,10 @@
                       uitem.authority_id = $scope.message.info[0].updateitem[0].authority_id;
 
                       console.log(aCtrl.items[4]); //.projects[0]);
-                      var rid = aCtrl.items[4].contact[0][0].findIndex(x => x.id === $scope.itemU.id);
-                      aCtrl.items[4].contact[0][0][rid] = uitem;
+                      var rid = aCtrl.items[4].contact[0].findIndex(x => x.id === $scope.itemU.id);
+                      aCtrl.items[4].contact[0][rid] = uitem;
                       console.log(rid);
-                      $scope.updateIndexConatct = null
+                      $scope.updateIndexContact = null;
                   }).error(function(data, status) {
                       $scope.message = data;
                   });
@@ -1067,6 +1088,52 @@
           // console.log(rid);
           // console.log($scope.author);
         }
+
+        $scope.addSI = function(itemid, nameofdb) {
+          console.log(itemid);
+          console.log(nameofdb);
+          $scope.upload = Upload.upload({
+              url: 'php/UploadSlideMemeber.php',
+              method: 'POST',
+              data: {
+                      itemid: itemid,
+                      nofdb : nameofdb
+                    }
+          }).success(function(data, status, headers, config) {
+            console.log(data);
+            // console.log($scope.author);
+            var rid = aCtrl.items[6].slide[0].findIndex(x => x.id === itemid);
+            $scope.disabledSI[aCtrl.items[6].slide[0][rid].id+aCtrl.items[6].slide[0][rid].title] = true;
+            console.log(rid);
+            aCtrl.items[6].slide[0].splice(rid,1);
+          }).error(function(data, status) {
+              $scope.message.info[1].message = data;
+          });
+        }
+
+        $scope.DeleteSI = function(itemid, nameofdb) {
+          console.log(itemid);
+          console.log(nameofdb);
+          $scope.upload = Upload.upload({
+              url: 'php/DeleteSlideMemeber.php',
+              method: 'POST',
+              data: {
+                      itemid: itemid,
+                      nofdb : nameofdb
+                    }
+          }).success(function(data, status, headers, config) {
+            console.log(data);
+            // console.log($scope.author);
+            var rid = aCtrl.items[6].slide[0].findIndex(x => x.id === itemid);
+            $scope.disabledSI[aCtrl.items[6].slide[0][rid].id+aCtrl.items[6].slide[0][rid].title] = false;
+            console.log(rid);
+            aCtrl.items[6].slide[0].splice(rid,1);
+          }).error(function(data, status) {
+              $scope.message.info[1].message = data;
+          });
+
+        }
+
     };
 
     //************************************************//

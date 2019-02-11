@@ -23,43 +23,20 @@
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ol class="carousel-indicators">
-      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-      <li data-target="#myCarousel" data-slide-to="1"></li>
-      <li data-target="#myCarousel" data-slide-to="2"></li>
+      <li data-target="#myCarousel" ng-repeat="item in hCtrl.isloggedin[4].slide[0]" ng-init="sectionIndex = $index" data-slide-to={{sectionIndex}} ng-class="{active: sectionIndex == 0}"></li>
     </ol>
-
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <a ui-sref='projects'>
-          <img src="img/la.jpg" alt="New York">
+
+      <div class="item"  ng-repeat="item in hCtrl.isloggedin[4].slide[0]" ng-init="sectionIndex = $index" ng-class="{active: sectionIndex == 0}">
+        <a ui-sref='projects/{{item.id}}'>
+          <img class="imagec" src="img/{{item.image}}" alt={{item.title}}>
           <div class="carousel-caption">
-            <h3>Mitochondria project</h3>
-            <p>Ongoing project</p>
+            <h3>{{item.title}}</h3>
           </div>
         </a>
       </div>
-      <div class="item">
-        <a ui-sref='papers'>
-        <img src="img/chicago.jpg" alt="Chicago">
-        <div class="carousel-caption">
-          <h3>Publications</h3>
-          <p>Recent publications</p>
-        </div>
-      </a>
-      </div>
-
-      <div class="item">
-        <a ui-sref='teams'>
-        <img src="img/team.jpg" alt="Los Angeles">
-        <div class="carousel-caption">
-          <h3>Our team</h3>
-          <p>Awesome, inspiring, friendly</p>
-        </div>
-      </a>
-      </div>
     </div>
-
     <!-- Left and right controls -->
     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
       <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -67,15 +44,12 @@
     </a>
     <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
       <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-
       <span class="sr-only">Next</span>
     </a>
   </div>
-
 </div>
 
 <hr class="panel-info">
-
 <div class="container">
   <!-- Example row of columns -->
   <div class="col-md-10  column-in-center">

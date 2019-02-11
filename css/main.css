@@ -286,3 +286,43 @@ footer {
 	margin-top: : 30px;
 	margin-bottom: : 5px;
 }
+
+
+@media (max-width: 1440px) {
+	.imagec {
+		width: auto;
+		height: 480px !important;
+		margin: auto;
+	}
+}
+
+@media (max-width: 640px) {
+	.imagec {
+		width: auto;
+		height: 320px !important;
+		margin: auto;
+	}
+}
+
+@media (max-width: 400px) {
+	.imagec {
+		width: auto;
+		height: 200px !important;
+		margin: auto;
+	}
+}
+
+.carousel-control .glyphicon-chevron-right, .carousel-control .icon-next {
+	 color: white;
+}
+
+.carousel-control .glyphicon-chevron-left, .carousel-control .icon-prev {
+	color: white;
+}
+
+.imgfit {
+	height: 50px;
+	width: 50px;
+	overflow: hidden;
+	margin: 5px;
+}

@@ -47,6 +47,15 @@ if (isset($db)) {
   $arr = [];
   foreach ($res as $key => $value) {
     $res1 = $tb->get_ParentResult($res[$key]['nameofdb'],null,'id='.$res[$key]['idofdb']);
+      foreach ($res1 as $key1 => $value1) {
+        // print_r ($res1[$key1]['id']);
+        $tbl1 = substr($res[$key]['nameofdb'], 0, -1);
+        // echo $tbl1;
+        // print_r ($value1);
+        $res2 = $tb->get_ParentResult('photos',null,$tbl1.'_id='.$res1[$key1]['id']);
+        $res1[$key1]['image']=$res2[$key1]['image'];
+        // print_r ($res2);
+      }
     $arr = array_merge($arr, $res1);
   }
   $outp5 ='{"slide":['.json_encode($arr).']}';

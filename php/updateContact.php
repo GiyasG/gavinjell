@@ -36,7 +36,7 @@ function toDbase($items) {
 	$db->setName('SET NAMES \'utf8\'');
 
 // echo $items['id'];
-$db->update('contact',array('propertytype'=>$items['propertytype'],
+$db->update('contacts',array('propertytype'=>$items['propertytype'],
             'country'=>$items['country'],
             'city'=>$items['city'],
             'postcode'=>$items['postcode'],
@@ -47,12 +47,13 @@ $db->update('contact',array('propertytype'=>$items['propertytype'],
             'id=\''.$items['id'].'\'');
 
 			$res = $db->getResult();
+      // print_r($res);
 			if (!$res)
 			{
-        print_r($res);
+        // print_r($res);
 			die('Cant connect1: ' . mysql_error());
     } else {
-      print_r($res);
+      // print_r($res);
       return $res;
     }
     $db->disconnect();
