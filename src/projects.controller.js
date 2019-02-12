@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('ShopApp')
+  angular.module('GJapp')
   .controller('ProjectsController', ProjectsController);
 
   ProjectsController.$inject = ['items', '$http', '$sce', '$scope', 'isloggedin'];

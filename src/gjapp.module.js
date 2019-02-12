@@ -1,6 +1,6 @@
 (function () {
 'use strict'
-angular.module('ShopApp', ['ui.router', 'data', 'ui.bootstrap', 'ngFileUpload', 'ui.tinymce','ngSanitize'])
+angular.module('GJapp', ['ui.router', 'data', 'ui.bootstrap', 'ngFileUpload', 'ui.tinymce','ngSanitize'])
 .config(config);
 
 config.$inject = ['$httpProvider'];

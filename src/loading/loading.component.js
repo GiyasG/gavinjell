@@ -1,7 +1,7 @@
 (function() {
 "use strict";
 
-angular.module('ShopApp')
+angular.module('GJapp')
 .component('loading', {
   template: '<img src="img/infinity.svg" ng-if="$ctrl.show">',
   controller: LoadingController

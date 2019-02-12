@@ -2,10 +2,10 @@
   'use strict'
 
   angular.module('data')
-  .service('ShopDataService', ShopDataService);
+  .service('DataService', DataService);
 
-  ShopDataService.$inject = ['$http', '$stateParams'];
-    function ShopDataService($http, $stateParams) {
+  DataService.$inject = ['$http', '$stateParams'];
+    function DataService($http, $stateParams) {
       var service = this;
 
       service.isLoggedIn = function (param) {
@@ -51,6 +51,5 @@
             return response.data.info;
           });
         };
-
       }
 })();

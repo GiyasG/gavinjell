@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="ShopApp">
+<html lang="en" ng-app="GJapp">
 <head>
 <meta charset="utf-8">
 <title>Dr. Jell's Lab</title>
@@ -22,14 +22,14 @@
 <script src="lib/jquery.min.js"></script>
 <script src="lib/bootstrap.min.js"></script>
 
-<script src="src/shopapp.module.js"></script>
+<script src="src/gjapp.module.js"></script>
 <script src="src/loading/loading.component.js"></script>
 <script src="src/loading/loading.interceptor.js"></script>
 
 <script src="src/data.module.js"></script>
 
 
-<script src="src/shopdata.service.js"></script>
+<script src="src/data.service.js"></script>
 
 <script src="src/tinymce.controller.js"></script>
 

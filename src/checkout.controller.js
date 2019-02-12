@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  angular.module('ShopApp')
+  angular.module('GJapp')
   .controller('CheckoutController', CheckoutController);
   CheckoutController.$inject = ['cart'];
   function CheckoutController(cart) {

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('ShopApp')
+  angular.module('GJapp')
   .controller('HomeController', HomeController)
   .directive('navBar', NavBarDirective)
   .directive('sessionCart', SessionCartDirective)

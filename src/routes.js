@@ -1,7 +1,7 @@
 (function () {
 'use strict';
 
-angular.module('ShopApp')
+angular.module('GJapp')
 .config(RoutesConfig);
 
 RoutesConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -13,8 +13,8 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
     templateUrl: 'src/template/home.template.html',
     controller: 'HomeController as hCtrl',
     resolve: {
-      isloggedin: function (ShopDataService) {
-        return ShopDataService.isLoggedIn('home');
+      isloggedin: function (DataService) {
+        return DataService.isLoggedIn('home');
       }
     }
   }
@@ -27,11 +27,11 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: 'src/template/projects.template.html',
           controller: 'ProjectsController as projectsCtrl',
           resolve: {
-            items: function (ShopDataService) {
-              return ShopDataService.getItems('projects');
+            items: function (DataService) {
+              return DataService.getItems('projects');
             },
-            isloggedin: function (ShopDataService) {
-              return ShopDataService.isLoggedIn('projects');
+            isloggedin: function (DataService) {
+              return DataService.isLoggedIn('projects');
           }
     }
    }
@@ -45,11 +45,11 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: 'src/template/papers.template.html',
           controller: 'PapersController as papersCtrl',
           resolve: {
-            items: function (ShopDataService) {
-              return ShopDataService.getItems('papers');
+            items: function (DataService) {
+              return DataService.getItems('papers');
             },
-            isloggedin: function (ShopDataService) {
-              return ShopDataService.isLoggedIn('projects');
+            isloggedin: function (DataService) {
+              return DataService.isLoggedIn('projects');
             }
           }
     }
@@ -64,11 +64,11 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: 'src/template/teams.template.html',
           controller: 'TeamsController as teamsCtrl',
           resolve: {
-            items: function (ShopDataService) {
-              return ShopDataService.getItems('teams');
+            items: function (DataService) {
+              return DataService.getItems('teams');
             },
-            isloggedin: function (ShopDataService) {
-              return ShopDataService.isLoggedIn('projects');
+            isloggedin: function (DataService) {
+              return DataService.isLoggedIn('projects');
             }
       }
     }
@@ -88,11 +88,11 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
   //       }
   //     },
   //     resolve: {
-  //                 // basketitems: function(ShopDataService, $stateParams) {
+  //                 // basketitems: function(DataService, $stateParams) {
   //                 //   console.log("basket in route: "+$stateParams.basket);
-  //                 //   return ShopDataService.CheckoutItems($stateParams.basket);
-  //                   cart: function(ShopDataService) {
-  //                   return ShopDataService.CheckoutItems();
+  //                 //   return DataService.CheckoutItems($stateParams.basket);
+  //                   cart: function(DataService) {
+  //                   return DataService.CheckoutItems();
   //                 }
   //               }
   // }
@@ -108,8 +108,8 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-              info: function(ShopDataService, $stateParams) {
-                    return ShopDataService.VerifyEmail($stateParams.selector, $stateParams.token);
+              info: function(DataService, $stateParams) {
+                    return DataService.VerifyEmail($stateParams.selector, $stateParams.token);
                   }
                 }
   }
@@ -126,8 +126,8 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-              info: function(ShopDataService, $stateParams) {
-                    return ShopDataService.resetPassword($stateParams.selector, $stateParams.token);
+              info: function(DataService, $stateParams) {
+                    return DataService.resetPassword($stateParams.selector, $stateParams.token);
                   }
                 }
   }
@@ -144,8 +144,8 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-        items: ['ShopDataService', function (ShopDataService) {
-          return ShopDataService.getItems('admin');
+        items: ['DataService', function (DataService) {
+          return DataService.getItems('admin');
         }]
       }
   }

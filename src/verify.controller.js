@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('ShopApp')
+  angular.module('GJapp')
   .controller('VerifyController', VerifyController);
 
   VerifyController.$inject = ['$scope', '$http', 'info'];

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('ShopApp')
+  angular.module('GJapp')
   .controller('AdminController', AdminController)
   .directive('adminAdd', AdminAddDirective)
   .directive('adminUpdate', AdminUpdateDirective)
