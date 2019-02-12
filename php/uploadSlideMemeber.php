@@ -23,21 +23,24 @@ if (isset($_POST)) {
   include('class/mysql_crud.php');
   $db = new Database();
   $db->connect();
-  $db->select($nameofdb,'*', null, 'id ='.$id);
 
+  $tb = new Table();
+  $resj = $tb->get_ParentResult($nameofdb, 'photos', $id);
+  $db->select($nameofdb,'*', null, 'id ='.$id);
   $res = $db->getResult();
-  print_r($res);
-  if ($res[0]) {
+  if ($resj[0] && $res[0]) {
     // echo ($res[0]['authority_id']);
     $db->insert('slides',array('authority_id'=>$res[0]['authority_id'],
     'nameofdb'=>$nameofdb,
     'idofdb'=>$id
   ));
   $res2 = $db->getResult();
+  // print_r ($res2);
   $outp1 = '{"newitem":[{"authority_id":'.$res[0]['authority_id'].',
-             "image":"'.$res[0]['image'].'",
+             "title":"'.$resj[0]['title'].'",
+             "image":"'.$resj[0]['image'].'",
              "nameofdb":"'.$nameofdb.'",
-             "idofdb":'.$id.'}]}';
+             "id":"'.$id.'"}]}';
   $outp2 = '{"message": "The record uploaded successfully"}';
   $outp  = '{"info":['.$outp1.','.$outp2.']}';
   echo ($outp);

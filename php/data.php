@@ -6,9 +6,8 @@ if ( $_GET ) {
     foreach ( $_GET as $key => $value ) {
         $choosendb = $key;
     }
-} else {
-  $choosendb = "admin";
 }
+
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 

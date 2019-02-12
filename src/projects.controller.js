@@ -4,12 +4,13 @@
   angular.module('ShopApp')
   .controller('ProjectsController', ProjectsController);
 
-  ProjectsController.$inject = ['items', '$http', '$sce', '$scope'];
+  ProjectsController.$inject = ['items', '$http', '$sce', '$scope', 'isloggedin'];
 
-  function ProjectsController(items, $http, $sce, $scope) {
+  function ProjectsController(items, $http, $sce, $scope, isloggedin) {
     var projectsCtrl = this;
     projectsCtrl.items = items;
-    // console.log(projectsCtrl.items);
+    console.log(isloggedin);
+    $scope.hasRoleAdmin = projectsCtrl.items[5].AdminIsIn;
     $scope.isPrevious = {
     "background-color" : "lightblue"
    };

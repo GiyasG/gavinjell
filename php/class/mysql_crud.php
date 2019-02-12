@@ -295,10 +295,13 @@ class Table extends Database {
 		if ($tbl2 == NULL) {
 			parent::select($tbl1,'*',null,$where);
 		} else {
-      // ($table, $rows = '*', $join = null, $where = null, $order = null, $limit = null)
-			// ($tbl1, '*', $tbl2 ON $tbl2.$tbl1_id = $tbl1.id)
-			// SELECT * FROM `authority` JOIN `photos` ON `photos`.`authority_id` = `authority`.`id`;
-			parent::select($tbl1,"*", $tbl2." ON ".$tbl2.".".$tbl1."_id = ".$tbl1.".id");
+			if ($where==NULL) {
+				parent::select($tbl1,"*", $tbl2." ON ".$tbl2.".".$tbl1."_id = ".$tbl1.".id");
+			} else {
+				$tbl1s = substr($tbl1, 0, -1);
+				$tbl2s = substr($tbl2, 0, -1);
+				parent::select($tbl1,"*", $tbl2." ON ".$tbl2.".".$tbl1s."_id = ".$tbl1.".id where ".$tbl1.".id = ".$where);
+			}
 		}
 		$val = parent::getResult();
 		return $val;

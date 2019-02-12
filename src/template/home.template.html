@@ -1,6 +1,4 @@
-<nav-bar>
-</nav-bar>
-
+<nav-bar></nav-bar>
 <!-- <session-cart ng-if="showCart"></session-cart> -->
 <div ui-view="verifyemail"></div>
 <div ui-view="changepassword"></div>
@@ -29,7 +27,7 @@
     <div class="carousel-inner" role="listbox">
 
       <div class="item"  ng-repeat="item in hCtrl.isloggedin[4].slide[0]" ng-init="sectionIndex = $index" ng-class="{active: sectionIndex == 0}">
-        <a ui-sref='projects/{{item.id}}'>
+        <a ui-sref='{{item.nameofdb}}'>
           <img class="imagec" src="img/{{item.image}}" alt={{item.title}}>
           <div class="carousel-caption">
             <h3>{{item.title}}</h3>
@@ -54,19 +52,21 @@
   <!-- Example row of columns -->
   <div class="col-md-10  column-in-center">
     <div class="col-md-4">
-      <h2>Projects</h2>
-      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-      <p><a class="btn btn-default" ui-sref="projects">View details &raquo;</a></p>
+      <h2>Research Activities</h2>
+      <p class="text-justify" >Researching the interface between materials and cells. Understanding how we can change material properties to direct biological interactions, including nano-particle targeting and tissue regeneration.</p>
+      <p>Gavin Jell</p>
+      <div><a class="btn btn-default" ui-sref="projects">View details &raquo;</a></div>
     </div>
     <div class="col-md-4">
       <h2>Publications</h2>
-      <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-      <p><a class="btn btn-default" ui-sref="papers">View details &raquo;</a></p>
+      <p class="text-justify" > Variety of topics including cell-material interactions, use of bioactive glass for regenerative medicine, stem cells, tissue engineering (including the creation of  HIF stabilising materials) and nanoparticle material-biological interactions.</p>
+      <div><a class="btn btn-default" ui-sref="papers">View details &raquo;</a></div>
     </div>
     <div class="col-md-4">
       <h2>Our team</h2>
-      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-      <p><a class="btn btn-default" ui-sref="teams">View details &raquo;</a></p>
+      <p class="text-justify" >It is the lone worker who makes the first advance in a subject: the details may be worked out by a team, but the prime idea is due to the enterprise, thought, and perception of an individual.</p>
+      <p>Sir Alexander Fleming</p>
+      <div><a class="btn btn-default" ui-sref="teams">View details &raquo;</a></div>
     </div>
   </div>
 </div>

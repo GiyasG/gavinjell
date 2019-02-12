@@ -8,45 +8,21 @@
     function ShopDataService($http, $stateParams) {
       var service = this;
 
-      service.isLoggedIn = function () {
-        return $http.get("php/isloggedin.php")
+      service.isLoggedIn = function (param) {
+        console.log(param);
+        return $http.get("php/isloggedin.php?"+param)
           .then(function (response) {
           return response.data.isloggedin;
         });
       };
 
-       service.getAllItems = function () {
-        return $http.get("php/data.php")
+       service.getItems = function (param) {
+        return $http.get("php/data.php?"+param)
           .then(function (response) {
             console.log("all items:"+response.data);
           return response.data.items;
         });
       };
-
-      service.getProjects = function () {
-       return $http.get("php/data.php?projects")
-         .then(function (response) {
-           console.log("all items:"+response.data);
-         return response.data.items;
-       });
-     };
-
-     service.getPapers = function () {
-      return $http.get("php/data.php?papers")
-        .then(function (response) {
-          console.log("all items:"+response.data);
-        return response.data.items;
-      });
-    };
-
-    service.getTeams = function () {
-     return $http.get("php/data.php?teams")
-       .then(function (response) {
-         console.log("all items:"+response.data);
-       return response.data.items;
-     });
-   };
-
 
     service.CheckoutItems = function (basket) {
         // console.log("basket in service: "+basket);

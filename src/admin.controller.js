@@ -1092,6 +1092,10 @@
         $scope.addSI = function(itemid, nameofdb) {
           console.log(itemid);
           console.log(nameofdb);
+          var rid = aCtrl.items[6].slide[0].findIndex(x => x.id === itemid);
+          if (rid>=0 || itemid.id === null || !itemid) {
+            return;
+          }
           $scope.upload = Upload.upload({
               url: 'php/UploadSlideMemeber.php',
               method: 'POST',
@@ -1102,10 +1106,13 @@
           }).success(function(data, status, headers, config) {
             console.log(data);
             // console.log($scope.author);
+            aCtrl.items[6].slide[0].push(data.info[0].newitem[0]);
+            console.log(aCtrl.items[6].slide[0]);
+            console.log(itemid);
             var rid = aCtrl.items[6].slide[0].findIndex(x => x.id === itemid);
+            console.log(rid);
             $scope.disabledSI[aCtrl.items[6].slide[0][rid].id+aCtrl.items[6].slide[0][rid].title] = true;
             console.log(rid);
-            aCtrl.items[6].slide[0].splice(rid,1);
           }).error(function(data, status) {
               $scope.message.info[1].message = data;
           });

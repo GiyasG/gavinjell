@@ -1,10 +1,17 @@
 <?php
 session_start();
 
+if ( $_GET ) {
+    foreach ( $_GET as $key => $value ) {
+        $choosendb = $key;
+        // echo $choosendb;
+    }
+}
 require '../vendor/autoload.php';
   $db = new \PDO('mysql:dbname=auth;host=127.0.0.1;charset=utf8mb4', 'authz', 'xP9tM715UK');
   $auth = new \Delight\Auth\Auth($db);
   $outp1 = "";
+
   if ($auth->isLoggedIn()) {
     $outp1 ='{"isIn":true}';
     if ($auth->hasRole(\Delight\Auth\Role::ADMIN)) {
@@ -17,6 +24,7 @@ require '../vendor/autoload.php';
     $outp2 = '{"Role": null}';
   }
 
+if ($choosendb == 'home') {
   include('class/mysql_crud.php');
   $db = new Database();
   if (isset($db)) {
@@ -54,6 +62,7 @@ if (isset($db)) {
         // print_r ($value1);
         $res2 = $tb->get_ParentResult('photos',null,$tbl1.'_id='.$res1[$key1]['id']);
         $res1[$key1]['image']=$res2[$key1]['image'];
+        $res1[$key1]['nameofdb']=$res[$key]['nameofdb'];
         // print_r ($res2);
       }
     $arr = array_merge($arr, $res1);
@@ -62,26 +71,10 @@ if (isset($db)) {
 } else {
   $outp5 ='{"slide":["No items found"]}';
 }
-
-
-// $res2 = $tb->get_ParentResult('authority', 'projects');
-// echo $res[0]['nameofdb'];
-
-// $res1 = $db->getResult(); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
-// print_r ($res2);
-
-//   $a = str_replace('"', '', $res[$key]['dname']);
-//   $b = str_replace('"', '', $res[$key]['dname_id']);
-  // $db->select('projects', '*', NULL, 'id=40'); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
-  // $res1 = $db->getResult();
-  //   // $slides = array_push($slides, $res1);
-  // }
-// $res[0]['about'] = html_entity_decode($res[0]['about']);
-// $res[0]['about'] = str_replace('"','\"',$res[0]['about']);
-
-
-
-
 $outp = '{"isloggedin":['.$outp1.','.$outp2.','.$outp3.','.$outp4.','.$outp5.']}';
+} else {
+  $outp = '{"isloggedin":['.$outp1.','.$outp2.']}';
+}
+
 echo ($outp);
 ?>

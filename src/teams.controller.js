@@ -4,12 +4,13 @@
   angular.module('ShopApp')
   .controller('TeamsController', TeamsController);
 
-  TeamsController.$inject = ['items', '$http', '$sce'];
+  TeamsController.$inject = ['items', '$http', '$sce', '$scope'];
 
-  function TeamsController(items, $http, $sce) {
+  function TeamsController(items, $http, $sce, $scope) {
     var teamsCtrl = this;
     teamsCtrl.items = items;
     console.log("tCtrl: "+teamsCtrl.items);
+    $scope.hasRoleAdmin = teamsCtrl.items[5].AdminIsIn;
 
     teamsCtrl.totalPages = [];
     teamsCtrl.PagesTeams = [];

@@ -14,7 +14,7 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
     controller: 'HomeController as hCtrl',
     resolve: {
       isloggedin: function (ShopDataService) {
-        return ShopDataService.isLoggedIn();
+        return ShopDataService.isLoggedIn('home');
       }
     }
   }
@@ -27,14 +27,16 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: 'src/template/projects.template.html',
           controller: 'ProjectsController as projectsCtrl',
           resolve: {
-            items: ['ShopDataService', function (ShopDataService) {
-              return ShopDataService.getProjects();
-            }]
+            items: function (ShopDataService) {
+              return ShopDataService.getItems('projects');
+            },
+            isloggedin: function (ShopDataService) {
+              return ShopDataService.isLoggedIn('projects');
           }
     }
    }
   }
-
+}
   var papers = {
     name: 'papers',
     url:'/papers',
@@ -43,9 +45,12 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: 'src/template/papers.template.html',
           controller: 'PapersController as papersCtrl',
           resolve: {
-            items: ['ShopDataService', function (ShopDataService) {
-              return ShopDataService.getPapers();
-            }]
+            items: function (ShopDataService) {
+              return ShopDataService.getItems('papers');
+            },
+            isloggedin: function (ShopDataService) {
+              return ShopDataService.isLoggedIn('projects');
+            }
           }
     }
    }
@@ -59,10 +64,13 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
           templateUrl: 'src/template/teams.template.html',
           controller: 'TeamsController as teamsCtrl',
           resolve: {
-            items: ['ShopDataService', function (ShopDataService) {
-              return ShopDataService.getTeams();
-            }]
-          }
+            items: function (ShopDataService) {
+              return ShopDataService.getItems('teams');
+            },
+            isloggedin: function (ShopDataService) {
+              return ShopDataService.isLoggedIn('projects');
+            }
+      }
     }
    }
   }
@@ -137,7 +145,7 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
       },
       resolve: {
         items: ['ShopDataService', function (ShopDataService) {
-          return ShopDataService.getAllItems();
+          return ShopDataService.getItems('admin');
         }]
       }
   }

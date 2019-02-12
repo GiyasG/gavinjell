@@ -72,7 +72,7 @@
     <loading class="loading-indicator"></loading>
 
 <div ui-view class="container">
-  <div ui-view="nav"></div>
+  <!-- <div ui-view="nav"></div> -->
   <div ui-view="content"></div>
   <!-- <div ui-view="basket"></div> -->
   <div ui-view="admin"></div>

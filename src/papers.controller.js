@@ -9,6 +9,7 @@
   function PapersController(items, $http, $sce, $scope) {
     var papersCtrl = this;
     papersCtrl.items = items;
+    $scope.hasRoleAdmin = papersCtrl.items[5].AdminIsIn;
 
     $scope.isPrevious = {
     "background-color" : "lightblue"
