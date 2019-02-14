@@ -1,7 +1,7 @@
 (function () {
 'use strict';
 
-angular.module('GJapp')
+angular.module('ShopApp')
 .config(RoutesConfig);
 
 RoutesConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -10,28 +10,42 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
   var home = {
     name: 'home',
     url: '/',
-    templateUrl: 'src/template/home.template.html',
-    controller: 'HomeController as hCtrl',
-    resolve: {
-      isloggedin: function (DataService) {
-        return DataService.isLoggedIn('home');
-      }
+        views: {
+          'content@': {
+            templateUrl: 'src/template/home.template.html',
+            controller: 'HomeController as hCtrl',
+              resolve: {
+                isloggedin: function (ShopDataService) {
+                  return ShopDataService.isLoggedIn('home');
+                  }
+              }
+          },
+          'navbar@': {
+            templateUrl: 'src/template/navbar.template.html',
+            controller: 'NavbarController as nCtrl',
+              resolve: {
+                isloggedin: function (ShopDataService) {
+                  return ShopDataService.isLoggedIn('home');
+                  }
+              }
+          },
+        }
     }
-  }
 
   var projects = {
     name: 'projects',
-    url:'/projects',
+    url:'projects',
+    parent: 'home',
     views: {
         'content@': {
           templateUrl: 'src/template/projects.template.html',
           controller: 'ProjectsController as projectsCtrl',
           resolve: {
-            items: function (DataService) {
-              return DataService.getItems('projects');
+            items: function (ShopDataService) {
+              return ShopDataService.getItems('projects');
             },
-            isloggedin: function (DataService) {
-              return DataService.isLoggedIn('projects');
+            isloggedin: function (ShopDataService) {
+              return ShopDataService.isLoggedIn('projects');
           }
     }
    }
@@ -39,17 +53,18 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
 }
   var papers = {
     name: 'papers',
-    url:'/papers',
+    url:'papers',
+    parent: 'home',
     views: {
         'content@': {
           templateUrl: 'src/template/papers.template.html',
           controller: 'PapersController as papersCtrl',
           resolve: {
-            items: function (DataService) {
-              return DataService.getItems('papers');
+            items: function (ShopDataService) {
+              return ShopDataService.getItems('papers');
             },
-            isloggedin: function (DataService) {
-              return DataService.isLoggedIn('projects');
+            isloggedin: function (ShopDataService) {
+              return ShopDataService.isLoggedIn('projects');
             }
           }
     }
@@ -58,17 +73,18 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
 
   var teams = {
     name: 'teams',
-    url:'/teams',
+    url:'teams',
+    parent: 'home',
     views: {
         'content@': {
           templateUrl: 'src/template/teams.template.html',
           controller: 'TeamsController as teamsCtrl',
           resolve: {
-            items: function (DataService) {
-              return DataService.getItems('teams');
+            items: function (ShopDataService) {
+              return ShopDataService.getItems('teams');
             },
-            isloggedin: function (DataService) {
-              return DataService.isLoggedIn('projects');
+            isloggedin: function (ShopDataService) {
+              return ShopDataService.isLoggedIn('projects');
             }
       }
     }
@@ -88,11 +104,11 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
   //       }
   //     },
   //     resolve: {
-  //                 // basketitems: function(DataService, $stateParams) {
+  //                 // basketitems: function(ShopDataService, $stateParams) {
   //                 //   console.log("basket in route: "+$stateParams.basket);
-  //                 //   return DataService.CheckoutItems($stateParams.basket);
-  //                   cart: function(DataService) {
-  //                   return DataService.CheckoutItems();
+  //                 //   return ShopDataService.CheckoutItems($stateParams.basket);
+  //                   cart: function(ShopDataService) {
+  //                   return ShopDataService.CheckoutItems();
   //                 }
   //               }
   // }
@@ -108,8 +124,8 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-              info: function(DataService, $stateParams) {
-                    return DataService.VerifyEmail($stateParams.selector, $stateParams.token);
+              info: function(ShopDataService, $stateParams) {
+                    return ShopDataService.VerifyEmail($stateParams.selector, $stateParams.token);
                   }
                 }
   }
@@ -126,29 +142,48 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
         }
       },
       resolve: {
-              info: function(DataService, $stateParams) {
-                    return DataService.resetPassword($stateParams.selector, $stateParams.token);
+              info: function(ShopDataService, $stateParams) {
+                    return ShopDataService.resetPassword($stateParams.selector, $stateParams.token);
                   }
                 }
   }
 
   var admin = {
     name: 'admin',
-    // parent: 'home',
-    url: '/admin',
+    parent: 'home',
+    url: 'admin',
     // params: { basket: null },
     views: {
-         'admin@': {
+         'content@': {
           templateUrl: 'src/template/admin.template.html',
           controller: 'AdminController as aCtrl',
         }
       },
       resolve: {
-        items: ['DataService', function (DataService) {
-          return DataService.getItems('admin');
+        items: ['ShopDataService', function (ShopDataService) {
+          return ShopDataService.getItems('admin');
         }]
       }
   }
+
+  var project = {
+    name: 'project',
+    parent: 'home',
+    url: 'projects/{id}',
+    // params: { basket: null },
+    views: {
+         'content@': {
+          templateUrl: 'src/template/project.template.html',
+          controller: 'ProjectController as psCtrl',
+        }
+      },
+      resolve: {
+        items: function (ShopDataService, $stateParams) {
+          return ShopDataService.getItems('projects', $stateParams.id);
+        }
+      }
+  }
+
 
   $urlRouterProvider.otherwise('/');
   $stateProvider
@@ -160,5 +195,6 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
   .state(emailconfirmed)
   .state(passwordconfirmed)
   .state(admin)
+  .state(project)
  }
 })();

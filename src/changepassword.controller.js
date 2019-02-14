@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('GJapp')
+  angular.module('ShopApp')
   .controller('ChangepasswordController', ChangepasswordController);
 
   ChangepasswordController.$inject = ['$scope', '$http', '$stateParams', 'info'];

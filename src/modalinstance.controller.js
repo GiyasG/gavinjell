@@ -1,13 +1,14 @@
 (function () {
   'use strict';
 
-  angular.module('GJapp')
+  angular.module('ShopApp')
   .controller('ModalInstanceController', ModalInstanceController);
 
   ModalInstanceController.$inject = ['$uibModalInstance', 'data', '$scope', '$http'];
   function ModalInstanceController($uibModalInstance, data, $scope, $http) {
     var mCtrl = this;
         mCtrl.data = data;
+
         if ($scope.showLogin) {
           mCtrl.title = "You are already logged in";
         } else {

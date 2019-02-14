@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('GJapp')
+  angular.module('ShopApp')
   .component('cart', {
     templateUrl: 'src/template/cart.template.html',
     bindings: {

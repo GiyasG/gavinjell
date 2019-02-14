@@ -3,7 +3,7 @@
 
   angular.module('ShopApp')
   .component('items', {
-    templateUrl: 'src/template/projects.template.html',
+    templateUrl: 'src/template/project.template.html',
     bindings: {
       items: '<'
         }

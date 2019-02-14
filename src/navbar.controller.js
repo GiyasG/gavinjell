@@ -2,40 +2,20 @@
   'use strict';
 
   angular.module('ShopApp')
-  .controller('HomeController', HomeController);
+  .controller('NavbarController', NavbarController)
+  .directive('sessionLogin', SessionLoginDirective)
+  .directive('sessionRegister', SessionRegisterDirective)
+  .directive('forgottenPassword', ForgottenPassordDirective);
 
-  HomeController.$inject = ['$state', '$scope', '$http', 'isloggedin', '$log', 'Upload', '$sce'];
+  NavbarController.$inject = ['$http', '$scope', 'isloggedin', '$uibModal', '$log'];
 
-    function HomeController($state, $scope, $http, isloggedin, $log, Upload, $sce) {
+    function NavbarController($http, $scope, isloggedin, $uibModal, $log) {
 
-        var hCtrl = this;
-        //**************** Data for Dbase Upload ********************//
-
-        $scope.fElements = {};
-        $scope.onFileSelect = function(file) {
-
-          console.log(file);
-            $scope.message = "";
-                $scope.upload = Upload.upload({
-                    url: 'php/upload.php',
-                    method: 'POST',
-                    file: file,
-                    data: {
-                              'item': $scope.fElements
-                          }
-                }).success(function(data, status, headers, config) {
-                    $scope.message = data;
-                    console.log($scope.message);
-                }).error(function(data, status) {
-                    $scope.message = data;
-                });
-        };
-
-        //************************************************//
+        var nCtrl = this;
         //****************** MODAL ****************//
-        hCtrl.data = false;
+        nCtrl.data = false;
 
-          hCtrl.open = function () {
+          nCtrl.open = function () {
             var modalInstance = $uibModal.open({
               // animation: true,
               ariaLabelledBy: 'modal-title',
@@ -46,8 +26,8 @@
               // size: size,
               resolve: {
                 data: function () {
-                  console.log(hCtrl.data);
-                  return hCtrl.data;
+                  console.log(nCtrl.data);
+                  return nCtrl.data;
                 }
               }
             });
@@ -60,32 +40,32 @@
           };
         //*****************************************//
         $scope.hasRoleAdmin = false;
-        hCtrl.isloggedin = isloggedin;
-        if (hCtrl.isloggedin[1].Role != null) {
+        nCtrl.isloggedin = isloggedin;
+        if (nCtrl.isloggedin[1].Role != null) {
           $scope.hasRoleAdmin = true;
         } else {
           $scope.hasRoleAdmin = false;
         }
-        if (hCtrl.isloggedin[0].isIn === false) {
+        if (nCtrl.isloggedin[0].isIn === false) {
           $scope.showLogin = true;
           $scope.showRegister = true;
-          hCtrl.data = false;
+          nCtrl.data = false;
           if (isloggedin[1].items === null) {
             $scope.showCart = false;
           } else {
             $scope.showCart = true;
           }
-          console.log("Logged out "+hCtrl.isloggedin[1].items);
+          console.log("Logged out "+nCtrl.isloggedin[1].items);
         } else {
           $scope.showLogin = false;
           $scope.showRegister = false;
-          hCtrl.data = true;
+          nCtrl.data = true;
           if (isloggedin[1].items === null) {
             $scope.showCart = false;
           } else {
             $scope.showCart = true;
           }
-          console.log("Logged in "+hCtrl.isloggedin[1].Role);
+          console.log("Logged in "+nCtrl.isloggedin[1].Role);
         }
 
         $scope.showLoginForm = false;
@@ -110,19 +90,19 @@
         };
 
 // ***************************************** //
-// hCtrl.emptyCart = function () {
-// $http({
-//       method  : 'POST',
-//       url     : 'php/emptyCart.php'
-//        })
-//     .then(function(response) {
-//         hCtrl.isloggedin[1].items = response.data.cart;
-//         $scope.showCart = false;
-//         return response.data.cart;
-//     });
-//   };
-//
-//
+nCtrl.emptyCart = function () {
+$http({
+      method  : 'POST',
+      url     : 'php/emptyCart.php'
+       })
+    .then(function(response) {
+        nCtrl.isloggedin[1].items = response.data.cart;
+        $scope.showCart = false;
+        return response.data.cart;
+    });
+  };
+
+
 // ***************************************** //
           $scope.openloginForm = function() {
             // console.log("Clicked open");
@@ -146,6 +126,7 @@
             }
           };
 
+
           // $scope.openregisterForm = function() {
           //   // console.log("Clicked open");
           //   if (!($scope.showRegisterForm)) {
@@ -168,5 +149,22 @@
           };
 };
 
+    function SessionLoginDirective () {
+      return {
+        templateUrl: 'src/template/session-login.html'
+      }
+    };
+
+    function SessionRegisterDirective () {
+      return {
+        templateUrl: 'src/template/session-register.html'
+      }
+    };
+
+    function ForgottenPassordDirective () {
+      return {
+        templateUrl: 'src/template/forgotten-password.html'
+      }
+    };
 
 })();

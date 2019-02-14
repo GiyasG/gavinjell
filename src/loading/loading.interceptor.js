@@ -1,7 +1,7 @@
 (function() {
 "use strict";
 
-angular.module('GJapp')
+angular.module('ShopApp')
 .factory('loadingHttpInterceptor', LoadingHttpInterceptor);
 
 LoadingHttpInterceptor.$inject = ['$rootScope', '$q'];

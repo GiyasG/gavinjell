@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('GJapp')
+  angular.module('ShopApp')
   .controller('PapersController', PapersController);
 
   PapersController.$inject = ['items', '$http', '$sce', '$scope'];

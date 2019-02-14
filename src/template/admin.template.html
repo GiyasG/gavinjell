@@ -1,5 +1,3 @@
-<nav-bar></nav-bar>
-
 <div ng-if="hasRoleAdmin">
 <h2> Administration </h2>
 <div>
@@ -122,7 +120,7 @@
 
 <!-- TEAM -->
 <div>
-		<div class="text-center"><h4>Update or delete Steam members</h4></div>
+		<div class="text-center"><h4>Update or delete team members</h4></div>
 
 		<div ng-repeat="item in aCtrl.items[3].teams[0][0]" ng-init="sectionIndex = $index">
 			<!-- {{sectionIndex}} -  {{updateIndexTeam}} -->
@@ -168,53 +166,55 @@
 		</div>
 		<hr class="panel-warning">
 </div>
-
-
+</div>
 
 <hr class="panel-info">
 
 <!-- SLIDES -->
+<div>
+
 <div class="text-center"><h4>Add or delete slides</h4></div>
 
-<div class="col-md-12">
-	<div class="well col-md-3" ng-repeat="item in aCtrl.items[6].slide[0]" ng-init="sectionIndex = $index">
-		<img class="imgslide" src="img/{{item.image}}" alt={{item.title}}>
-		<span>{{item.title}}</span>
-		<button class="glyphicon glyphicon-minus rbn"
-		ng-if="item.title"
-		ng-click="DeleteSI(item.id, item.nameofdb)">
-		</button>
-	</div>
+		<div class="col-md-12">
+			<div class="well col-md-3" ng-repeat="item in aCtrl.items[6].slide[0]" ng-init="sectionIndex = $index">
+				<img class="imgslide" src="img/{{item.image}}" alt={{item.title}}>
+				<span>{{item.title}}</span>
+				<button class="glyphicon glyphicon-minus rbn"
+				ng-if="item.title"
+				ng-click="DeleteSI(item.id, item.nameofdb)">
+				</button>
+			</div>
+		</div>
+
+		<div class="well col-md-5">
+		<div>Add project</div>
+		<select class="inline" ng-model="fSlides.projects.model">
+			<option value="" selected>Select</option>
+			<option style="font-weight: bold;" ng-repeat="option1 in aCtrl.items[1].projects[0][0]"
+			value="{{option1.id}}"
+			ng-disabled="disabledSI[option1.id+option1.title]">
+			{{option1.title}}
+		</option>
+		</select>
+		<button class="glyphicon glyphicon-plus rbn" ng-click="addSI(fSlides.projects.model, 'projects')"></button>
+		</div>
+
+
+		<div class="well col-md-5">
+		<div>Add publication</div>
+		<select class="inline" ng-model="fSlides.papers.model">
+			<option value="" selected>Select</option>
+			<option style="font-weight: bold;" ng-repeat="option2 in aCtrl.items[2].papers[0][0]"
+			value="{{option2.id}}"
+			ng-disabled="disabledSI[option2.id+option2.title]">
+			{{option2.title}}
+		</option>
+		</select>
+		<button class="glyphicon glyphicon-plus rbn" ng-click="addSI(fSlides.papers.model, 'papers')"></button>
+		</div>
 </div>
 
-<div class="well col-md-5">
-<div>Add project</div>
-<select class="inline" ng-model="fSlides.projects.model">
-	<option value="" selected>Select</option>
-	<option style="font-weight: bold;" ng-repeat="option1 in aCtrl.items[1].projects[0][0]"
-	value="{{option1.id}}"
-	ng-disabled="disabledSI[option1.id+option1.title]">
-	{{option1.title}}
-</option>
-</select>
-<button class="glyphicon glyphicon-plus rbn" ng-click="addSI(fSlides.projects.model, 'projects')"></button>
-</div>
-
-
-<div class="well col-md-5">
-<div>Add publication</div>
-<select class="inline" ng-model="fSlides.papers.model">
-	<option value="" selected>Select</option>
-	<option style="font-weight: bold;" ng-repeat="option2 in aCtrl.items[2].papers[0][0]"
-	value="{{option2.id}}"
-	ng-disabled="disabledSI[option2.id+option2.title]">
-	{{option2.title}}
-</option>
-</select>
-<button class="glyphicon glyphicon-plus rbn" ng-click="addSI(fSlides.papers.model, 'papers')"></button>
-</div>
-
-</div>
+<hr class="panel-info col-md-12">
 
 <div ng-if="!hasRoleAdmin">
 	Please login to access

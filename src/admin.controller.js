@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('GJapp')
+  angular.module('ShopApp')
   .controller('AdminController', AdminController)
   .directive('adminAdd', AdminAddDirective)
   .directive('adminUpdate', AdminUpdateDirective)
@@ -17,13 +17,16 @@
   .directive('teamcontactUpdate', TeamcontactUpdateDirective);
 
 
-  AdminController.$inject = ['$scope', '$http', '$sce', 'Upload', 'items'];
+  AdminController.$inject = ['$state', '$scope', '$http', '$sce', 'Upload', 'items'];
 
-    function AdminController($scope, $http, $sce, Upload, items) {
+    function AdminController($state, $scope, $http, $sce, Upload, items) {
+
+        window.scrollTo(0, 0);
 
         var aCtrl = this;
         aCtrl.items = items;
         console.log(aCtrl.items[1].projects[0]);// aCtrl.items[0].all[0].about = $sce.trustAsHtml(aCtrl.items[0].all[0].about);
+
         $scope.updateIndexItem = null;
         $scope.updateIndexProject = null;
         $scope.updateIndexPaper = null;

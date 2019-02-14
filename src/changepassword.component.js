@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('GJapp')
+  angular.module('ShopApp')
   .component('changepassword', {
     templateUrl: 'src/template/passwordchange.template.html',
     bindings: {
