@@ -1,12 +1,15 @@
 <?php
 session_start();
-// print_r ($_GET);
+// print_r ($_GET['db']);
 
-if ( $_GET ) {
-    foreach ( $_GET as $key => $value ) {
-        $choosendb = $key;
+if ( isset($_GET['db']) ) {
+        $choosendb = $_GET['db'];
+        // echo $choosendb;
     }
-}
+if ( isset($_GET['id']) ) {
+            $id = $_GET['id'];
+            // echo $id;
+        }
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
