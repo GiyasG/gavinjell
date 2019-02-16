@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="GJapp">
+<html lang="en" ng-app="ShopApp">
 <head>
 <meta charset="utf-8">
 <title>Dr. Jell's Lab</title>
@@ -22,18 +22,19 @@
 <script src="lib/jquery.min.js"></script>
 <script src="lib/bootstrap.min.js"></script>
 
-<script src="src/gjapp.module.js"></script>
+<script src="src/shopapp.module.js"></script>
 <script src="src/loading/loading.component.js"></script>
 <script src="src/loading/loading.interceptor.js"></script>
 
 <script src="src/data.module.js"></script>
 
 
-<script src="src/data.service.js"></script>
+<script src="src/shopdata.service.js"></script>
 
 <script src="src/tinymce.controller.js"></script>
 
 <script src="src/home.controller.js"></script>
+<script src="src/navbar.controller.js"></script>
 <script src="src/modalinstance.controller.js"></script>
 
 <script src="src/projects.component.js"></script>
@@ -63,6 +64,9 @@
 <script src="src/admin.component.js"></script>
 <script src="src/admin.controller.js"></script>
 
+<script src="src/project.component.js"></script>
+<script src="src/project.controller.js"></script>
+
 <script src="src/routes.js"></script>
 
 <!-- <script src="lib/script.js"></script> -->
@@ -72,11 +76,9 @@
     <loading class="loading-indicator"></loading>
 
 <div ui-view class="container">
-  <!-- <div ui-view="nav"></div> -->
+  <div ui-view="navbar"></div>
   <div ui-view="content"></div>
   <!-- <div ui-view="basket"></div> -->
-  <div ui-view="admin"></div>
-
 </div>
 <footer class="navbar-inverse">
   <div class="text-center">

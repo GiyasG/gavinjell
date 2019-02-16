@@ -29,7 +29,7 @@ gulp.task('js', function() {
 gulp.task('concat_js', function() {
   gulp.src('src/*.js')
   // gulp.src('dist/*.js')
-  .pipe(order(['gjapp.module.js',
+  .pipe(order(['shopapp.module.js',
   'loading.component.js',
   'loading.interceptor.js',
   'data.module.js',
