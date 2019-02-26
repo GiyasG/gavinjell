@@ -12,17 +12,20 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "latest",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "gulp": "^4.0.0",
     "gulp-coffee": "latest",
-    "gulp-concat": "latest",
+    "gulp-concat": "^2.6.1",
     "gulp-connect": "latest",
     "gulp-minify": "^3.1.0",
     "gulp-sass": "latest",
     "gulp-uglify": "latest",
-    "gulp-util": "latest",
+    "gulp-util": "^3.0.8",
     "uglifyjs-webpack-plugin": "^2.0.1"
   },
   "dependencies": {
+    "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-order": "^1.2.0",
     "gulp-uglify-es": "^1.0.4",

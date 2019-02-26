@@ -1,20 +1,15 @@
 (function () {
   'use strict';
-
-  angular.module('ShopApp')
+  angular.module('GJApp')
   .controller('HomeController', HomeController);
-
-  HomeController.$inject = ['$state', '$scope', '$http', 'isloggedin', '$log', 'Upload', '$sce'];
-
-    function HomeController($state, $scope, $http, isloggedin, $log, Upload, $sce) {
-
+  HomeController.$inject = ['FData', '$state', '$scope', '$http', 'isloggedin', '$log', 'Upload', '$sce', '$timeout'];
+    function HomeController(FData, $state, $scope, $http, isloggedin, $log, Upload, $sce, $timeout) {
         var hCtrl = this;
+        $timeout(function() { $scope.showImage = true;});
         //**************** Data for Dbase Upload ********************//
-
+        $scope.fD = FData;
         $scope.fElements = {};
         $scope.onFileSelect = function(file) {
-
-          console.log(file);
             $scope.message = "";
                 $scope.upload = Upload.upload({
                     url: 'php/upload.php',
@@ -25,37 +20,29 @@
                           }
                 }).success(function(data, status, headers, config) {
                     $scope.message = data;
-                    console.log($scope.message);
                 }).error(function(data, status) {
                     $scope.message = data;
                 });
         };
-
-        //************************************************//
         //****************** MODAL ****************//
         hCtrl.data = false;
-
           hCtrl.open = function () {
             var modalInstance = $uibModal.open({
-              // animation: true,
+              animation: true,
               ariaLabelledBy: 'modal-title',
               ariaDescribedBy: 'modal-body',
               templateUrl: 'src/template/myModalContent.html',
               controller: 'ModalInstanceController',
               controllerAs: 'mCtrl',
-              // size: size,
               resolve: {
                 data: function () {
-                  console.log(hCtrl.data);
                   return hCtrl.data;
                 }
               }
             });
-
             modalInstance.result.then(function () {
               $scope.showLogin = false;
               $scope.hasRoleAdmin = true;
-              // alert($scope.showLogin);
             });
           };
         //*****************************************//
@@ -75,7 +62,6 @@
           } else {
             $scope.showCart = true;
           }
-          console.log("Logged out "+hCtrl.isloggedin[1].items);
         } else {
           $scope.showLogin = false;
           $scope.showRegister = false;
@@ -85,12 +71,9 @@
           } else {
             $scope.showCart = true;
           }
-          console.log("Logged in "+hCtrl.isloggedin[1].Role);
         }
-
         $scope.showLoginForm = false;
         $scope.loginWarning = "";
-
 //**********************************************************//
         $scope.logoutForm = function() {
           var userparams = "logOut";
@@ -108,24 +91,8 @@
                     return response.data;
                   });
         };
-
-// ***************************************** //
-// hCtrl.emptyCart = function () {
-// $http({
-//       method  : 'POST',
-//       url     : 'php/emptyCart.php'
-//        })
-//     .then(function(response) {
-//         hCtrl.isloggedin[1].items = response.data.cart;
-//         $scope.showCart = false;
-//         return response.data.cart;
-//     });
-//   };
-//
-//
 // ***************************************** //
           $scope.openloginForm = function() {
-            // console.log("Clicked open");
             if (!($scope.showLoginForm)) {
               $scope.pwarnings = "";
               $scope.loginWarning = "";
@@ -135,9 +102,7 @@
               $scope.showPasswordForm = false;
             }
           };
-
           $scope.closeloginForm = function() {
-            // console.log("Clicked close");
             if ($scope.showLoginForm) {
               $scope.loginWarning = "";
               $scope.showLoginForm = false;
@@ -145,20 +110,7 @@
               $scope.showPasswordChange = false;
             }
           };
-
-          // $scope.openregisterForm = function() {
-          //   // console.log("Clicked open");
-          //   if (!($scope.showRegisterForm)) {
-          //     $scope.loginWarning = "";
-          //     $scope.showRegisterForm = true;
-          //     $scope.showLoginForm = false;
-          //     $scope.showPasswordForm = false;
-          //     $scope.showPasswordChange = false;
-          //   }
-          // };
-
           $scope.closeregisterForm = function() {
-            // console.log("Clicked close");
             if ($scope.showRegisterForm) {
               $scope.loginWarning = "";
               $scope.showRegisterForm = false;
@@ -167,6 +119,4 @@
             }
           };
 };
-
-
 })();

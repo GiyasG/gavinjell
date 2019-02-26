@@ -1,0 +1,33 @@
+<!-- <nav-bar></nav-bar> -->
+<div class="container">
+	<h2> Search results </h2>
+		    <div class="col-md-12" ng-repeat="item in chCtrl.PagesSearch">
+					<h2 ng-if="item != null" >Found in: {{item.title}}</h2>
+					<a ng-if="item != null" ui-sref="{{item.db}}({id:'{{item.id}}'})">
+						Read more ...
+					</a>
+				<span ng-if="item == null">Search returned no results</span>
+		    </div>
+	</div>
+	<div class="col-md-5 text-center column-in-center">
+		<ul class="pagination">
+			<button ng-show="chCtrl.currentPage-1>=0"
+				ng-style="isPrevious"
+				ng-click="chCtrl.NextPage(chCtrl.currentPage-1)">
+				Previous
+			</button>
+		</ul>
+		<ul ng-repeat="num in chCtrl.totalPages" class="pagination pg-blue">
+			<button ng-show="chCtrl.currentPage-1>=0 && chCtrl.totalPagesNumber-1!=chCtrl.currentPage" class="active"
+				ng-click="chCtrl.NextPage(num-1)">
+				{{num}}
+			</button>
+		</ul>
+		<ul class="pagination pg-blue">
+			<button ng-show="chCtrl.totalPagesNumber-1!=chCtrl.currentPage && chCtrl.PagesSearch[0] != null"
+			ng-style="isNext"
+			ng-click="chCtrl.NextPage(searchCtrl.currentPage+1)">
+			Next
+		</button>
+	</ul>
+</div>

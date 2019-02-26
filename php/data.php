@@ -5,28 +5,143 @@ session_start();
 if ( isset($_GET['db']) ) {
         $choosendb = $_GET['db'];
         // echo $choosendb;
+    } else {
+      return;
     }
 if ( isset($_GET['id']) ) {
             $id = $_GET['id'];
-            // echo $id;
+        } else {
+          $id = null;
         }
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
 require '../vendor/autoload.php';
-  $db1 = new \PDO('mysql:dbname=auth;host=127.0.0.1;charset=utf8mb4', 'authz', 'xP9tM715UK');
+  $db1 = new \PDO('mysql:dbname=1092877;host=localhost;charset=utf8mb4', '1092877', 'xP9tM715UK');
   $auth = new \Delight\Auth\Auth($db1);
 $outp3 = "";
-if (($auth->isLoggedIn()) && ($auth->hasRole(\Delight\Auth\Role::ADMIN))) {
-  $outp3 = '{"AdminIsIn":true}';
+$uid = null;
+if ($auth->isLoggedIn()) {
+  $uid = $auth->getUserId();
+  if ($auth->hasRole(\Delight\Auth\Role::ADMIN)) {
+    $outp3 ='{"isIn":true, "Role": "Admin", "UID":'.$uid.'}';
+  } else {
+    $outp3 = '{"isIn":true, "Role": null, "UID":'.$uid.'}';
+  }
 } else {
-  $outp3 = '{"AdminIsIn":false}';
+  $outp3 ='{"isIn":false, "Role": null, "UID": null}';
 }
 
 include('class/mysql_crud.php');
 $db = new Database();
 $db->connect();
+
+if ($id != null) {
+if (isset($db)) {
+
+  $tb = new Table();
+
+  switch ($choosendb) {
+    case 'projects':
+  if (isset($tb)) {
+    $res1 = $tb->get_ParentResult('projects',null,'id='.$id);
+    $res2 = $tb->get_ParentResult('photos',null,'project_id='.$id);
+    $res3 = $tb->get_ParentResult('comments',null,'idofdb='.$id);
+          $res1[0]['image']=$res2[0]['image'];
+          $res1[0]['description'] = html_entity_decode($res1[0]['description']);
+          $proj ='{"projects":['.json_encode($res1).']}';
+          $papr ='{"papers":[null]}';
+          $team ='{"teams":[null]}';
+          $cnt ='{"contact":[null]}';
+          $sld ='{"slides":[null]}';
+          if (isset($res3)) {
+            foreach ($res3 as $key3 => $value13) {
+              $res3[$key3]['comment'] = html_entity_decode($res3[$key3]['comment']);
+              $res3[$key3]['UID'] = $uid;
+              $res3[$key3]['updated_at'] = Date('dMy H:i', strtotime($res3[$key3]['updated_at']));
+            }
+            $cmt = '{"comment":['.json_encode($res3).']}';
+          } else {
+            $cmt = '{"comment":[null]}';
+          }
+  } else {
+    $proj ='{"project":["No items found"]}';
+  }
+      break;
+    case 'papers':
+    if (isset($tb)) {
+    $res1 = $tb->get_ParentResult('papers',null,'id='.$id);
+    $res2 = $tb->get_ParentResult('photos',null,'paper_id='.$id);
+    $res3 = $tb->get_ParentResult('comments',null,'idofdb='.$id);
+          $res1[0]['image']=$res2[0]['image'];
+          $res1[0]['description'] = html_entity_decode($res1[0]['description']);
+    $papr ='{"papers":['.json_encode($res1).']}';
+    $proj ='{"projects":[null]}';
+    $team ='{"teams":[null]}';
+    $cnt ='{"contact":[null]}';
+    $sld ='{"slides":[null]}';
+    $cmt = '{"comment":[null]}';
+    if (isset($res3)) {
+      foreach ($res3 as $key3 => $value13) {
+        $res3[$key3]['comment'] = html_entity_decode($res3[$key3]['comment']);
+        $res3[$key3]['UID'] = $uid;
+        $res3[$key3]['updated_at'] = Date('dMy H:i', strtotime($res3[$key3]['updated_at']));
+      }
+      $cmt = '{"comment":['.json_encode($res3).']}';
+    } else {
+      $cmt = '{"comment":[null]}';
+    }
+  } else {
+    $papr ='{"papers":["No items found"]}';
+  }
+      break;
+    case 'teams':
+    if (isset($tb)) {
+    $res1 = $tb->get_ParentResult('teams',null,'id='.$id);
+    $res2 = $tb->get_ParentResult('photos',null,'team_id='.$id);
+          $res1[0]['image']=$res2[0]['image'];
+          $res1[0]['about'] = html_entity_decode($res1[0]['about']);
+          // print_r ($res1[0]);
+
+          foreach ($res1 as $key1 => $value1) {
+            $res_project = $tb->get_JointResult('projects', 'projects_team', 'teams', $res1[$key1]['id']);
+            // print_r ($res_project);
+            if ($res_project) {
+              foreach ($res_project as $key2 => $value2) {
+                $res1[$key1]['project'][$key2]['project_id'] = $res_project[$key2]['project_id'];
+                $res1[$key1]['project'][$key2]['title'] = $res_project[$key2]['title'];
+              }
+            }
+          }
+          foreach ($res1 as $key1 => $value1) {
+            $res_paper = $tb->get_JointResult('papers', 'papers_team', 'teams', $res1[$key1]['id']);
+            // print_r ($res_paper);
+            if ($res_paper) {
+              foreach ($res_paper as $key2 => $value2) {
+                $res1[$key1]['paper'][$key2]['paper_id'] = $res_paper[$key2]['paper_id'];
+                $res1[$key1]['paper'][$key2]['title'] = $res_paper[$key2]['title'];
+              }
+            }
+          }
+
+    $team ='{"teams":['.json_encode($res1).']}';
+    // echo $team;
+    $papr ='{"papers":[null]}';
+    $proj ='{"projects":[null]}';
+    $cnt ='{"contact":[null]}';
+    $sld ='{"slides":[null]}';
+    $cmt = '{"comment":[null]}';
+  } else {
+    $team ='{"teams":["No items found"]}';
+  }
+      break;
+    // default:
+    //   // code...
+    //   break;
+  }
+ }
+}
 
 if (isset($db)) {
   $tb = new Table();
@@ -41,6 +156,7 @@ if (isset($db)) {
   $outp1 ='{"all":["No items found"]}';
 }
 
+if ($id==null) {
 /* PROJECTS */
   $res = $tb->get_ParentResult('authority', 'projects');
 
@@ -67,7 +183,7 @@ if (isset($db)) {
 
   if ($choosendb == "projects" && $records_number != 0) {
     $proj = Projects("projects", $db, $res, $records_number, $records_per_page);
-  }  elseif ($choosendb == "admin" && $records_number != 0) {
+  } elseif ($choosendb == "admin" && $records_number != 0) {
     $records_per_page = $records_number;
     $proj = Projects("projects",$db, $res, $records_number, $records_per_page);
   } elseif ($choosendb != "projects" && $choosendb != "admin" || $records_number == 0) {
@@ -130,28 +246,26 @@ foreach ($res as $key1 => $value1) {
     }
   }
 }
-foreach ($res as $key1 => $value1) {
-  $res_project = $tb->get_JointResult('projects', 'projects_team', 'teams', $res[$key1]['id']);
-  // print_r ($res_project);
-  if ($res_project) {
-    foreach ($res_project as $key2 => $value2) {
-      $res[$key1]['project'][$key2]['project_id'] = $res_project[$key2]['project_id'];
-      $res[$key1]['project'][$key2]['title'] = $res_project[$key2]['title'];
-    }
-  }
-}
-foreach ($res as $key1 => $value1) {
-  $res_paper = $tb->get_JointResult('papers', 'papers_team', 'teams', $res[$key1]['id']);
-  // print_r ($res_paper);
-  if ($res_paper) {
-    foreach ($res_paper as $key2 => $value2) {
-      $res[$key1]['paper'][$key2]['paper_id'] = $res_paper[$key2]['paper_id'];
-      $res[$key1]['paper'][$key2]['title'] = $res_paper[$key2]['title'];
-    }
-  }
-}
-
-
+// foreach ($res as $key1 => $value1) {
+//   $res_project = $tb->get_JointResult('projects', 'projects_team', 'teams', $res[$key1]['id']);
+//   // print_r ($res_project);
+//   if ($res_project) {
+//     foreach ($res_project as $key2 => $value2) {
+//       $res[$key1]['project'][$key2]['project_id'] = $res_project[$key2]['project_id'];
+//       $res[$key1]['project'][$key2]['title'] = $res_project[$key2]['title'];
+//     }
+//   }
+// }
+// foreach ($res as $key1 => $value1) {
+//   $res_paper = $tb->get_JointResult('papers', 'papers_team', 'teams', $res[$key1]['id']);
+//   // print_r ($res_paper);
+//   if ($res_paper) {
+//     foreach ($res_paper as $key2 => $value2) {
+//       $res[$key1]['paper'][$key2]['paper_id'] = $res_paper[$key2]['paper_id'];
+//       $res[$key1]['paper'][$key2]['title'] = $res_paper[$key2]['title'];
+//     }
+//   }
+// }
 
 $records_number  = sizeof($res);
   // print_r ($res);
@@ -204,12 +318,16 @@ if (isset($db)) {
       }
     $arr = array_merge($arr, $res1);
   }
-  $outp5 ='{"slide":['.json_encode($arr).']}';
+  $sld ='{"slide":['.json_encode($arr).']}';
 } else {
-  $outp5 ='{"slide":["No items found"]}';
+  $sld ='{"slide":["No items found"]}';
 }
+
+  $cmt = '{"comment":["No items found"]}';
+}
+
 // ************ Output ************** //
-$outp = '{"items":['.$outp1.','.$proj.','.$papr.','.$team.','.$cnt.','.$outp3.','.$outp5.']}';
+$outp = '{"items":['.$outp1.','.$proj.','.$papr.','.$team.','.$cnt.','.$outp3.','.$sld.','.$cmt.']}';
 
 $db->disconnect();
 

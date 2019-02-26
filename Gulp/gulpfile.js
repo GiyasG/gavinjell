@@ -26,31 +26,41 @@ gulp.task('js', function() {
   .pipe(gulp.dest('assets'))
 });
 
-gulp.task('concat_js', function() {
-  gulp.src('src/*.js')
+gulp.task('concat_js', function(cb) {
+  pump ([
+  gulp.src(['src/*.js','src/loading/*.js'])
   // gulp.src('dist/*.js')
-  .pipe(order(['shopapp.module.js',
+  .pipe(order(['gjapp.module.js',
   'loading.component.js',
   'loading.interceptor.js',
   'data.module.js',
-  'shopdata.service.js',
+  'data.service.js',
   'home.controller.js',
   'modalinstance.controller.js',
-  'items.component.js',
-  'items.controller.js',
-  'cart.component.js',
-  'cart.controller.js',
-  'checkout.component.js',
-  'checkout.controller.js',
+  'projects.component.js',
+  'projects.controller.js',
+  'papers.component.js',
+  'papers.controller.js',
+  'teams.component.js',
+  'teams.controller.js',
   'verify.component.js',
   'verify.controller.js',
   'changepassword.component.js',
   'changepassword.controller.js',
   'admin.component.js',
   'admin.controller.js',
+  'project.component.js',
+  'project.controller.js',
+  'paper.component.js',
+  'paper.controller.js',
+  'team.component.js',
+  'team.controller.js',
+  'search.component.js',
+  'search.controller.js',
   'routes.js']))
-  .pipe(concat('script.js'))
-  .pipe(gulp.dest('assets/scripts'))
+  .pipe(concat('script.js')),
+   gulp.dest('assets/scripts')
+], cb);
 });
 
 gulp.task('gulp-minify', function (cb) {
@@ -71,10 +81,12 @@ gulp.task('gulp-uglify-es', function (cb) {
   ], cb);
 });
 
-gulp.task('concat_css', function() {
-  gulp.src('assets/css/*.css')
-  .pipe(concat('styles.css'))
-  .pipe(gulp.dest('dist'))
+gulp.task('concat_css', function(cb) {
+  pump([
+  gulp.src('css/*.css')
+  .pipe(concat('styles.css')),
+   gulp.dest('assets/scripts')
+], cb);
 });
 
 gulp.task('minify-css', () => {

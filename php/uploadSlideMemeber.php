@@ -1,7 +1,7 @@
 <?php
 
 require '../vendor/autoload.php';
-  $db1 = new \PDO('mysql:dbname=auth;host=127.0.0.1;charset=utf8mb4', 'authz', 'xP9tM715UK');
+  $db1 = new \PDO('mysql:dbname=1092877;host=localhost;charset=utf8mb4', '1092877', 'xP9tM715UK');
   $auth = new \Delight\Auth\Auth($db1);
 $outp3 = "";
 if (($auth->isLoggedIn()) && ($auth->hasRole(\Delight\Auth\Role::ADMIN))) {
@@ -14,8 +14,11 @@ if (($auth->isLoggedIn()) && ($auth->hasRole(\Delight\Auth\Role::ADMIN))) {
 
 if ($adminOk) {
   if (isset($_POST)) {
-    $id = $_POST['itemid'];
-    $nameofdb = $_POST['nofdb'];
+    foreach ( $_POST as $key => $value ) {
+      $postdata = json_decode($key);
+    }
+    $id = $postdata->itemid;
+    $nameofdb = $postdata->nofdb;
    }
 }
 // echo $id;
@@ -28,6 +31,8 @@ if (isset($_POST)) {
   $resj = $tb->get_ParentResult($nameofdb, 'photos', $id);
   $db->select($nameofdb,'*', null, 'id ='.$id);
   $res = $db->getResult();
+  // print_r ($resj);
+  // print_r ($res);
   if ($resj[0] && $res[0]) {
     // echo ($res[0]['authority_id']);
     $db->insert('slides',array('authority_id'=>$res[0]['authority_id'],

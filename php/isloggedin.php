@@ -8,7 +8,7 @@ if ( $_GET ) {
     }
 }
 require '../vendor/autoload.php';
-  $db = new \PDO('mysql:dbname=auth;host=127.0.0.1;charset=utf8mb4', 'authz', 'xP9tM715UK');
+  $db = new \PDO('mysql:dbname=1092877;host=localhost;charset=utf8mb4', '1092877', 'xP9tM715UK');
   $auth = new \Delight\Auth\Auth($db);
   $outp1 = "";
 
@@ -62,7 +62,8 @@ if (isset($db)) {
         // print_r ($value1);
         $res2 = $tb->get_ParentResult('photos',null,$tbl1.'_id='.$res1[$key1]['id']);
         $res1[$key1]['image']=$res2[$key1]['image'];
-        $res1[$key1]['nameofdb']=$res[$key]['nameofdb'];
+        $res1[$key1]['nameofdb']=$tbl1;
+        // $res1[$key1]['nameofdb']=$res[$key]['nameofdb'];
         // print_r ($res2);
       }
     $arr = array_merge($arr, $res1);

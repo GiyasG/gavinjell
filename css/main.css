@@ -72,29 +72,6 @@
 }
 
 
-.shoppingcart {
- border: 1px solid black;
- display: block;
- position: absolute;
- top: 50px;
- right: 10px;
- width: 200px;
- font-size: 0.7em;
-}
-
-.shoppingcart img {
-	width: 50%;
-	height: auto;
-}
-
-.shoppingcart p, label{
-	margin: 0px;
-	font-weight: 400;
-}
-
-.shoppingcart p label{
-		color: blue;
-}
 .emcart {
  border: 1px solid black;
  display: block;
@@ -279,7 +256,7 @@ div span {
 	margin-top: 5px;
 }
 
-.container { margin-top: 50px; }
+.container { margin-top: 50px; margin-bottom: 25px;}
 .navbar-right {margin-right: 20px;}
 
 footer {
@@ -320,9 +297,62 @@ footer {
 	color: white;
 }
 
+.carousel-caption {
+	color: black;
+	text-shadow: 0 1px 2px white;
+}
+
 .imgslide {
 	height: 50px;
 	width: 50px;
 	overflow: hidden;
 	margin: 5px;
+}
+
+.red {
+	color: red;
+}
+
+.green {
+	color: green;
+}
+
+.blue {
+	color: blue;
+}
+
+
+.cmnt {
+	clear: both;
+	top:50%;
+}
+
+.topimg {
+	width: 99%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	border-radius: 70%;
+}
+
+.cell.ng-enter {
+	border-radius: 0%;
+	opacity: 0;
+	-moz-transition: border-radius 1s linear;
+	-o-transition: border-radius 1s linear;
+	-webkit-transition: border-radius 1s linear;
+	transition: border-radius 1s linear;
+}
+
+.cell.ng-enter-active {
+	border-radius: 70%;
+	/* border-radius: 70%; */
+	opacity: 1;
+}
+
+.cell:hover {
+	background: #9351A6;
+	color: white;
+	/* border-radius: 3%; */
 }

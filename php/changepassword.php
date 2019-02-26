@@ -11,7 +11,7 @@ if ( $_POST ) {
     // print_r($postdata->un);
 
 require '../vendor/autoload.php';
-$db = new \PDO('mysql:dbname=auth;host=127.0.0.1;charset=utf8mb4', 'authz', 'xP9tM715UK');
+$db = new \PDO('mysql:dbname=1092877;host=localhost;charset=utf8mb4', '1092877', 'xP9tM715UK');
 $auth = new \Delight\Auth\Auth($db);
 $outp = "";
 if (isset($postdata->ps)) {

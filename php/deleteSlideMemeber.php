@@ -1,6 +1,6 @@
 <?php
 require '../vendor/autoload.php';
-  $db1 = new \PDO('mysql:dbname=auth;host=127.0.0.1;charset=utf8mb4', 'authz', 'xP9tM715UK');
+  $db1 = new \PDO('mysql:dbname=1092877;host=localhost;charset=utf8mb4', '1092877', 'xP9tM715UK');
   $auth = new \Delight\Auth\Auth($db1);
 $outp3 = "";
 if (($auth->isLoggedIn()) && ($auth->hasRole(\Delight\Auth\Role::ADMIN))) {
@@ -13,12 +13,20 @@ if (($auth->isLoggedIn()) && ($auth->hasRole(\Delight\Auth\Role::ADMIN))) {
 
 if ($adminOk) {
   if (isset($_POST)) {
+    if (isset($_POST)) {
+      foreach ( $_POST as $key => $value ) {
+        $postdata = json_decode($key);
+      }
+      $id = $postdata->itemid;
+      $nameofdb = $postdata->nofdb;
+     }
+
     include('class/mysql_crud.php');
     $db = new Database();
     $db->connect();
-    $db->delete('slides', 'idofdb ='.$_POST["itemid"].' and nameofdb =\''.$_POST["nofdb"].'\''); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
+    $db->delete('slides', 'idofdb ='.$id.' and nameofdb =\''.$nameofdb.'\''); // Table name, Column Names, JOIN, WHERE conditions, ORDER BY conditions
     $res = $db->getResult();
-    print_r ($res);
+    // print_r ($res);
     if (!$res) {
       die('Cant connect: ' . mysql_error());
     } else {

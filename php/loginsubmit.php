@@ -11,7 +11,7 @@ if ( $_POST ) {
 }
 
 require '../vendor/autoload.php';
-$db = new \PDO('mysql:dbname=auth;host=127.0.0.1;charset=utf8mb4', 'authz', 'xP9tM715UK');
+$db = new \PDO('mysql:dbname=1092877;host=localhost;charset=utf8mb4', '1092877', 'xP9tM715UK');
 // or
 // $db = new \PDO('sqlite:../Databases/php_auth.sqlite');
 
@@ -35,18 +35,18 @@ try {
     $auth->login($postdata->em, $postdata->ps, $rememberDuration);
     $outp .= '{"SessionID":"'.\session_id().'",';
     $outp .= '"isLoggedIn":"'.$auth->isLoggedIn().'",';
-    $outp .= '"AuthCheck":"'.$auth->check().'",';
+    // $outp .= '"AuthCheck":"'.$auth->check().'",';
     $outp .= '"getUserId":"'.$auth->getUserId().'",';
-    $outp .= '"AuthId":"'.$auth->id().'",';
+    // $outp .= '"AuthId":"'.$auth->id().'",';
     $outp .= '"getEmail":"'.$auth->getEmail().'",';
     $outp .= '"getUsername":"'.$auth->getUsername().'",';
-    $outp .= '"getStatus":"'.$auth->getStatus().'",';
-    $outp .= '"SuperModerator":"'.$auth->hasRole(\Delight\Auth\Role::SUPER_MODERATOR).'",';
+    // $outp .= '"getStatus":"'.$auth->getStatus().'",';
+    $outp .= '"Admin":"'.$auth->hasRole(\Delight\Auth\Role::ADMIN).'",';
     $outp .= '"isRemembered":"'.$auth->isRemembered().'",';
-    $outp .= '"getIpAddress":"'.$auth->getIpAddress().'",';
-    $outp .= '"createCookieName":"'.\Delight\Auth\Auth::createCookieName('session').'",';
-    $outp .= '"createRandomString":"'.\Delight\Auth\Auth::createRandomString().'",';
-    $outp .= '"Auth::createUuid()":"'.\Delight\Auth\Auth::createUuid().'"}';
+    $outp .= '"getIpAddress":"'.$auth->getIpAddress().'"}';
+    // $outp .= '"createCookieName":"'.\Delight\Auth\Auth::createCookieName('session').'",';
+    // $outp .= '"createRandomString":"'.\Delight\Auth\Auth::createRandomString().'",';
+    // $outp .= '"Auth::createUuid()":"'.\Delight\Auth\Auth::createUuid().'"}';
 }
 catch (\Delight\Auth\InvalidEmailException $e) {
     $outp ='{"Error":"Wrong email address"}';

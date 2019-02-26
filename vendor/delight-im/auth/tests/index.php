@@ -27,9 +27,9 @@
 
 require __DIR__.'/../vendor/autoload.php';
 
-$db = new \PDO('mysql:dbname=php_auth;host=127.0.0.1;charset=utf8mb4', 'root', 'monkey');
+$db = new \PDO('mysql:dbname=php_auth;host=localhost;charset=utf8mb4', 'root', 'monkey');
 // or
-// $db = new \PDO('pgsql:dbname=php_auth;host=127.0.0.1;port=5432', 'postgres', 'monkey');
+// $db = new \PDO('pgsql:dbname=php_auth;host=localhost;port=5432', 'postgres', 'monkey');
 // or
 // $db = new \PDO('sqlite:../Databases/php_auth.sqlite');
 

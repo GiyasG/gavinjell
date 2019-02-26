@@ -1,7 +1,7 @@
 <?php
 
 require '../vendor/autoload.php';
-  $db1 = new \PDO('mysql:dbname=auth;host=127.0.0.1;charset=utf8mb4', 'authz', 'xP9tM715UK');
+  $db1 = new \PDO('mysql:dbname=1092877;host=localhost;charset=utf8mb4', '1092877', 'xP9tM715UK');
   $auth = new \Delight\Auth\Auth($db1);
 $outp3 = "";
 if (($auth->isLoggedIn()) && ($auth->hasRole(\Delight\Auth\Role::ADMIN))) {

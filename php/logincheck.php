@@ -1,6 +1,6 @@
 <?php
 require '../vendor/autoload.php';
-$db = new \PDO('mysql:dbname=auth;host=127.0.0.1;charset=utf8mb4', 'authz', 'xP9tM715UK');
+$db = new \PDO('mysql:dbname=1092877;host=localhost;charset=utf8mb4', '1092877', 'xP9tM715UK');
 // or
 // $db = new \PDO('sqlite:../Databases/php_auth.sqlite');
 
